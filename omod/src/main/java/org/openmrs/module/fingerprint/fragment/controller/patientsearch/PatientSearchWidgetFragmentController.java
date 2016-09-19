@@ -1,4 +1,4 @@
-package org.openmrs.module.ugandaemr.fingerprint.fragment.controller.patientsearch;
+package org.openmrs.module.fingerprint.fragment.controller.patientsearch;
 
 import org.apache.commons.lang.StringUtils;
 import org.openmrs.Patient;

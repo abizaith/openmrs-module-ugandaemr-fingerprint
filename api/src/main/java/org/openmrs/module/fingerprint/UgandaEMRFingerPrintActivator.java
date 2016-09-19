@@ -11,7 +11,7 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
-package org.openmrs.module.ugandaemr.fingerprint;
+package org.openmrs.module.fingerprint;
 
 
 import org.apache.commons.logging.Log; 
