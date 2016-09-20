@@ -78,7 +78,7 @@
 		            })
 		        .success(function(data) {
 		           
-		            window.location=".../../coreapps/clinicianfacing/patient.page?patientId=" + data.uuid;
+		            window.location="coreapps/clinicianfacing/patient.page?patientId=" + data.uuid;
 		            
 				 
 		        })
