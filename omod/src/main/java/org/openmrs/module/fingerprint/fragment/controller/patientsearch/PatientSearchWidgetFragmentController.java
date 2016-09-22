@@ -76,8 +76,7 @@ public class PatientSearchWidgetFragmentController {
             @RequestParam(value = "datakey", required = false)String fingerPrintInBase64,
             @SpringBean("patientService") PatientService service,
             UiUtils ui){
-    	//String patientSearchPageUrl = "http://localhost:8080/openmrs/coreapps/findpatient/findPatient.page?app=patients.findPatientByFingerprint";
-    	String fingerPrintPersonAttributeTypeUUID = "0fe8824e-f9f8-42fa-a919-4d2dcd00a5da";
+    	//String fingerPrintPersonAttributeTypeUUID = "0fe8824e-f9f8-42fa-a919-4d2dcd00a5da";
     	Patient searchedPatient = new Patient();
     	
     	
@@ -98,9 +97,12 @@ public class PatientSearchWidgetFragmentController {
         		
         		
         		for(Patient patientInstance : patients){
-        		//for(int index = lastIndex; index > -1; index--){
-        	    //		Patient patientInstance = patients.get(index);
-        			List<PersonAttribute> personAttributes = patientInstance.getActiveAttributes();
+        		/*int lastIndex = patients.size() - 1 ;
+        		for(int index = lastIndex; index > -1; index--){
+        			
+        			Patient patientInstance = patients.get(index)*/;
+        			searchedPatient = patientInstance;
+        			/*List<PersonAttribute> personAttributes = patientInstance.getActiveAttributes();
         			
         			for(PersonAttribute personAttribute: personAttributes){
         				System.out.println("Person Attribute: "+personAttribute.getValue());
@@ -118,7 +120,7 @@ public class PatientSearchWidgetFragmentController {
             				}
         				
         			}//end person attribute loop
-        
+        			 */        
         			if(uuid!="null"){
         				break;
         			}

@@ -10,7 +10,7 @@
                 "extensionPointId": "org.openmrs.referenceapplication.homepageLink",
                 "type": "link",
                 "label": "Find Patient by FingerPrint",
-                "url": "fingerprint/findpatient/findPatient.page?app=coreapps.findPatient",
+                "url": "fingerprint/findpatient/findPatient.page?app=fingerprint.findPatient",
                 "icon": "icon-search",
                 "requiredPrivilege": "App: fingerprint.findPatient"
             }
