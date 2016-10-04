@@ -62,6 +62,12 @@
 
         new PatientSearchWidget(widgetConfig);
     });
+    
+      function writeToHiddenFingerprintSearchTextbox(fingerPrintSample) {
+           
+            var fingerPrintTextbox=document.getElementById('fingerPrintSearchTextbox');
+            fingerPrintTextbox.value = fingerPrintSample;
+        }
 </script>
 <script type="text/javascript">
     jq = jQuery;
@@ -99,8 +105,10 @@
     <br>
 	<button id="testAjaxButton" onclick="searchFingerPrint()"></button>
     <p>Search functionality</p>
-	<applet code="org.openmrs.module.fingerprint.applet.PatientSearchApplet" archive="/openmrs/finger-print-applet.jar" width="650" height="300">
-            
-    </applet>
+    
+<applet width="600" height="300" archive="finger-print-applet.jar" code="org.openmrs.module.fingerprint.applet.PatientSearchApplet.class" codebase="/openmrs" name="fingerApplet">
+    <param value="16" name="patientId"></param>
+    <param value="false" name="codebase_lookup"></param>
+</applet>
 </div>
 <div id="patient-search-results"></div>
