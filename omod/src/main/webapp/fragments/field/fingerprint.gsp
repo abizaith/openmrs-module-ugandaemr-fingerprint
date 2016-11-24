@@ -19,5 +19,5 @@
 	    <param value="false" name="codebase_lookup"></param>
     </applet>
     <span class="field-error"></span>
-    <textarea rows="4" cols="50" id="fingerPrintTextbox" style="display:none;"></textarea>
+    <textarea rows="4" cols="50" id="fingerPrintTextbox" name="fingerPrintTextbox" style="display:none;"></textarea>
 </p>

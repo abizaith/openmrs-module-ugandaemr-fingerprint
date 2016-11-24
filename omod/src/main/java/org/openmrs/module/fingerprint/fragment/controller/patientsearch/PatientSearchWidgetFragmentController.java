@@ -2,9 +2,7 @@ package org.openmrs.module.fingerprint.fragment.controller.patientsearch;
 
 import org.apache.commons.lang.StringUtils;
 import org.openmrs.Patient;
-import org.openmrs.Person;
 import org.openmrs.PersonAttribute;
-import org.openmrs.PersonAttributeType;
 import org.openmrs.api.AdministrationService;
 import org.openmrs.api.PatientService;
 import org.openmrs.api.context.Context;
@@ -17,12 +15,26 @@ import org.openmrs.ui.framework.UiUtils;
 import org.openmrs.ui.framework.annotation.FragmentParam;
 import org.openmrs.ui.framework.annotation.SpringBean;
 import org.openmrs.ui.framework.fragment.FragmentModel;
-import org.openmrs.ui.framework.fragment.action.FragmentActionResult;
-import org.openmrs.ui.framework.fragment.action.SuccessResult;
-import org.openmrs.util.OpenmrsConstants;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
+import org.openmrs.util.OpenmrsConstants;
+import java.util.Base64;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.digitalpersona.onetouch.DPFPDataPurpose;
+import com.digitalpersona.onetouch.DPFPFeatureSet;
+import com.digitalpersona.onetouch.DPFPGlobal;
+import com.digitalpersona.onetouch.DPFPSample;
+import com.digitalpersona.onetouch.DPFPTemplate;
+import com.digitalpersona.onetouch._impl.DPFPSampleFactoryImpl;
+import com.digitalpersona.onetouch._impl.DPFPTemplateFactoryImpl;
+import com.digitalpersona.onetouch.processing.DPFPFeatureExtraction;
+import com.digitalpersona.onetouch.processing.DPFPImageQualityException;
+import com.digitalpersona.onetouch.verification.DPFPVerification;
+import com.digitalpersona.onetouch.verification.DPFPVerificationResult;
+
+import java.io.ByteArrayInputStream;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
@@ -35,6 +47,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class PatientSearchWidgetFragmentController {
 
+	
+	private DPFPTemplate template;
+	
+	
     public void controller(FragmentModel model, UiSessionContext sessionContext,
                            HttpServletRequest request,
                            @SpringBean("adminService") AdministrationService administrationService,
@@ -73,6 +89,161 @@ public class PatientSearchWidgetFragmentController {
     }
 
     public SimpleObject searchForPatientByFingerPrint(
+            @RequestParam(value = "patientIdentifierId", required = false)String fingerPrintInBase64,
+            @SpringBean("patientService") PatientService service,
+            UiUtils ui){
+    	String fingerPrintPersonAttributeTypeUUID = "a41339f9-5014-45f4-91d6-bab84c6c62f1";
+    	Patient searchedPatient = new Patient();
+    	
+    	String fingerPrintSampleInBase64 = fingerPrintInBase64;
+    	String uuid ="null";
+        System.out.println("Server reached");
+        try{ 
+       
+    	
+    		
+    		Context.openSession();
+            Context.authenticate("admin", "Admin123");
+        	//search patient attribute: leftIndexFingerPrint
+        	List<Patient> patients = Context.getPatientService().getAllPatients();
+    		
+        	
+        	if(fingerPrintSampleInBase64!= null){
+        		
+        		
+        		for(Patient patientInstance : patients){
+        		/*int lastIndex = patients.size() - 1 ;
+        		for(int index = lastIndex; index > -1; index--){
+        			
+        			Patient patientInstance = patients.get(index)*/;
+        			searchedPatient = patientInstance;
+        			
+        			List<PersonAttribute> personAttributes = patientInstance.getActiveAttributes();
+        			
+        			for(PersonAttribute personAttribute: personAttributes){
+        				
+        					if(personAttribute.getAttributeType().getUuid().equalsIgnoreCase(fingerPrintPersonAttributeTypeUUID)){
+            					System.out.println("Person attributeType passed...");
+            					//test if the base64 generated matches our stored base64 text
+            					if(personAttribute.getValue() != null ){
+            						System.out.println("....1...");
+            						this.generateDPFPTemplate(personAttribute.getValue());
+            						System.out.println("....2...");
+            						if(this.matchFound(this.generateDPFPSample(fingerPrintSampleInBase64))){
+            							System.out.println("....3...");
+            							//System.out.println("Patient UUID: "+patientInstance.getUuid());
+            							System.out.println("Fingerprint match successfully carried out.............................................");
+                						uuid = patientInstance.getUuid();
+                						searchedPatient = patientInstance;
+                						break;
+            						}
+            						
+            					}
+            				}
+        				
+        			}//end person attribute loop
+        			        
+        			if(uuid != "null"){
+        				break;
+        			}
+        		}//end patient loop
+        	}
+    	}catch(Exception e){
+    		System.out.println(".......exception..................................................................");
+    		e.getStackTrace();
+    	}
+    		finally{
+    	
+    		Context.closeSession();
+    	}
+    	
+    	String pageName = "patient.page?patientId="+uuid;
+        ui.pageLink("coreapps", pageName);
+    	String [] properties = {"uuid"};
+    	SimpleObject simplePatientObject = SimpleObject.fromObject(searchedPatient, ui, properties);
+    	
+    	
+    	return simplePatientObject;
+    }
+    
+    private boolean matchFound(DPFPSample sample){
+    	DPFPVerification verifier = DPFPGlobal.getVerificationFactory().createVerification();
+    	// Process the sample and create a feature set for the enrollment purpose.
+    			DPFPFeatureSet features = extractFeatures(sample, DPFPDataPurpose.DATA_PURPOSE_VERIFICATION);
+
+    			// Check quality of the sample and start verification if it's good
+    			if (features != null)
+    			{
+    				// Compare the feature set with our template
+    				DPFPVerificationResult result = verifier.verify(features, getTemplate());
+    				
+    				if (result.isVerified())
+    					return true;
+    				else
+    					return false;
+    			}
+				return false;
+    	
+    	
+    }
+    protected DPFPFeatureSet extractFeatures(DPFPSample sample, DPFPDataPurpose purpose)
+	{
+		DPFPFeatureExtraction extractor = DPFPGlobal.getFeatureExtractionFactory().createFeatureExtraction();
+		try {
+			return extractor.createFeatureSet(sample, purpose);
+		} catch (DPFPImageQualityException e) {
+			return null;
+		}
+	}
+
+    private DPFPSample generateDPFPSample(String receivedBase64String){
+    	try{
+
+	    	 byte []  receivedBytes=  Base64.getDecoder().decode(receivedBase64String); 
+	    	 System.out.println("....byte[] conversion...");
+	    	 
+	    	 DPFPSampleFactoryImpl sampleFactoryImpInstance = new DPFPSampleFactoryImpl();
+	         DPFPSample sampleInstance = sampleFactoryImpInstance.createSample(receivedBytes);
+	        
+	         System.out.println("....Sample generation ..done.....");
+	    	return sampleInstance;
+		}catch(Exception e){
+			System.out.println("....Sample generation. failed.....: "+e.getMessage());
+			return null;	
+		}
+		
+    	//DPFPSample sampleInstance = new DPFPSample();
+    }
+    private void generateDPFPTemplate(String storedBase64String){
+    	try{
+	    	/*byte[] templateInBase64Array = Base64.getDecoder().decode(storedBase64String);
+	    	ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(templateInBase64Array);
+	    	ObjectInputStream objectInputStreamInstance = new ObjectInputStream(byteArrayInputStream);
+	    	DPFPTemplate templateInstance = (DPFPTemplate)objectInputStreamInstance.readObject();
+	    	this.setTemplate(templateInstance);*/
+	    	
+	    	byte[] templateInBase64Array = Base64.getDecoder().decode(storedBase64String);
+	    	DPFPTemplateFactoryImpl templateFactory = new DPFPTemplateFactoryImpl();
+	    	DPFPTemplate templateInstance = templateFactory.createTemplate(templateInBase64Array);
+	         System.out.println("....Template generation ..done.....");
+
+	    	this.setTemplate(templateInstance);
+    	}catch(Exception e){
+			System.out.println("....Template generation. failed.....: "+e.getMessage());
+
+    	}
+    	
+    }
+	public DPFPTemplate getTemplate() {
+		return template;
+	}
+
+	public void setTemplate(DPFPTemplate template) {
+		this.template = template;
+	}
+   
+   
+    public SimpleObject searchForPatientByFingerPrintBak(
             @RequestParam(value = "datakey", required = false)String fingerPrintInBase64,
             @SpringBean("patientService") PatientService service,
             UiUtils ui){
@@ -143,5 +314,4 @@ public class PatientSearchWidgetFragmentController {
     	
     	return simplePatientObject;
     }
-   
 }

@@ -95,7 +95,29 @@
             <groupId>org.openmrs.module</groupId>
             <artifactId>emrapi-api</artifactId>
         </dependency>
-
+        
+        <!-- FingerPrint Device -->
+			<dependency>
+				<groupId>org.openmrs.module.fingerprint</groupId>
+				<artifactId>DigitalPersonaEnrollment</artifactId>
+				
+			</dependency>
+			<dependency>
+				<groupId>org.openmrs.module.fingerprint</groupId>
+				<artifactId>DigitalPersonaOtapi</artifactId>
+				
+			</dependency>
+			<dependency>
+				<groupId>org.openmrs.module.fingerprint</groupId>
+				<artifactId>DigitalPersonaVerification</artifactId>
+				
+			</dependency>
+			<dependency>
+				<groupId>org.openmrs.module.fingerprint</groupId>
+				<artifactId>DigitalPersonaOtJni</artifactId>
+				
+			</dependency>
+			<!--End FingerPrint Device -->
 	</dependencies>
 
 	<build>

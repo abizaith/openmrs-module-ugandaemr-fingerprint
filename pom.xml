@@ -55,7 +55,8 @@
 		<metadatamappingVersion>1.0.2</metadatamappingVersion>
 		<metadatasharingVersion>1.2</metadatasharingVersion>
 		<serializationxstreamVersion>0.2.9</serializationxstreamVersion>
-		<uiframeworkVersion>3.6</uiframeworkVersion>
+		<uiframeworkVersion>3.8</uiframeworkVersion>
+		<digitalPersonaVersion>4500</digitalPersonaVersion>
 	</properties>
 
 	<dependencyManagement>
@@ -156,6 +157,29 @@
 				<type>jar</type>
 				<scope>provided</scope>
 			</dependency>
+			
+			<!-- FingerPrint Device -->
+			<dependency>
+				<groupId>org.openmrs.module.fingerprint</groupId>
+				<artifactId>DigitalPersonaEnrollment</artifactId>
+				<version>${digitalPersonaVersion}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.openmrs.module.fingerprint</groupId>
+				<artifactId>DigitalPersonaOtapi</artifactId>
+				<version>${digitalPersonaVersion}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.openmrs.module.fingerprint</groupId>
+				<artifactId>DigitalPersonaVerification</artifactId>
+				<version>${digitalPersonaVersion}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.openmrs.module.fingerprint</groupId>
+				<artifactId>DigitalPersonaOtJni</artifactId>
+				<version>${digitalPersonaVersion}</version>
+			</dependency>
+			<!--End FingerPrint Device -->
 		</dependencies>
 	</dependencyManagement>
 

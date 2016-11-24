@@ -63,39 +63,38 @@
         new PatientSearchWidget(widgetConfig);
     });
     
-      function writeToHiddenFingerprintSearchTextbox(fingerPrintSample) {
+      
+</script>
+<script type="text/javascript">
+             
+	function writeToHiddenFingerprintSearchTextbox(fingerPrintSample) {
            
             var fingerPrintTextbox=document.getElementById('fingerPrintSearchTextbox');
             fingerPrintTextbox.value = fingerPrintSample;
+            
+            alert("Fingerprint sample received...");
+            
+            
+            jq = jQuery;
+		    jq(function() {
+		    jq('#testAjaxButton').click(function() {
+		                var fingerprintSample = jq("#fingerPrintSearchTextbox").val();
+		                alert("Ajax started...");
+				        jq.post('${ ui.actionLink("searchForPatientByFingerPrint") }', { returnFormat: 'json', patientIdentifierId: fingerprintSample }, function(data) {
+							window.location="../../coreapps/clinicianfacing/patient.page?patientId=" + data.uuid;
+						}, 'json')
+						.error(function(xhr) {
+							fragmentActionError(xhr, "Failed to find match");
+						})
+				    });
+				});
+				
+			jq('#testAjaxButton').trigger("click");
         }
+        
+        	
 </script>
-<script type="text/javascript">
-    jq = jQuery;
-    
-    
-    
-    jq(function() {
-    jq('#testAjaxButton').click(function() {
-		        jq.getJSON('${ ui.actionLink("searchForPatientByFingerPrint") }',
-		            {
-		              'datakey': 'searchForPatientByFingerPrint'
-		              
-		             
-		            })
-		        .success(function(data) {
-		           
-		            window.location="../../coreapps/clinicianfacing/patient.page?patientId=" + data.uuid;
-		          
-		            
-				 
-		        })
-		        .error(function(xhr, status, err) {
-		            alert('AJAX error ' + err);
-		        })
-		    });
-		});
-	
-</script>
+
 <form method="get" id="patient-search-form" onsubmit="return false">
     <input type="text" id="patient-search" placeholder="${ ui.message("coreapps.findPatient.search.placeholder") }" autocomplete="off" <% if (doInitialSearch) { %>value="${doInitialSearch}"<% } %>/>
     <i id="patient-search-clear-button" class="small icon-remove-sign"></i>
@@ -103,7 +102,8 @@
 </form>
 <div id="patient-search-finger-print" style="display:none;">
     <br>
-	<button id="testAjaxButton" onclick="searchFingerPrint()"></button>
+     <textarea rows="4" cols="50" id="fingerPrintSearchTextbox" name="fingerPrintSearchTextbox" style="display:none;"></textarea>
+     <Button id="testAjaxButton" style="display:none;"></Button>
     <p>Search functionality</p>
     
 <applet width="600" height="300" archive="finger-print-applet.jar" code="org.openmrs.module.fingerprint.applet.PatientSearchApplet.class" codebase="/openmrs" name="fingerApplet">
