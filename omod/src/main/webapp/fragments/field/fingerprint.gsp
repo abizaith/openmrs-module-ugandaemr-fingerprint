@@ -12,7 +12,7 @@
 <p>
     <label>
         ${config.label}
-        <span>(${ ui.message("emr.formValidation.messages.requiredField.label") })</span>
+        
     </label>
    <applet width="600" height="300" archive="finger-print-applet.jar" code="org.openmrs.module.fingerprint.applet.PatientEnrollmentApplet.class" codebase="/openmrs" name="fingerApplet">
 	    <param value="16" name="patientId"></param>

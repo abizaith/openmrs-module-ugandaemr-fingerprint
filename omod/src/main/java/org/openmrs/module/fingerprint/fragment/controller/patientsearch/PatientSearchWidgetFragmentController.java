@@ -32,9 +32,6 @@ import com.digitalpersona.onetouch.processing.DPFPImageQualityException;
 import com.digitalpersona.onetouch.verification.DPFPVerification;
 import com.digitalpersona.onetouch.verification.DPFPVerificationResult;
 
-import java.io.ByteArrayInputStream;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
@@ -112,10 +109,7 @@ public class PatientSearchWidgetFragmentController {
         		
         		
         		for(Patient patientInstance : patients){
-        		/*int lastIndex = patients.size() - 1 ;
-        		for(int index = lastIndex; index > -1; index--){
-        			
-        			Patient patientInstance = patients.get(index)*/;
+        		
         			searchedPatient = patientInstance;
         			
         			List<PersonAttribute> personAttributes = patientInstance.getActiveAttributes();
@@ -133,9 +127,15 @@ public class PatientSearchWidgetFragmentController {
             							System.out.println("....3...");
             							//System.out.println("Patient UUID: "+patientInstance.getUuid());
             							System.out.println("Fingerprint match successfully carried out.............................................");
-                						uuid = patientInstance.getUuid();
+            							System.out.println("Patient UUID: "+patientInstance.getUuid());
+            							System.out.println("Second Person name: "+patientInstance.getPerson().getPersonName().getUuid());
+            							
+                						uuid = patientInstance.getPerson().getPersonName().getUuid();
+                						System.out.println("Person UUID: "+uuid);
                 						searchedPatient = patientInstance;
                 						break;
+            						}else{
+            							searchedPatient = null;
             						}
             						
             					}

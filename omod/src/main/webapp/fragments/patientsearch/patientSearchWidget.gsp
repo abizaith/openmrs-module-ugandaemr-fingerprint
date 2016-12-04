@@ -79,9 +79,14 @@
 		    jq(function() {
 		    jq('#testAjaxButton').click(function() {
 		                var fingerprintSample = jq("#fingerPrintSearchTextbox").val();
-		                alert("Ajax started...");
+		                
 				        jq.post('${ ui.actionLink("searchForPatientByFingerPrint") }', { returnFormat: 'json', patientIdentifierId: fingerprintSample }, function(data) {
-							window.location="../../coreapps/clinicianfacing/patient.page?patientId=" + data.uuid;
+							if(data != null){
+								window.location="../../coreapps/clinicianfacing/patient.page?patientId=" + data.uuid;
+							}else{
+								alert('Patient not found by fingerprint');
+							}
+							
 						}, 'json')
 						.error(function(xhr) {
 							fragmentActionError(xhr, "Failed to find match");
