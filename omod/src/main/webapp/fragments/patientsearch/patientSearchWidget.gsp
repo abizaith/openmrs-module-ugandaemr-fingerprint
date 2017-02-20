@@ -48,8 +48,8 @@
                 previous: '${ ui.message("coreapps.search.previous") }',
                 next: '${ ui.message("coreapps.search.next") }',
                 last: '${ ui.message("coreapps.search.last") }',
-                noMatchesFound: '${ ui.message("coreapps.search.noMatchesFound") }',
-                noData: '${ ui.message("coreapps.search.noData") }',
+                noMatchesFound: 'No matching Patient found in this hospital. Click to start remote search',
+                noData: 'Patient file not found in this hospital. Click to start remote search',
                 recent: '${ ui.message("coreapps.search.label.recent") }',
                 searchError: '${ ui.message("coreapps.search.error") }',
                 identifierColHeader: '${ ui.message("coreapps.search.identifier") }',
@@ -66,6 +66,26 @@
       
 </script>
 <script type="text/javascript">
+             var myVar;
+			function myFunction() {
+			    document.getElementById("loader").className = "load";
+			    myVar = setTimeout(showPage, 5000);
+			}
+			 
+			function showPage() {
+			  document.getElementById("loader").style.display = "none";
+			  document.getElementById("myDiv").style.display = "block";
+			 
+			}
+	function remoteSearch(){
+		 $jq = jQuery;
+		$jq.post("http://197.157.19.230:5000/api/query",
+    		{query:"{encounter{id,uuid,facility}}"},
+
+     		function(response){
+    		console.log(response.data);
+    	});
+	}
              
 	function writeToHiddenFingerprintSearchTextbox(fingerPrintSample) {
            
@@ -82,7 +102,9 @@
 		                
 				        jq.post('${ ui.actionLink("searchForPatientByFingerPrint") }', { returnFormat: 'json', patientIdentifierId: fingerprintSample }, function(data) {
 							if(data != null){
+							    //alert('..Mukyala Nkuggwa...');
 								window.location="../../coreapps/clinicianfacing/patient.page?patientId=" + data.uuid;
+								
 							}else{
 								alert('Patient not found by fingerprint');
 							}
@@ -95,9 +117,14 @@
 				});
 				
 			jq('#testAjaxButton').trigger("click");
+			
+			
         }
         
         	
+      
+
+       
 </script>
 
 <form method="get" id="patient-search-form" onsubmit="return false">
@@ -117,3 +144,12 @@
 </applet>
 </div>
 <div id="patient-search-results"></div>
+
+<div id="remote-search">
+    <Button id="remoteSearchButton" onClick="myFunction()">click here to start remote search</Button>
+	<div id="loader"></div>
+    <div style="display:none;" id="myDiv" class="animate-bottom">
+	    <h2>Server Response!</h2>
+	    <p>patient not found</p>
+    </div>
+</div>
