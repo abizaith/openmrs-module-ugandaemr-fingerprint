@@ -1,5 +1,6 @@
 package org.openmrs.module.fingerprint.fragment.controller.patientsearch;
 
+import core.FingerPrintConstant;
 import org.apache.commons.lang.StringUtils;
 import org.openmrs.Patient;
 import org.openmrs.PersonAttribute;
@@ -44,10 +45,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class PatientSearchWidgetFragmentController {
 
-	
+
 	private DPFPTemplate template;
-	
-	
+
+
     public void controller(FragmentModel model, UiSessionContext sessionContext,
                            HttpServletRequest request,
                            @SpringBean("adminService") AdministrationService administrationService,
@@ -89,33 +90,31 @@ public class PatientSearchWidgetFragmentController {
             @RequestParam(value = "patientIdentifierId", required = false)String fingerPrintInBase64,
             @SpringBean("patientService") PatientService service,
             UiUtils ui){
-    	String fingerPrintPersonAttributeTypeUUID = "a41339f9-5014-45f4-91d6-bab84c6c62f1";
+    	String fingerPrintPersonAttributeTypeUUID = FingerPrintConstant.FINGER_PRINT_ATTRIBUTE_UUID;
     	Patient searchedPatient = new Patient();
-    	
+
     	String fingerPrintSampleInBase64 = fingerPrintInBase64;
     	String uuid ="null";
         System.out.println("Server reached");
-        try{ 
-       
-    	
-    		
+        try{
+
     		Context.openSession();
             Context.authenticate("admin", "Admin123");
         	//search patient attribute: leftIndexFingerPrint
         	List<Patient> patients = Context.getPatientService().getAllPatients();
-    		
-        	
+
+
         	if(fingerPrintSampleInBase64!= null){
-        		
-        		
+
+
         		for(Patient patientInstance : patients){
-        		
+
         			searchedPatient = patientInstance;
-        			
+
         			List<PersonAttribute> personAttributes = patientInstance.getActiveAttributes();
-        			
+
         			for(PersonAttribute personAttribute: personAttributes){
-        				
+
         					if(personAttribute.getAttributeType().getUuid().equalsIgnoreCase(fingerPrintPersonAttributeTypeUUID)){
             					System.out.println("Person attributeType passed...");
             					//test if the base64 generated matches our stored base64 text
@@ -129,7 +128,7 @@ public class PatientSearchWidgetFragmentController {
             							System.out.println("Fingerprint match successfully carried out.............................................");
             							System.out.println("Patient UUID: "+patientInstance.getUuid());
             							System.out.println("Second Person name: "+patientInstance.getPerson().getPersonName().getUuid());
-            							
+
                 						uuid = patientInstance.getPerson().getPersonName().getUuid();
                 						System.out.println("Person UUID: "+uuid);
                 						searchedPatient = patientInstance;
@@ -137,12 +136,12 @@ public class PatientSearchWidgetFragmentController {
             						}else{
             							searchedPatient = null;
             						}
-            						
+
             					}
             				}
-        				
+
         			}//end person attribute loop
-        			        
+
         			if(uuid != "null"){
         				break;
         			}
@@ -153,19 +152,19 @@ public class PatientSearchWidgetFragmentController {
     		e.getStackTrace();
     	}
     		finally{
-    	
+
     		Context.closeSession();
     	}
-    	
+
     	String pageName = "patient.page?patientId="+uuid;
         ui.pageLink("coreapps", pageName);
     	String [] properties = {"uuid"};
     	SimpleObject simplePatientObject = SimpleObject.fromObject(searchedPatient, ui, properties);
-    	
-    	
+
+
     	return simplePatientObject;
     }
-    
+
     private boolean matchFound(DPFPSample sample){
     	DPFPVerification verifier = DPFPGlobal.getVerificationFactory().createVerification();
     	// Process the sample and create a feature set for the enrollment purpose.
@@ -176,15 +175,15 @@ public class PatientSearchWidgetFragmentController {
     			{
     				// Compare the feature set with our template
     				DPFPVerificationResult result = verifier.verify(features, getTemplate());
-    				
+
     				if (result.isVerified())
     					return true;
     				else
     					return false;
     			}
 				return false;
-    	
-    	
+
+
     }
     protected DPFPFeatureSet extractFeatures(DPFPSample sample, DPFPDataPurpose purpose)
 	{
@@ -199,19 +198,19 @@ public class PatientSearchWidgetFragmentController {
     private DPFPSample generateDPFPSample(String receivedBase64String){
     	try{
 
-	    	 byte []  receivedBytes=  Base64.getDecoder().decode(receivedBase64String); 
+	    	 byte []  receivedBytes=  Base64.getDecoder().decode(receivedBase64String);
 	    	 System.out.println("....byte[] conversion...");
-	    	 
+
 	    	 DPFPSampleFactoryImpl sampleFactoryImpInstance = new DPFPSampleFactoryImpl();
 	         DPFPSample sampleInstance = sampleFactoryImpInstance.createSample(receivedBytes);
-	        
+
 	         System.out.println("....Sample generation ..done.....");
 	    	return sampleInstance;
 		}catch(Exception e){
 			System.out.println("....Sample generation. failed.....: "+e.getMessage());
-			return null;	
+			return null;
 		}
-		
+
     	//DPFPSample sampleInstance = new DPFPSample();
     }
     private void generateDPFPTemplate(String storedBase64String){
@@ -221,7 +220,7 @@ public class PatientSearchWidgetFragmentController {
 	    	ObjectInputStream objectInputStreamInstance = new ObjectInputStream(byteArrayInputStream);
 	    	DPFPTemplate templateInstance = (DPFPTemplate)objectInputStreamInstance.readObject();
 	    	this.setTemplate(templateInstance);*/
-	    	
+
 	    	byte[] templateInBase64Array = Base64.getDecoder().decode(storedBase64String);
 	    	DPFPTemplateFactoryImpl templateFactory = new DPFPTemplateFactoryImpl();
 	    	DPFPTemplate templateInstance = templateFactory.createTemplate(templateInBase64Array);
@@ -232,7 +231,7 @@ public class PatientSearchWidgetFragmentController {
 			System.out.println("....Template generation. failed.....: "+e.getMessage());
 
     	}
-    	
+
     }
 	public DPFPTemplate getTemplate() {
 		return template;
@@ -241,32 +240,32 @@ public class PatientSearchWidgetFragmentController {
 	public void setTemplate(DPFPTemplate template) {
 		this.template = template;
 	}
-   
-   
+
+
     public SimpleObject searchForPatientByFingerPrintBak(
             @RequestParam(value = "datakey", required = false)String fingerPrintInBase64,
             @SpringBean("patientService") PatientService service,
             UiUtils ui){
     	//String fingerPrintPersonAttributeTypeUUID = "0fe8824e-f9f8-42fa-a919-4d2dcd00a5da";
     	Patient searchedPatient = new Patient();
-    	
-    	
+
+
     	String uuid ="null";
     	 System.out.println("Server reached");
-    	 
-    	
+
+
     	try{
     		Context.openSession();
             Context.authenticate("admin", "Admin123");
-            
+
 
         	//search patient attribute: leftIndexFingerPrint
         	List<Patient> patients = Context.getPatientService().getAllPatients();
     		System.out.println("Number of Patients: "+patients.size());
-        	
+
         	if(fingerPrintInBase64!= null){
-        		
-        		
+
+
         		for(Patient patientInstance : patients){
         		/*int lastIndex = patients.size() - 1 ;
         		for(int index = lastIndex; index > -1; index--){
@@ -291,7 +290,7 @@ public class PatientSearchWidgetFragmentController {
             				}
         				
         			}//end person attribute loop
-        			 */        
+        			 */
         			if(uuid!="null"){
         				break;
         			}
@@ -302,16 +301,16 @@ public class PatientSearchWidgetFragmentController {
     		e.getStackTrace();
     	}
     		finally{
-    	
+
     		Context.closeSession();
     	}
-    	
+
     	String pageName = "patient.page?patientId="+uuid;
         ui.pageLink("coreapps", pageName);
     	String [] properties = {"uuid"};
     	SimpleObject simplePatientObject = SimpleObject.fromObject(searchedPatient, ui, properties);
-    	
-    	
+
+
     	return simplePatientObject;
     }
 }

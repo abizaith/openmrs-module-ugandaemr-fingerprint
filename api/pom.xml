@@ -27,7 +27,12 @@
 		
 
 		<!-- Begin OpenMRS core -->
-		
+
+		<dependency>
+			<groupId>org.openmrs.module</groupId>
+			<artifactId>metadatadeploy-api</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>org.openmrs.api</groupId>
 			<artifactId>openmrs-api</artifactId>
@@ -64,26 +69,22 @@
 		<!-- End OpenMRS core -->
 		
 		<!-- FingerPrint Device -->
-			<dependency>
-				<groupId>org.openmrs.module.fingerprint</groupId>
-				<artifactId>DigitalPersonaEnrollment</artifactId>
-				
-			</dependency>
-			<dependency>
-				<groupId>org.openmrs.module.fingerprint</groupId>
-				<artifactId>DigitalPersonaOtapi</artifactId>
-				
-			</dependency>
-			<dependency>
-				<groupId>org.openmrs.module.fingerprint</groupId>
-				<artifactId>DigitalPersonaVerification</artifactId>
-				
-			</dependency>
-			<dependency>
-				<groupId>org.openmrs.module.fingerprint</groupId>
-				<artifactId>DigitalPersonaOtJni</artifactId>
-				
-			</dependency>
+		<dependency>
+			<groupId>com.digitalpersona.fingerprint</groupId>
+			<artifactId>fp-enrollment</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.digitalpersona.fingerprint</groupId>
+			<artifactId>fp-verification</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.digitalpersona.onetouch</groupId>
+			<artifactId>ot-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.digitalpersona.onetouch</groupId>
+			<artifactId>ot-jni</artifactId>
+		</dependency>
 			<!--End FingerPrint Device -->
 	</dependencies>
 	

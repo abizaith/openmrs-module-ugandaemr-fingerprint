@@ -97,27 +97,28 @@
         </dependency>
         
         <!-- FingerPrint Device -->
-			<dependency>
-				<groupId>org.openmrs.module.fingerprint</groupId>
-				<artifactId>DigitalPersonaEnrollment</artifactId>
-				
-			</dependency>
-			<dependency>
-				<groupId>org.openmrs.module.fingerprint</groupId>
-				<artifactId>DigitalPersonaOtapi</artifactId>
-				
-			</dependency>
-			<dependency>
-				<groupId>org.openmrs.module.fingerprint</groupId>
-				<artifactId>DigitalPersonaVerification</artifactId>
-				
-			</dependency>
-			<dependency>
-				<groupId>org.openmrs.module.fingerprint</groupId>
-				<artifactId>DigitalPersonaOtJni</artifactId>
-				
-			</dependency>
-			<!--End FingerPrint Device -->
+		<dependency>
+			<groupId>com.digitalpersona.fingerprint</groupId>
+			<artifactId>fp-enrollment</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.digitalpersona.fingerprint</groupId>
+			<artifactId>fp-verification</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.digitalpersona.onetouch</groupId>
+			<artifactId>ot-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.digitalpersona.onetouch</groupId>
+			<artifactId>ot-jni</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.dbunit</groupId>
+			<artifactId>dbunit</artifactId>
+			<version>2.4.7</version>
+		</dependency>
+		<!--End FingerPrint Device -->
 	</dependencies>
 
 	<build>
