@@ -3,11 +3,11 @@
     def breadcrumbOverride = config.breadcrumbOverride ?: ""
 
     ui.includeCss("uicommons", "datatables/dataTables_jui.css")
-    ui.includeCss("fingerprint", "patientsearch/patientSearchWidget.css")
-    ui.includeCss("fingerprint", "patientsearch/fontcustom_findpatient_fingerprint.css")
+    ui.includeCss("ugandaemrfingerprint", "patientsearch/patientSearchWidget.css")
+    ui.includeCss("ugandaemrfingerprint", "patientsearch/fontcustom_findpatient_fingerprint.css")
     ui.includeJavascript("uicommons", "datatables/jquery.dataTables.min.js")
-    ui.includeJavascript("fingerprint", "patientsearch/patientSearchWidget.js")
-    ui.includeJavascript("fingerprint", "patientsearch/patientFingerPrintSearch.js")
+    ui.includeJavascript("ugandaemrfingerprint", "patientsearch/patientSearchWidget.js")
+    ui.includeJavascript("ugandaemrfingerprint", "patientsearch/patientFingerPrintSearch.js")
     ui.includeJavascript("uicommons", "moment-with-locales.min.js")
 
 %>
@@ -86,15 +86,6 @@
         document.getElementById("myDiv").style.display = "block";
 
     }
-    function () {
-        $jq = jQuery;
-        $jq.post("http://197.157.19.230:5000/api/query",
-                {query: "{encounter{id,uuid,facility}}"},
-
-                function (response) {
-                    console.log(response.data);
-                });
-    }
 
     function writeToHiddenFingerprintSearchTextbox(fingerPrintSample) {
 
@@ -118,7 +109,7 @@
                         window.location = "../../coreapps/clinicianfacing/patient.page?patientId=" + data.uuid;
 
                     } else {
-                        alert('Patient not found by fingerprint');
+                        alert('Patient not found by ugandaemrfingerprint');
                     }
 
                 }, 'json')
@@ -144,6 +135,7 @@
            autocomplete="off" <% if (doInitialSearch) { %>value="${doInitialSearch}" <% } %>/>
     <i id="patient-search-clear-button" class="small icon-remove-sign"></i>
     <i id="patient-search-finger-print-button" class="small icon-fingerprint"></i>
+    <a href="${ui.urlBind("/" + contextPath +"ugandaemrfingerprint/patientInOtherFacility.page")}"><i title="Search Patient Online" class="small icon-globe">Search For Patient Online</i></a>
 </form>
 
 <div id="patient-search-finger-print" style="display:none;">
@@ -155,7 +147,7 @@
     <p>Search functionality</p>
 
     <applet width="600" height="300" archive="finger-print-applet.jar"
-            code="org.openmrs.module.fingerprint.applet.PatientSearchApplet.class" codebase="/openmrs"
+            code="org.openmrs.module.ugandaemrfingerprint.applet.PatientSearchApplet.class" codebase="/openmrs"
             name="fingerApplet">
         <param value="16" name="patientId"></param>
         <param value="false" name="codebase_lookup"></param>

@@ -1,16 +1,15 @@
-package core;
+package org.openmrs.module.ugandaemrfingerprint.core;
 
-import org.openmrs.Concept;
-import org.openmrs.Location;
+import org.openmrs.PersonAttributeType;
 import org.openmrs.module.metadatadeploy.descriptor.PersonAttributeTypeDescriptor;
 
-import static core.FingerPrintConstant.*;
-import static core.FingerPrintConstant.FINGER_PRINT_ATTRIBUTE_UUID;
+import static org.openmrs.module.ugandaemrfingerprint.core.FingerPrintConstant.*;
+import static org.openmrs.module.ugandaemrfingerprint.core.FingerPrintConstant.FINGER_PRINT_ATTRIBUTE_UUID;
 
 /**
- * Constants for all defined person attiribute types
+ * Constants for all defined person attribute types
  * <p/>
- * Created by ssmusoke on 09/01/2016.
+ * Created by Lubwama Samuel on 21/02/2016.
  */
 public class PersonAttributeTypes {
 
@@ -22,7 +21,7 @@ public class PersonAttributeTypes {
 
         @Override
         public Class<?> format() {
-            return Concept.class;
+            return PersonAttributeType.class;
         }
 
         @Override

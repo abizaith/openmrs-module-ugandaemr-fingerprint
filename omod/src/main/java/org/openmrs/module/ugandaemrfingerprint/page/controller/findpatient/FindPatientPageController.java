@@ -1,4 +1,4 @@
-package org.openmrs.module.fingerprint.page.controller.findpatient;
+package org.openmrs.module.ugandaemrfingerprint.page.controller.findpatient;
 
 import org.openmrs.module.appframework.domain.AppDescriptor;
 import org.openmrs.module.appui.UiSessionContext;

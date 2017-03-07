@@ -11,16 +11,16 @@
  * <p>
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
-package org.openmrs.module.fingerprint;
+package org.openmrs.module.ugandaemrfingerprint;
 
 
-import deploy.bundle.CommonMetadataBundle;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.Module;
 import org.openmrs.module.ModuleActivator;
 import org.openmrs.module.ModuleFactory;
+import org.openmrs.module.ugandaemrfingerprint.core.FingerPrintMetadataBundle;
 import org.openmrs.module.metadatadeploy.api.MetadataDeployService;
 
 /**
@@ -66,11 +66,11 @@ public class UgandaEMRFingerPrintActivator implements ModuleActivator {
         try {
             log.info("Installing metadata");
             log.info("Installing commonly used metadata");
-            deployService.installBundle(Context.getRegisteredComponents(CommonMetadataBundle.class).get(0));
+            deployService.installBundle(Context.getRegisteredComponents(FingerPrintMetadataBundle.class).get(0));
             log.info("Finished installing commonly used metadata");
 
         } catch (Exception e) {
-            Module mod = ModuleFactory.getModuleById("fingerprint");
+            Module mod = ModuleFactory.getModuleById("ugandaemrfingerprint");
             ModuleFactory.stopModule(mod);
             throw new RuntimeException("failed to install the common metadata ", e);
         }

@@ -21,12 +21,12 @@
 	${ ui.message(heading) }
 </h2>
 <% if (breadcrumbs) { %>
-${ ui.includeFragment("fingerprint", "patientsearch/patientSearchWidget",
+${ ui.includeFragment("ugandaemrfingerprint", "patientsearch/patientSearchWidget",
         [ afterSelectedUrl: afterSelectedUrl,
           showLastViewedPatients: showLastViewedPatients,
           breadcrumbOverride: breadcrumbs])}
 <% } else { %>
-${ ui.includeFragment("fingerprint", "patientsearch/patientSearchWidget",
+${ ui.includeFragment("ugandaemrfingerprint", "patientsearch/patientSearchWidget",
         [ afterSelectedUrl: afterSelectedUrl,
           showLastViewedPatients: showLastViewedPatients ])}
 <% } %>

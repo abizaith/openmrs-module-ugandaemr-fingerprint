@@ -44,32 +44,35 @@
 		<!-- Required Modules -->
 	<require_modules>
 																											
-		<require_module version="${appframeworkVersion}">
+		<require_module>
 			org.openmrs.module.appframework
 		</require_module>
 
-        <require_module version="${uiframeworkVersion}">
+        <require_module>
             org.openmrs.module.uiframework
         </require_module>
 
-        <require_module version="${emrapiVersion}">
+        <require_module>
             org.openmrs.module.emrapi
         </require_module>
 
-        <require_module version="${appuiVersion}">
+        <require_module>
             org.openmrs.module.appui
         </require_module>
 
-        <require_module version="${idgenVersion}">
+        <require_module>
             org.openmrs.module.idgen
         </require_module>
 
-        <require_module version="${webservicesRestVersion}">
+        <require_module>
             org.openmrs.module.webservices.rest
         </require_module>
 		
-        <require_module version="${coreappsVersion}">
+        <require_module>
 			org.openmrs.module.coreapps
+		</require_module>
+		<require_module>
+			org.openmrs.module.metadatadeploy
 		</require_module>
     </require_modules>
 	<!-- / Required Modules -->
