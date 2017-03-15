@@ -135,7 +135,6 @@
            autocomplete="off" <% if (doInitialSearch) { %>value="${doInitialSearch}" <% } %>/>
     <i id="patient-search-clear-button" class="small icon-remove-sign"></i>
     <i id="patient-search-finger-print-button" class="small icon-fingerprint"></i>
-    <a href="${ui.urlBind("/" + contextPath +"ugandaemrfingerprint/patientInOtherFacility.page")}"><i title="Search Patient Online" class="small icon-globe">Search For Patient Online</i></a>
 </form>
 
 <div id="patient-search-finger-print" style="display:none;">
