@@ -2,51 +2,51 @@
 
 <module configVersion="1.2">
 
-	<!-- Module Properties -->
-	<id>${project.parent.artifactId}</id>
-	<name>${project.parent.name}</name>
-	<version>${project.parent.version}</version>
-	<package>${project.parent.groupId}.${project.parent.artifactId}</package>
-	<author>METS</author>
-	<description>
-		${project.parent.description}
-	</description>
-	<updateURL>https://modules.openmrs.org/modules/download/${project.parent.artifactId}/update.rdf</updateURL>
-	<require_version>${openMRSVersion}</require_version>
-	<!-- / Module Properties -->
+    <!-- Module Properties -->
+    <id>${project.parent.artifactId}</id>
+    <name>${project.parent.name}</name>
+    <version>${project.parent.version}</version>
+    <package>${project.parent.groupId}.${project.parent.artifactId}</package>
+    <author>METS</author>
+    <description>
+        ${project.parent.description}
+    </description>
+    <updateURL>https://modules.openmrs.org/modules/download/${project.parent.artifactId}/update.rdf</updateURL>
+    <require_version>${openMRSVersion}</require_version>
+    <!-- / Module Properties -->
 
-	
-	<!-- Module Activator -->
-	<activator>${project.parent.groupId}.${project.parent.artifactId}.UgandaEMRFingerPrintActivator</activator>
-	
-	
-	<!-- Maps hibernate file's, if present -->
-	<mappingFiles>
-				
-	</mappingFiles>
 
-	<!-- Internationalization -->
-	<!-- All message codes should start with ${project.parent.artifactId}. -->
-	<messages>
-		<lang>en</lang>
-		<file>messages.properties</file>
-	</messages>
-	<messages>
-		<lang>fr</lang>
-		<file>messages_fr.properties</file>
-	</messages>
-	<messages>
-		<lang>es</lang>
-		<file>messages_es.properties</file>
-	</messages>
-	<!-- /Internationalization -->
-	
-		<!-- Required Modules -->
-	<require_modules>
-																											
-		<require_module>
-			org.openmrs.module.appframework
-		</require_module>
+    <!-- Module Activator -->
+    <activator>${project.parent.groupId}.${project.parent.artifactId}.UgandaEMRFingerPrintActivator</activator>
+
+
+    <!-- Maps hibernate file's, if present -->
+    <mappingFiles>
+
+    </mappingFiles>
+
+    <!-- Internationalization -->
+    <!-- All message codes should start with ${project.parent.artifactId}. -->
+    <messages>
+        <lang>en</lang>
+        <file>messages.properties</file>
+    </messages>
+    <messages>
+        <lang>fr</lang>
+        <file>messages_fr.properties</file>
+    </messages>
+    <messages>
+        <lang>es</lang>
+        <file>messages_es.properties</file>
+    </messages>
+    <!-- /Internationalization -->
+
+    <!-- Required Modules -->
+    <require_modules>
+
+        <require_module>
+            org.openmrs.module.appframework
+        </require_module>
 
         <require_module>
             org.openmrs.module.uiframework
@@ -67,23 +67,22 @@
         <require_module>
             org.openmrs.module.webservices.rest
         </require_module>
-		
-        <require_module>
-			org.openmrs.module.coreapps
-		</require_module>
-		<require_module>
-			org.openmrs.module.metadatadeploy
-		</require_module>
-    </require_modules>
-	<!-- / Required Modules -->
 
- 
+        <require_module>
+            org.openmrs.module.coreapps
+        </require_module>
+        <require_module>
+            org.openmrs.module.metadatadeploy
+        </require_module>
+    </require_modules>
+    <!-- / Required Modules -->
 
     <globalProperty>
         <property>coreapps.searchDelayShort</property>
         <defaultValue>300</defaultValue>
         <description>
-            Default time, in milliseconds, that the patient search waits for an additional keystroke before performed a search
+            Default time, in milliseconds, that the patient search waits for an additional keystroke before performed a
+            search
         </description>
     </globalProperty>
 
@@ -91,7 +90,8 @@
         <property>coreapps.searchDelayLong</property>
         <defaultValue>1000</defaultValue>
         <description>
-            Time, in milliseconds, that the patient search waits for an additional keystroke if only 1 or 2 characters have been entered
+            Time, in milliseconds, that the patient search waits for an additional keystroke if only 1 or 2 characters
+            have been entered
         </description>
     </globalProperty>
 
@@ -100,43 +100,41 @@
         <description>Able to end a visit</description>
     </privilege>
 
-	<privilege>
-		<name>Task: coreapps.createVisit</name>
-		<description>Able to create a visit</description>
-	</privilege>
+    <privilege>
+        <name>Task: coreapps.createVisit</name>
+        <description>Able to create a visit</description>
+    </privilege>
 
-	<privilege>
-		<name>Task: coreapps.createRetrospectiveVisit</name>
-		<description>Able to create a retrospective visit</description>
-	</privilege>
+    <privilege>
+        <name>Task: coreapps.createRetrospectiveVisit</name>
+        <description>Able to create a retrospective visit</description>
+    </privilege>
 
-	<privilege>
-		<name>Task: coreapps.mergeVisits</name>
-		<description>Able to merge visits</description>
-	</privilege>
+    <privilege>
+        <name>Task: coreapps.mergeVisits</name>
+        <description>Able to merge visits</description>
+    </privilege>
 
     <privilege>
         <name>Task: coreapps.deletePatient</name>
         <description>Able to delete a patient</description>
     </privilege>
 
-	<privilege>
-		<name>App: coreapps.findPatient</name>
-		<description>Able to access the find patient app</description>
-	</privilege>
+    <privilege>
+        <name>App: coreapps.findPatient</name>
+        <description>Able to access the find patient app</description>
+    </privilege>
 
     <privilege>
         <name>App: coreapps.patientDashboard</name>
         <description>Able to access the patient dashboard</description>
     </privilege>
 
-    
 
     <privilege>
         <name>App: coreapps.findPatient</name>
         <description>Able to access the find patient app</description>
     </privilege>
 
-	
 </module>
 
