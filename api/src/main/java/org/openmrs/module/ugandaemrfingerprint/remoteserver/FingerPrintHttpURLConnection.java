@@ -71,7 +71,7 @@ public class FingerPrintHttpURLConnection {
             con.setUseCaches(false);
             con.setDefaultUseCaches(false);
 
-            // tell the web server what we are sending
+            // tell the servlets server what we are sending
             con.setRequestProperty("Content-Type", contentType);
             con.setRequestProperty("User-Agent", USER_AGENT);
             con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");

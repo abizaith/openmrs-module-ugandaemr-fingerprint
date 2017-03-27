@@ -79,7 +79,5 @@ public class PatientInOtherFacilityPageController {
         pageModel.put("connectionStatus", connectionStatus);
         pageModel.put("searched", searched);
         pageModel.put("patientNotFound", patientNotFound);
-
-
     }
 }
