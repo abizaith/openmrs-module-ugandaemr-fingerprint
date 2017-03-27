@@ -1,0 +1,11 @@
+[
+  {
+    "id": "ugandaemrfingerprint.patientDashboard.patientActions.addPatientFingerPrint",
+    "extensionPointId": "patientDashboard.overallActions",
+    "type": "link",
+    "label": "ugandaemrfingerprint.app.addfingerprint.label",
+    "url": "ugandaemrfingerprint/addPatientFingerPrint.page?patientId={{patient.uuid}}",
+    "icon": "icon-hand-up",
+    "order": 20
+  }
+]
