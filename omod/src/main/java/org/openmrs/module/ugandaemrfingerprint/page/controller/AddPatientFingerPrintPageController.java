@@ -25,8 +25,11 @@ public class AddPatientFingerPrintPageController {
     public void controller(UiSessionContext sessionContext, PageModel model) {
     }
 
-    public void get(@SpringBean PageModel pageModel, @RequestParam(value = "breadcrumbOverride", required = false) String breadcrumbOverride) {
+    public void get(@SpringBean PageModel pageModel, @RequestParam(value = "breadcrumbOverride", required = false) String breadcrumbOverride, @RequestParam("patientId") String patientId) {
 
+        Patient patient=new Patient();
+        patient=Context.getPatientService().getPatientByUuid(patientId);
+        pageModel.put("patientId",patient.getUuid());
         pageModel.put("breadcrumbOverride", breadcrumbOverride);
     }
 }
