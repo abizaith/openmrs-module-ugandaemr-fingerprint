@@ -26,7 +26,7 @@ import org.openmrs.module.metadatadeploy.api.MetadataDeployService;
 /**
  * This class contains the logic that is run every time this module is either started or stopped.
  */
-public class UgandaEMRFingerPrintActivator implements ModuleActivator {
+public class UgandaEMRFingerprintActivator implements ModuleActivator {
 
     protected Log log = LogFactory.getLog(getClass());
 
