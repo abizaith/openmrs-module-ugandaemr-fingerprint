@@ -44,6 +44,7 @@
             document.getElementById('calResponse').innerHTML = "";
             var imageTag = document.createElement('img');
             document.getElementById('fingerprint').value = message.result;
+
             document.getElementById('onlinesearch').value = '';
             imageTag.src = "data:image/png;base64," + message.result;
             imageDiv.appendChild(imageTag);
@@ -55,12 +56,41 @@
 
 
     function remoteSearch() {
-        jq.post("http://192.168.1.28/api/query",
-                {query: '{patient(attribute:{t:"8d871f2a-c2cc-11de-8d13-0010c6dffd0f",v:"1056"}){uuid,facility,birthdate,gender}}'},
-                function (response) {
-                    console.log(response.data);
-                });
+        var search_params = jq("#onlinesearch").val();
+        jq("#status_message").html("");
+
+        if (search_params != "") {
+            if (navigator.onLine) {
+                jq.post("http://192.168.1.28/api/query",
+                        {query: '{patient(attribute:{t:"8d871f2a-c2cc-11de-8d13-0010c6dffd0f",v:"'+search_params+'"}){uuid,facility,birthdate,gender,names{middleName,givenName,familyName}}}'},
+                        function (response) {
+                            if (response && response.data.patient != null) {
+                                displayData(response);
+                            }
+
+                        });
+            } else {
+                jq("#status_message").html('<div class="toast-item-wrapper"> <div class="toast-item toast-type-error"> <div class="toast-item-image toast-item-image-error"></div> <div class="toast-item-close"></div> <p>No Internet Connection</p></div> </div>');
+            }
+        }
+        else {
+            jq("#status_message").html('<div class="toast-item-wrapper"> <div class="toast-item toast-type-error"> <div class="toast-item-image toast-item-image-error"></div> <div class="toast-item-close"></div> <p>No Search Parameters typed in the Search box</p></div> </div>');
+        }
     }
+
+    function displayData(response) {
+        var patientNames = "" + response.data.patient.names[0].familyName + " " + response.data.patient.names[0].middleName + " " + response.data.patient.names[0].givenName;
+        jq("#facilityName").html(response.data.patient.facility);
+        jq("#patientNames").html(patientNames);
+        jq("#patientNames").html(patientNames);
+     ;
+
+        "${patientFound=true}";
+        "${searched=true}";
+        "${connectionStatus=""}";
+    }
+
+
 </script>
 <style type="text/css">
 #death-date-display {
@@ -82,41 +112,28 @@ img {
 </style>
 
 <h3>Locate Patient From other Facility</h3>
-
+<div id="status_message"></div>
 <form method="post">
     <fieldset style="min-width:100%">
         <input type="hidden" name="fingerprint" id="fingerprint">
 
         <div class="scan-input">
             <input type="text" name="onlinesearch" id="onlinesearch" class="field-display ui-autocomplete-input left"
-                   placeholder="Type National Id" size="100">
+                   placeholder="Type National Id"  style="max-width: 100%" size="100">
         </div>
 
-        <div><input type="button" value="Read Fingerprint" id="search" ></div>
+        <div><input type="button" value="Read Fingerprint" id="search"></div>
+        <div class="left"><input type="button" value="Search" onclick="remoteSearch()"></div>
 
-        <p id="calResponse"></p>
+
+
+
 
         <div id="images"></div>
-
-        <div class="left"><input type="button" value="Search" onclick="remoteSearch()"></div>
+        <p id="calResponse"></p>
         <br>
     </fieldset>
 </form>
-
-<% if (searched == true && connectionStatus != "") { %>
-<div class="toast-item-wrapper">
-    <div class="toast-item toast-type-error">
-        <div class="toast-item-image toast-item-image-error"></div>
-
-        <div class="toast-item-close"></div>
-
-        <p>${connectionStatus}</p>
-    </div>
-</div>
-
-
-<% } %>
-
 <% if (searched == true && patientFound == false) { %>
 <div class="toast-item-wrapper">
     <div class="toast-item toast-type-error">
@@ -130,21 +147,24 @@ img {
 <% } %>
 
 <% if (patientFound == true && searched == true) { %>
-<fieldset>
-    <table>
-        <thead>
-        <td>Facility Name</td>
-        <td>Facility Id</td>
-        <td>Patient Id</td>
-        <td>Patient Summary</td>
-        </thead>
-        <tbody>
-        <td><% facilityName ?: "No Results" %></td>
-        <td><% facilityId ?: "No Results" %></td>
-        <td><% patientId ?: "No Results" %></td>
-        <td><% patientSummary ?: "No Results" %></td>
-
-        </tbody>
-    </table>
-</fieldset>
+<table>
+    <thead>
+    <tr>
+        <th>Facility Name</th>
+        <th>Facility Id</th>
+        <th>Patient Id</th>
+        <th>Patient Names</th>
+        <th>Patient Summary</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td id="facilityName"></td>
+        <td id="facilityId"></td>
+        <td id="patientId"></td>
+        <td id="patientNames"></td>
+        <td id="patientSummary"></td>
+    </tr>
+    </tbody>
+</table>
 <% } %>

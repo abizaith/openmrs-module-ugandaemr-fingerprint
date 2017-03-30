@@ -34,7 +34,7 @@ public class FindPatientOnlinePageController {
 
             if (fingerPrintHttpURLConnection.getCheckConnection(CONNECTION_TEST_IP) == CONNECTION_SUCCESS) {
                 Commons commons = new Commons();
-                Map map = fingerPrintHttpURLConnection.sendPostBy(SEARCH_URL, commons.getRequestString(SEARCH_PARAMS, searchString));
+                Map map = fingerPrintHttpURLConnection.sendPostBy(SEARCH_URL, "");
 
                 if (!map.isEmpty()) {
                     pageModel.put("patient", map.get(PATIENT_ONLINE_ID));
