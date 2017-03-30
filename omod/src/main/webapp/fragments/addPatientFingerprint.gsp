@@ -42,7 +42,15 @@
             var imageTag = document.createElement('img');
             imageTag.src = "data:image/png;base64," + message.result;
             imageDiv.appendChild(imageTag);
-        }else {
+        } else if (message.patient !== null) {
+            jq.post('${ ui.actionLink("saveFingerprint") }', JSON.stringify({
+                patient: message.patient,
+                finger: message.finger,
+                fingerprint: message.fingerprint
+            }), function (response) {
+                console.log("Response: " + response);
+            });
+        } else {
             response.innerHTML = message.result;
         }
     }
