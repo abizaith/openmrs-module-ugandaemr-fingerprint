@@ -52,6 +52,15 @@
             response.innerHTML = message.result;
         }
     }
+
+
+    function remoteSearch() {
+        jq.post("http://192.168.1.28/api/query",
+                {query: '{patient(attribute:{t:"8d871f2a-c2cc-11de-8d13-0010c6dffd0f",v:"1056"}){uuid,facility,birthdate,gender}}'},
+                function (response) {
+                    console.log(response.data);
+                });
+    }
 </script>
 <style type="text/css">
 #death-date-display {
@@ -65,6 +74,7 @@ span.field-error {
     vertical-align: middle;
     color: red;
 }
+
 img {
     width: 100px;
     height: auto;
@@ -82,13 +92,13 @@ img {
                    placeholder="Type National Id" size="100">
         </div>
 
-        <div><input type="button" value="Read Fingerprint" onclick="search()"></div>
+        <div><input type="button" value="Read Fingerprint" id="search" ></div>
 
         <p id="calResponse"></p>
 
         <div id="images"></div>
 
-        <div class="left"><input type="submit" value="Search"></div>
+        <div class="left"><input type="button" value="Search" onclick="remoteSearch()"></div>
         <br>
     </fieldset>
 </form>
