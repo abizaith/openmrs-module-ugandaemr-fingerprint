@@ -53,8 +53,10 @@
         <registrationcoreVersion>1.6</registrationcoreVersion>
         <registrationappVersion>1.6</registrationappVersion>
         <metadatadeployVersion>1.7</metadatadeployVersion>
+        <metadatamappingVersion>1.2.0</metadatamappingVersion>
+        <metadatasharingVersion>1.2.2</metadatasharingVersion>
         <serializationxstreamVersion>0.2.12</serializationxstreamVersion>
-        <uiframeworkVersion>3.9</uiframeworkVersion>
+        <uiframeworkVersion>3.6</uiframeworkVersion>
         <digitalPersonaVersion>2.2.0</digitalPersonaVersion>
     </properties>
 
@@ -152,6 +154,13 @@
                 <groupId>org.openmrs.module</groupId>
                 <artifactId>metadatadeploy-api</artifactId>
                 <version>${metadatadeployVersion}</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.openmrs.module</groupId>
+                <artifactId>metadatasharing-api</artifactId>
+                <version>${metadatasharingVersion}</version>
                 <scope>provided</scope>
             </dependency>
 

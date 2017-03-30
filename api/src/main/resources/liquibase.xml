@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                  http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+
+    <!--
+    	See http://wiki.openmrs.org/display/docs/Module+liquibase+File for 
+    	documentation on this file.
+    
+        See http://www.liquibase.org/manual/home#available_database_refactorings
+        for a list of supported elements and attributes
+    -->
+
+    <!--<changeSet id="ugandaemrfingerprint-2017-08-02-12-21" author="carapai" dbms="mysql">-->
+    <changeSet id="20170323-1124" author="carapai" dbms="mysql">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="ugandaemrfingerprint_fingerprint"/>
+            </not>
+        </preConditions>
+        <comment>
+            Creating the ugandaemrfingerprint_fingerprint table
+        </comment>
+        <createTable tableName="ugandaemrfingerprint_fingerprint">
+            <column name="ugandaemrfingerprint_fingerprint_id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="patient_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="finger" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fingerprint" type="blob"/>
+
+            <column name="creator" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date_created" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="voided_by" type="int"/>
+            <column name="date_voided" type="DATETIME"/>
+            <column name="void_reason" type="varchar(255)"/>
+            <column name="changed_by" type="int"/>
+            <column name="date_changed" type="DATETIME"/>
+            <column name="uuid" type="char(38)">
+                <constraints nullable="false" unique="true"></constraints>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="creator" baseTableName="ugandaemrfingerprint_fingerprint"
+                                 constraintName="fingerprint_creator" referencedColumnNames="user_id"
+                                 referencedTableName="users"/>
+        <addForeignKeyConstraint baseColumnNames="voided_by" baseTableName="ugandaemrfingerprint_fingerprint"
+                                 constraintName="fingerprint_voider" referencedColumnNames="user_id"
+                                 referencedTableName="users"/>
+        <addForeignKeyConstraint baseColumnNames="changed_by" baseTableName="ugandaemrfingerprint_fingerprint"
+                                 constraintName="fingerprint_changer" referencedColumnNames="user_id"
+                                 referencedTableName="users"/>
+        <addForeignKeyConstraint baseTableName="ugandaemrfingerprint_fingerprint" baseColumnNames="patient_id"
+                                 constraintName="fingerprint_patient_id_fk" referencedTableName="patient"
+                                 referencedColumnNames="patient_id"/>
+
+    </changeSet>
+
+</databaseChangeLog>
