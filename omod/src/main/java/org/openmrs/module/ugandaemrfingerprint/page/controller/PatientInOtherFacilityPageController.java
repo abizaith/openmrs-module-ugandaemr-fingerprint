@@ -37,7 +37,7 @@ public class PatientInOtherFacilityPageController {
     }
 
 
-    public void post(@SpringBean PageModel pageModel, @RequestParam(value = "breadcrumbOverride", required = false) String breadcrumbOverride, @RequestParam(value = "onlinesearch", required = false) String onlineSearch, UiUtils
+    public void post(@SpringBean PageModel pageModel, @RequestParam(value = "breadcrumbOverride", required = false) String breadcrumbOverride, @RequestParam(value = "onlinesearch", required = false) String onlineSearch, @RequestParam(value = "fingerprint", required = false) String fingerprint, UiUtils
             uiUtils) {
         FingerPrintHttpURLConnection fingerPrintHttpURLConnection = new FingerPrintHttpURLConnection();
         Map resultsOnlin = null;
@@ -51,17 +51,22 @@ public class PatientInOtherFacilityPageController {
 
             if (success == CONNECTION_SUCCESS) {
                 Commons commons = new Commons();
-                resultsOnlin = fingerPrintHttpURLConnection.sendPostBy(FingerPrintConstant.SEARCH_URL, commons.getRequestString(FingerPrintConstant.SEARCH_PARAMS, onlineSearch));
+                if (fingerprint != null) {
+                    resultsOnlin = fingerPrintHttpURLConnection.sendPostBy(FingerPrintConstant.SEARCH_URL, FingerPrintConstant.getFingerprintSearch(fingerprint));
+                } else {
+                    resultsOnlin = fingerPrintHttpURLConnection.sendPostBy(FingerPrintConstant.SEARCH_URL, FingerPrintConstant.getAttributeSearch("identifier", "a41339f9-5014-45f4-91d6-bab84c6c62f2", onlineSearch));
+
+                }
 
                 if (resultsOnlin != null) {
-                    pageModel.put("facilityName", resultsOnlin.get("facilityName"));
-                    pageModel.put("facilityId", resultsOnlin.get("facilityId"));
-                    pageModel.put("patientId", resultsOnlin.get("patientId"));
-                    pageModel.put("patientSummary", resultsOnlin.get("patientSummary"));
+                    // pageModel.put("facilityName", resultsOnlin.get("facilityName"));
+                    pageModel.put("facilityId", resultsOnlin.get("facility"));
+                    pageModel.put("patientId", resultsOnlin.get("patient"));
+                    // pageModel.put("patientSummary", resultsOnlin.get("patientSummary"));
                     patientFound = true;
 
                 } else {
-                    patientNotFound = "Patient is not Found while using search phrase " + onlineSearch;
+                    patientNotFound = "Patient is not Found while using search phrase " + onlineSearch + "  or by fingerprint";
                 }
 
             } else {

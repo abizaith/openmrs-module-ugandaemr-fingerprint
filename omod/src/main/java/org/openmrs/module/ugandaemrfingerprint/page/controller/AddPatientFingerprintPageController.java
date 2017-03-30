@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Marking a patient as dead
  */
-public class AddPatientFingerPrintPageController {
+public class AddPatientFingerprintPageController {
     protected final Log log = LogFactory.getLog(this.getClass());
 
     public void controller(UiSessionContext sessionContext, PageModel model) {

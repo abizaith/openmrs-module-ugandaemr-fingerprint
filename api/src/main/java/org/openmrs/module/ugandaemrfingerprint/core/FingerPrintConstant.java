@@ -28,9 +28,18 @@ public class FingerPrintConstant {
     public static final String PATIENT_ID = "patient.id";
     public static final String PATIENT_SUMMARY = "patient.summary";
 
-    public static final String SEARCH_PARAMS = "query=patient(attribute:{t:\"a41339f9-5014-45f4-91d6-bab84c6c62f2\",v:\"105708474\"}){uuid}";
-    public static final String SEARCH = "{patient(identifier:{t:\"f0c16a6d-dc5f-4118-a803-616d0075d282\",v:\"searchParams\"}){gender encounters{uuid} names{familyName} identifiers{identifier} attributes{personAttributeType value} addresses{address1 country countyDistrict}}}";
+    /*public static final String SEARCH_PARAMS_ATTRIBUTE = "query=patient(attribute:{t:\"a41339f9-5014-45f4-91d6-bab84c6c62f2\",v:\"105708474\"}){uuid}";
+    public static final String SEARCH_PARAMS_IDENTIFIER = "query=patient(identifier:{t:\"a41339f9-5014-45f4-91d6-bab84c6c62f2\",v:\"105708474\"}){uuid}";
+    public static final String SEARCH_PARAMS_FINGERPRINT = "query=patient(attribute:{t:\"a41339f9-5014-45f4-91d6-bab84c6c62f2\",v:\"105708474\"}){uuid}";*/
     public static final String PATIENT_ONLINE_ID = "identifiers";
     public static final String PATIENT_NOT_FOUND = "Patient Not Found";
     public static final String CONNECTION_TEST_IP = "google.com/";
+
+    public static String getAttributeSearch(String searchType, String attributeType, String attributeValue) {
+        return String.format("query=patient(%s:{t:\"%s\",v:\"%s\"}){uuid}", searchType, attributeType, attributeValue);
+    }
+
+    public static String getFingerprintSearch(String fingerprint) {
+        return String.format("query=patient(fingerprint:%s){uuid}", fingerprint);
+    }
 }
