@@ -2,13 +2,20 @@ package org.openmrs.module.ugandaemrfingerprint.fragment.controller;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.SQLQuery;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.openmrs.api.AdministrationService;
+import org.openmrs.api.context.Context;
 import org.openmrs.module.appui.UiSessionContext;
 import org.openmrs.module.ugandaemrfingerprint.api.UgandaEMRFingerprintService;
+import org.openmrs.ui.framework.SimpleObject;
+import org.openmrs.ui.framework.UiUtils;
 import org.openmrs.ui.framework.annotation.FragmentParam;
 import org.openmrs.ui.framework.annotation.SpringBean;
 import org.openmrs.ui.framework.fragment.FragmentModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -30,44 +37,21 @@ public class AddPatientFingerprintFragmentController {
 
     }
 
-    /*public SimpleObject saveFingerprint(@RequestParam(value = "patient", required = false) String patient,
+    public SimpleObject saveFingerprint(@RequestParam(value = "patient", required = false) String patient,
                                         @RequestParam(value = "finger", required = false) Integer finger,
                                         @RequestParam(value = "fingerprint", required = false) String fingerprint,
                                         UiUtils ui) {
 
         SimpleObject obj = new SimpleObject();
 
-        ConceptComplex conceptComplex = Context.getConceptService().getConceptComplex(163149);
 
-        try {
+        Session session = Context.getRegisteredComponent("sessionFactory", SessionFactory.class).getCurrentSession();
 
-            Person p = Context.getPersonService().getPersonByUuid(patient);
+        String query = String.format("INSERT INTO fingerprint(patient,finger,fingerprint) VALUES ('%s',%s,'%s')", patient, finger, fingerprint);
+        SQLQuery sqlQuery = session.createSQLQuery(query);
 
-            Obs obs = new Obs(p, conceptComplex, new Date(), Context.getLocationService().getDefaultLocation());
+        sqlQuery.executeUpdate();
 
-            ComplexData complexData = new ComplexData(String.valueOf(finger),fingerprint.getBytes());
-
-            obs.setComplexData(complexData);
-
-            Context.getObsService().saveObs(obs, null);
-
-            UgandaEMRFingerprintService service = Context.getService(UgandaEMRFingerprintService.class);
-
-            Fingerprint fingerprint1 = new Fingerprint();
-            fingerprint1.setFinger(finger);
-            fingerprint1.setFingerprint(fingerprint.getBytes());
-            fingerprint1.setPatient(p);
-
-            System.out.println(fingerprint1);
-            Fingerprint returned = service.saveFingerprint(fingerprint1);
-
-            obj.put("fingerprint",returned.getFingerprint());
-            obj.put("finger",returned.getFinger());
-            obj.put("patient",returned.getPatient().getUuid());
-
-        } catch (APIException e) {
-            System.out.println(e.getMessage());
-        }
         return obj;
-    }*/
+    }
 }

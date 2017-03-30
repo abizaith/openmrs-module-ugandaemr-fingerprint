@@ -14,7 +14,7 @@
     -->
 
     <!--<changeSet id="ugandaemrfingerprint-2017-08-02-12-21" author="carapai" dbms="mysql">-->
-    <changeSet id="20170323-1124" author="carapai" dbms="mysql">
+    <!--<changeSet id="20170323-1124" author="carapai" dbms="mysql">
         <preConditions onFail="MARK_RAN">
             <not>
                 <tableExists tableName="ugandaemrfingerprint_fingerprint"/>
@@ -66,5 +66,32 @@
                                  referencedColumnNames="patient_id"/>
 
     </changeSet>
+-->
 
+    <changeSet id="20170330-1238" author="carapai" dbms="mysql">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="fingerprint"/>
+            </not>
+        </preConditions>
+        <comment>
+            Creating the fingerprint table
+        </comment>
+        <createTable tableName="fingerprint">
+            <column name="fingerprint_id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="patient" type="char(38)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="finger" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fingerprint" type="text"/>
+
+            <column name="uploaded" type="int" defaultValue="0">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
 </databaseChangeLog>
