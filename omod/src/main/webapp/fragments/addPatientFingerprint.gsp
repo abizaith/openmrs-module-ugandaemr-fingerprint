@@ -10,7 +10,7 @@
 
     var stompClient = null;
 
-    var socket = new SockJS('http://192.168.1.186:8084/complete/add');
+    var socket = new SockJS('http://localhost:8081/complete/add');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
         //        console.log('Connected: ' + frame);
@@ -42,12 +42,12 @@
             var imageTag = document.createElement('img');
             imageTag.src = "data:image/png;base64," + message.result;
             imageDiv.appendChild(imageTag);
-        } else if (message.patient !== null) {
-            jq.post('${ ui.actionLink("saveFingerprint") }', JSON.stringify({
+        } else if (message.type === "template") {
+            jq.post('${ ui.actionLink("saveFingerprint") }', {
                 patient: message.patient,
                 finger: message.finger,
-                fingerprint: message.fingerprint
-            }), function (response) {
+                fingerprint: message.result
+            }, function (response) {
                 console.log("Response: " + response);
             });
         } else {
