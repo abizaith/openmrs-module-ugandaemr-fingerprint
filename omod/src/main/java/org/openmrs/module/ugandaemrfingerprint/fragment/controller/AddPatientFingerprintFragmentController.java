@@ -5,6 +5,9 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.type.IntegerType;
+import org.hibernate.type.StringType;
+import org.hibernate.type.TextType;
 import org.openmrs.api.AdministrationService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.appui.UiSessionContext;
@@ -47,10 +50,22 @@ public class AddPatientFingerprintFragmentController {
 
         Session session = Context.getRegisteredComponent("sessionFactory", SessionFactory.class).getCurrentSession();
 
-        String query = String.format("INSERT INTO fingerprint(patient,finger,fingerprint) VALUES ('%s',%s,'%s')", patient, finger, fingerprint);
+        session.beginTransaction();
+
+        String query = "INSERT INTO fingerprint(patient,finger,fingerprint) VALUES (:patient,:finger,:fingerprint)";
         SQLQuery sqlQuery = session.createSQLQuery(query);
 
+        //        byte[] fingerprintByte = Base64.getDecoder().decode(fingerprint);
+
+        sqlQuery.setParameter("patient", patient, StringType.INSTANCE);
+        sqlQuery.setParameter("finger", finger, IntegerType.INSTANCE);
+        sqlQuery.setParameter("fingerprint", fingerprint, TextType.INSTANCE);
+
         sqlQuery.executeUpdate();
+
+        session.getTransaction().commit();
+
+        obj.put("message", "Patient fingerprint saved");
 
         return obj;
     }

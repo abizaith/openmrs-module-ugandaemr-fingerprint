@@ -19,7 +19,7 @@
     ];
 
 
-    var socket = new SockJS('http://192.168.1.186:8084/complete/search');
+    var socket = new SockJS('http://localhost:8081/complete/search');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
         stompClient.subscribe('/topic/showResult', function (calResult) {
@@ -48,8 +48,8 @@
             document.getElementById('onlinesearch').value = '';
             imageTag.src = "data:image/png;base64," + message.result;
             imageDiv.appendChild(imageTag);
-
-            remoteFingerprint(message.result)
+        } else if (message.type === "sample") {
+            remoteFingerprint(message.result);
         }
         else {
             response.innerHTML = message.result;
@@ -83,7 +83,9 @@
     function remoteFingerprint(fingerprint) {
         jq("#status_message").html("");
 
-        var finger = JSON.stringify(fingerprint)
+
+        var finger = JSON.stringify(fingerprint);
+        console.log(fingerprint);
 
         if (navigator.onLine) {
             jq.post("http://192.168.1.28/api/query",
@@ -104,6 +106,7 @@
         jq("#facilityName").html(response.data.patient.facility);
         jq("#patientNames").html(patientNames);
         jq("#patientNames").html(patientNames);
+
 
         "${patientFound=true}";
         "${searched=true}";

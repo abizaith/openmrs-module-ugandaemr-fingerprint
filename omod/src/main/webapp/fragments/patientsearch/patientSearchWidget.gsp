@@ -102,8 +102,8 @@ img {
             var imageTag = document.createElement('img');
             imageTag.src = "data:image/png;base64," + message.result;
             imageDiv.appendChild(imageTag);
-        } else if (message.patient) {
-            window.location = "../../coreapps/clinicianfacing/patient.page?patientId=" + message.patient;
+        } else if (message.type === "person" && message.result !== "") {
+            window.location = "../../coreapps/clinicianfacing/patient.page?patientId=" + message.result;
         }
         else {
             response.innerHTML = message.result;

@@ -87,7 +87,7 @@
             <column name="finger" type="int">
                 <constraints nullable="false"/>
             </column>
-            <column name="fingerprint" type="text"/>
+            <column name="fingerprint" type="blob"/>
 
             <column name="uploaded" type="int" defaultValue="0">
                 <constraints nullable="false"/>
