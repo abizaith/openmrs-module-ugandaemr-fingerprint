@@ -1,33 +1,20 @@
 package org.openmrs.module.ugandaemrfingerprint.fragment.controller.patientsearch;
 
-import com.digitalpersona.onetouch.*;
-import com.digitalpersona.onetouch._impl.DPFPSampleFactoryImpl;
-import com.digitalpersona.onetouch._impl.DPFPTemplateFactoryImpl;
-import com.digitalpersona.onetouch.processing.DPFPFeatureExtraction;
-import com.digitalpersona.onetouch.processing.DPFPImageQualityException;
-import com.digitalpersona.onetouch.verification.DPFPVerification;
-import com.digitalpersona.onetouch.verification.DPFPVerificationResult;
 import org.apache.commons.lang.StringUtils;
 import org.openmrs.Patient;
-import org.openmrs.PersonAttribute;
 import org.openmrs.api.AdministrationService;
-import org.openmrs.api.PatientService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.appui.UiSessionContext;
 import org.openmrs.module.coreapps.CoreAppsConstants;
 import org.openmrs.module.emrapi.utils.GeneralUtils;
-import org.openmrs.ui.framework.SimpleObject;
 import org.openmrs.ui.framework.UiFrameworkConstants;
-import org.openmrs.ui.framework.UiUtils;
 import org.openmrs.ui.framework.annotation.FragmentParam;
 import org.openmrs.ui.framework.annotation.SpringBean;
 import org.openmrs.ui.framework.fragment.FragmentModel;
 import org.openmrs.util.OpenmrsConstants;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
-import java.util.Base64;
 import java.util.List;
 import java.util.Locale;
 

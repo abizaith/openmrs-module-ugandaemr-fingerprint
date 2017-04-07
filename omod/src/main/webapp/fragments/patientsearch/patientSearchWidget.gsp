@@ -80,7 +80,7 @@ img {
 
     var stompClient = null;
 
-    var socket = new SockJS('http://192.168.1.186:8084/complete/search');
+    var socket = new SockJS('${fingerSocketPrintIpAddress}/search');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
         stompClient.subscribe('/topic/showResult', function (calResult) {
@@ -102,8 +102,11 @@ img {
             var imageTag = document.createElement('img');
             imageTag.src = "data:image/png;base64," + message.result;
             imageDiv.appendChild(imageTag);
-        } else if (message.type === "person" && message.result !== "") {
-            window.location = "../../coreapps/clinicianfacing/patient.page?patientId=" + message.result;
+        } else if (message.type === "local" && message.patient !== "") {
+            window.location = "../../coreapps/clinicianfacing/patient.page?patientId=" + message.patient;
+        }
+        else if (message.type === "online" && message.patient !== "") {
+            window.location = "/openmrs/ugandaemrfingerprint/patientInOtherFacility.page?patientId=" + message.patient;
         }
         else {
             response.innerHTML = message.result;

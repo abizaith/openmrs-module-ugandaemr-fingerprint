@@ -10,7 +10,7 @@
 
     var stompClient = null;
 
-    var socket = new SockJS('http://localhost:8081/complete/add');
+    var socket = new SockJS('${fingerSocketPrintIpAddress}/add');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
         //        console.log('Connected: ' + frame);

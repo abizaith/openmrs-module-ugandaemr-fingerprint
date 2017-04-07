@@ -23,31 +23,9 @@ public class FindPatientOnlinePageController {
     public void controller(UiSessionContext sessionContext, PageModel model) {
     }
 
-    public void get(@SpringBean PageModel pageModel, @RequestParam(value = "breadcrumbOverride", required = false) String breadcrumbOverride) {
-
-    }
-
-    public void post(@SpringBean PageModel pageModel, @RequestParam(value = "breadcrumbOverride", required = false) String breadcrumbOverride, @RequestParam(value = "searchString", required = false) String searchString) {
-
-        try {
-            FingerPrintHttpURLConnection fingerPrintHttpURLConnection = new FingerPrintHttpURLConnection();
-
-            if (fingerPrintHttpURLConnection.getCheckConnection(CONNECTION_TEST_IP) == CONNECTION_SUCCESS) {
-                Commons commons = new Commons();
-                Map map = fingerPrintHttpURLConnection.sendPostBy(SEARCH_URL, "");
-
-                if (!map.isEmpty()) {
-                    pageModel.put("patient", map.get(PATIENT_ONLINE_ID));
-                } else {
-                    pageModel.put("patient", PATIENT_NOT_FOUND);
-                }
-            } else {
-                pageModel.put("connectionError", "No Internet Access");
-            }
-
-        } catch (Exception e) {
-            log.error(e.getMessage());
-        }
+    public void get(@SpringBean PageModel pageModel, @RequestParam(value = "breadcrumbOverride", required = false) String breadcrumbOverride,@RequestParam(value = "patientId", required = false) String patientId) {
+        pageModel.put("searched", false);
+        pageModel.put("patientId", patientId);
 
     }
 }

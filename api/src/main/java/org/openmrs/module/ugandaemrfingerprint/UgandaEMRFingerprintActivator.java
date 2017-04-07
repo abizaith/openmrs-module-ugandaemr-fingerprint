@@ -22,6 +22,7 @@ import org.openmrs.module.ModuleActivator;
 import org.openmrs.module.ModuleFactory;
 import org.openmrs.module.ugandaemrfingerprint.core.FingerPrintMetadataBundle;
 import org.openmrs.module.metadatadeploy.api.MetadataDeployService;
+import org.openmrs.module.ugandaemrfingerprint.remoteserver.FingerPrintGlobalProperties;
 
 /**
  * This class contains the logic that is run every time this module is either started or stopped.
@@ -57,9 +58,16 @@ public class UgandaEMRFingerprintActivator implements ModuleActivator {
     public void started() {
 
         MetadataDeployService deployService = Context.getService(MetadataDeployService.class);
+        FingerPrintGlobalProperties fingerPrintGlobalProperties = new FingerPrintGlobalProperties();
+        try {
+            fingerPrintGlobalProperties.setFingerPrintGlobalProperties();
+            installCommonMetadata(deployService);
+            log.info("UgandaEMR FingerPrint Module started");
+        } catch (Exception e) {
+            log.error(e);
+        }
 
-        installCommonMetadata(deployService);
-        log.info("UgandaEMR FingerPrint Module started");
+
     }
 
     private void installCommonMetadata(MetadataDeployService deployService) {
@@ -68,6 +76,8 @@ public class UgandaEMRFingerprintActivator implements ModuleActivator {
             log.info("Installing commonly used metadata");
             deployService.installBundle(Context.getRegisteredComponents(FingerPrintMetadataBundle.class).get(0));
             log.info("Finished installing commonly used metadata");
+            log.info("Setting Global Properties For Sync Module");
+
 
         } catch (Exception e) {
             Module mod = ModuleFactory.getModuleById("ugandaemrfingerprint");
