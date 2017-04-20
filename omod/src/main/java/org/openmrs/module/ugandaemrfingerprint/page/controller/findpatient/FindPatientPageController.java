@@ -36,7 +36,6 @@ public class FindPatientPageController {
         model.addAttribute("heading", app.getConfig().get("heading").getTextValue());
         model.addAttribute("label", app.getConfig().get("label").getTextValue());
         model.addAttribute("showLastViewedPatients", app.getConfig().get("showLastViewedPatients").getBooleanValue());
-        model.put("fingerSocketPrintIpAddress", fingerPrintGlobalProperties.getGlobalProperty(FingerPrintConstant.DEVICE_SOCKET_IP));
         BreadcrumbHelper.addBreadcrumbsIfDefinedInApp(app, model, ui);
     }
 

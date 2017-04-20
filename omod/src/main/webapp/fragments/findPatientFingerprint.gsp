@@ -3,7 +3,7 @@
 
     var stompClient = null;
 
-    var socket = new SockJS('http://192.168.1.186:8084/complete/search');
+    var socket = new SockJS('${fingerSocketPrintIpAddress}/search');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
         stompClient.subscribe('/topic/showResult', function (calResult) {
