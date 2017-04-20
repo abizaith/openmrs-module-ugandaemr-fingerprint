@@ -38,6 +38,8 @@ public class AddPatientFingerprintFragmentController {
                            @FragmentParam(value = "showLastViewedPatients", required = false) Boolean showLastViewedPatients,
                            @FragmentParam(value = "initialSearchFromParameter", required = false) String searchByParam) {
 
+
+
     }
 
     public SimpleObject saveFingerprint(@RequestParam(value = "patient", required = false) String patient,

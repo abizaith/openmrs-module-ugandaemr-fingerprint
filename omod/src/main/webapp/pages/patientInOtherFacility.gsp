@@ -18,95 +18,59 @@
         }
     ];
 
+    if (jQuery) {
+        jq(document).ready(function () {
 
-    var socket = new SockJS('http://localhost:8081/complete/search');
-    stompClient = Stomp.over(socket);
-    stompClient.connect({}, function (frame) {
-        stompClient.subscribe('/topic/showResult', function (calResult) {
-            showResult(JSON.parse(calResult.body));
+            if ("${patientId}" != "") {
+                remoteSearch("${patientId}");
+            }
+
         });
-    });
-
-
-    function search() {
-        document.getElementById('calResponse').innerHTML = "";
-        document.getElementById('images').innerHTML = "";
-        document.getElementById('fingerprint').value = '';
-        document.getElementById('onlinesearch').value = '';
-        document.getElementById('onlinesearch').disabled = true;
-        stompClient.send("/calcApp/fingerprint", {});
-    }
-
-    function showResult(message) {
-        var response = document.getElementById('calResponse');
-        var imageDiv = document.getElementById('images');
-        if (message.type === "image") {
-            document.getElementById('calResponse').innerHTML = "";
-            var imageTag = document.createElement('img');
-            document.getElementById('fingerprint').value = message.result;
-
-            document.getElementById('onlinesearch').value = '';
-            imageTag.src = "data:image/png;base64," + message.result;
-            imageDiv.appendChild(imageTag);
-        } else if (message.type === "sample") {
-            remoteFingerprint(message.result);
-        }
-        else {
-            response.innerHTML = message.result;
-        }
     }
 
 
-    function remoteSearch() {
-        var search_params = jq("#onlinesearch").val();
+    function remoteSearch(search_params) {
+        console.log(search_params);
+        if(!search_params){
+            search_params = jq("#onlinesearch").val();
+        }
+
         jq("#status_message").html("");
-
         if (search_params != "") {
             if (navigator.onLine) {
-                jq.post("http://192.168.1.28/api/query",
-                        {query: '{patient(attribute:{t:"8d871f2a-c2cc-11de-8d13-0010c6dffd0f",v:"' + search_params + '"}){uuid,facility,birthdate,gender,names{middleName,givenName,familyName}}}'},
+                jq.post("${connectionProtocol+onlineIpAddress+queryURL}", {query: '${searchString}'.replace('%s',search_params)},
                         function (response) {
-                            if (response && response.data.patient != null) {
-                                displayData(response);
-                            }
 
+                            if (response && response.data.patient !== null) {
+                                displayData(response);
+                                jq().toastmessage('showSuccessToast', "Patient Found");
+                                jq("#patient_found").attr("display", "block");
+                            }
+                            else if (response.errors) {
+                                jq().toastmessage('showErrorToast', "Internal Server Error");
+                            }
+                            else {
+                                jq().toastmessage('showErrorToast', "Patient Not Found");
+                                jq("#patient_found").attr("display", "none");
+                            }
                         });
             } else {
-                jq("#status_message").html('<div class="toast-item-wrapper"> <div class="toast-item toast-type-error"> <div class="toast-item-image toast-item-image-error"></div> <div class="toast-item-close"></div> <p>No Internet Connection</p></div> </div>');
+                jq().toastmessage('showErrorToast', "No internet Connection");
             }
         }
         else {
-            jq("#status_message").html('<div class="toast-item-wrapper"> <div class="toast-item toast-type-error"> <div class="toast-item-image toast-item-image-error"></div> <div class="toast-item-close"></div> <p>No Search Parameters typed in the Search box</p></div> </div>');
-        }
-    }
-
-    function remoteFingerprint(fingerprint) {
-        jq("#status_message").html("");
-
-
-        var finger = JSON.stringify(fingerprint);
-        console.log(fingerprint);
-
-        if (navigator.onLine) {
-            jq.post("http://192.168.1.28/api/query",
-                    {query: '{patient(fingerprint:' + finger + '){uuid,facility,birthdate,gender,names{middleName,givenName,familyName}}}'},
-                    function (response) {
-                        if (response && response.data.patient != null) {
-                            displayData(response);
-                        }
-
-                    });
-        } else {
-            jq("#status_message").html('<div class="toast-item-wrapper"> <div class="toast-item toast-type-error"> <div class="toast-item-image toast-item-image-error"></div> <div class="toast-item-close"></div> <p>No Internet Connection</p></div> </div>');
+            jq().toastmessage('showWarningToast', "No Search Parameters typed in the Search box");
         }
     }
 
     function displayData(response) {
         var patientNames = "" + response.data.patient.names[0].familyName + " " + response.data.patient.names[0].middleName + " " + response.data.patient.names[0].givenName;
-        jq("#facilityName").html(response.data.patient.facility);
         jq("#patientNames").html(patientNames);
-        jq("#patientNames").html(patientNames);
-
+        jq("#age").html(response.data.patient.age);
+        jq("#gender").html(patientNames);
+        jq("#facilityName").html(response.data.patient.patientFacility.name);
+        jq("#birthDate").html(response.data.patient.birthdate);
+        jq("#gender").html(response.data.patient.gender);
 
         "${patientFound=true}";
         "${searched=true}";
@@ -132,61 +96,79 @@ img {
     width: 100px;
     height: auto;
 }
+
+.online_search_input_box {
+    max-width: 94%;
+    height: 34px;
+}
+
+.search_container {
+    width: 65%;
+}
+
+.toast-position-top-right {
+    position: fixed;
+    top: 165px;
+    right: 70px;
+}
+
+.dialog .dialog-header, .ngdialog.ngdialog-theme-default .ngdialog-content .dialog-header {
+    background: #000;
+}
 </style>
 
 <h3>Locate Patient From other Facility</h3>
 
-<div id="status_message"></div>
-
-<fieldset style="min-width:100%">
+<fieldset>
     <input type="hidden" name="fingerprint" id="fingerprint">
 
-    <div class="scan-input">
-        <input type="text" name="onlinesearch" id="onlinesearch" class="field-display ui-autocomplete-input left"
-               placeholder="Type National Id" style="max-width: 100%" size="100">
+    <div class="scan-input left search_container">
+        <input type="text" name="onlinesearch" id="onlinesearch"
+               class="field-display ui-autocomplete-input left online_search_input_box"
+               placeholder="Type National Id" size="100">
     </div>
-
-    <div><input type="button" value="Read Fingerprint" id="search" onclick="search()"></div>
 
     <div class="left"><input type="button" value="Search" onclick="remoteSearch()"></div>
-
-
-    <div id="images"></div>
-
-    <p id="calResponse"></p>
-    <br>
 </fieldset>
-<% if (searched == true && patientFound == false) { %>
-<div class="toast-item-wrapper">
-    <div class="toast-item toast-type-error">
-        <div class="toast-item-image toast-item-image-error"></div>
+<div id="status_message"></div>
+<% if (patientFound == true && searched == true) { %>
 
-        <div class="toast-item-close"></div>
+<div id="patient_found" class="dialog" style="width: 100%">
+    <div class="dialog-header">
+        <i class="icon-globe"></i>
 
-        <p>${patientNotFound}</p>
+        <h3>Patient Found:</h3>
+    </div>
+
+    <div class="dialog-content">
+
+        <div>
+            <h5>Facility Name:</h5>
+
+            <div id="facilityName"></div>
+
+            <h5>Facility Id:</h5>
+
+            <div id="facilityId"></div>
+        </div>
+
+        <div>
+            <h5>Patient Id:</h5>
+
+            <div id="patientId"></div>
+        </div>
+
+        <div>
+            <h5>Patient Names:</h5>
+
+            <div id="patientNames"></div>
+        </div>
+
+        <div>
+            <h5>Patient Summary:</h5>
+
+            <div id="patientSummary"></div>
+        </div>
     </div>
 </div>
-<% } %>
-
-<% if (patientFound == true && searched == true) { %>
-<table>
-    <thead>
-    <tr>
-        <th>Facility Name</th>
-        <th>Facility Id</th>
-        <th>Patient Id</th>
-        <th>Patient Names</th>
-        <th>Patient Summary</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td id="facilityName"></td>
-        <td id="facilityId"></td>
-        <td id="patientId"></td>
-        <td id="patientNames"></td>
-        <td id="patientSummary"></td>
-    </tr>
-    </tbody>
-</table>
 <% } %>
