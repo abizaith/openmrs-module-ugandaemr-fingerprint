@@ -66,11 +66,14 @@
     function displayData(response) {
         var patientNames = "" + response.data.patient.names[0].familyName + " " + response.data.patient.names[0].middleName + " " + response.data.patient.names[0].givenName;
         jq("#patientNames").html(patientNames);
+        jq("#patientId").html(response.data.patient.uuid);
         jq("#age").html(response.data.patient.age);
         jq("#gender").html(patientNames);
         jq("#facilityName").html(response.data.patient.patientFacility.name);
+        jq("#facilityId").html(response.data.patient.patientFacility.uuid);
         jq("#birthDate").html(response.data.patient.birthdate);
         jq("#gender").html(response.data.patient.gender);
+        jq("#patientSummary").html(response.data.patient.summaryPage.obs);
 
         "${patientFound=true}";
         "${searched=true}";
@@ -143,13 +146,20 @@ img {
     <div class="dialog-content">
 
         <div>
-            <h5>Facility Name:</h5>
+            <h5>Patient Names:</h5>
 
-            <div id="facilityName"></div>
+            <div id="patientNames"></div>
+        </div>
 
-            <h5>Facility Id:</h5>
+        <div>
+            <h5>Sex:</h5>
 
-            <div id="facilityId"></div>
+            <div id="gender"></div>
+        </div>
+        <div>
+            <h5>Date of Birth:</h5>
+
+            <div id="birthDate"></div>
         </div>
 
         <div>
@@ -159,9 +169,13 @@ img {
         </div>
 
         <div>
-            <h5>Patient Names:</h5>
+            <h5>Facility Name:</h5>
 
-            <div id="patientNames"></div>
+            <div id="facilityName"></div>
+
+            <h5>Facility Id:</h5>
+
+            <div id="facilityId"></div>
         </div>
 
         <div>
