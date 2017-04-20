@@ -18,44 +18,6 @@
         }
     ];
 
-
-    var socket = new SockJS('http://localhost:8081/complete/search');
-    stompClient = Stomp.over(socket);
-    stompClient.connect({}, function (frame) {
-        stompClient.subscribe('/topic/showResult', function (calResult) {
-            showResult(JSON.parse(calResult.body));
-        });
-    });
-
-
-    function search() {
-        document.getElementById('calResponse').innerHTML = "";
-        document.getElementById('images').innerHTML = "";
-        document.getElementById('fingerprint').value = '';
-        document.getElementById('onlinesearch').value = '';
-        document.getElementById('onlinesearch').disabled = true;
-        stompClient.send("/calcApp/fingerprint", {});
-    }
-
-    function showResult(message) {
-        var response = document.getElementById('calResponse');
-        var imageDiv = document.getElementById('images');
-        if (message.type === "image") {
-            document.getElementById('calResponse').innerHTML = "";
-            var imageTag = document.createElement('img');
-            document.getElementById('fingerprint').value = message.result;
-
-            document.getElementById('onlinesearch').value = '';
-            imageTag.src = "data:image/png;base64," + message.result;
-            imageDiv.appendChild(imageTag);
-        } else if (message.type === "sample") {
-            remoteFingerprint(message.result);
-        }
-        else {
-            response.innerHTML = message.result;
-        }
-    }
-
     if (jQuery) {
         jq(document).ready(function () {
 
@@ -103,11 +65,12 @@
 
     function displayData(response) {
         var patientNames = "" + response.data.patient.names[0].familyName + " " + response.data.patient.names[0].middleName + " " + response.data.patient.names[0].givenName;
-        jq("#NationalId").html(patientNames);
         jq("#patientNames").html(patientNames);
         jq("#age").html(response.data.patient.age);
         jq("#gender").html(patientNames);
-        jq("#facilityName").html(response.data.patient.facility);
+        jq("#facilityName").html(response.data.patient.patientFacility.name);
+        jq("#birthDate").html(response.data.patient.birthdate);
+        jq("#gender").html(response.data.patient.gender);
 
         "${patientFound=true}";
         "${searched=true}";
