@@ -28,7 +28,7 @@ public class FingerPrintConstant {
     public static final String PATIENT_ID = "patient.id";
     public static final String PATIENT_SUMMARY = "patient.summary";
 
-    public static final String SEARCH_PARAMS_ATTRIBUTE = "{patient(patients:[\"%s\"]){uuid birthdate gender dead patientFacility{ uuid name} names{ familyName middleName givenName voided} summaryPage{ obs{ uuid encounterDate encounterType valueCoded valueText valueNumeric valueDatetime valueDrug valueBoolean valueComplex voided}} mostRecentEncounter{obs{ uuid encounterDate encounterType valueCoded valueText valueNumeric valueDatetime valueDrug valueBoolean valueComplex voided}}}}";
+    public static final String SEARCH_PARAMS_ATTRIBUTE = "{patient(patients:[\"%s\"]){uuid birthdate gender dead patientFacility{ uuid name} names{ familyName middleName givenName voided}}}";
     public static final String PATIENT_ONLINE_ID = "identifiers";
     public static final String PATIENT_NOT_FOUND = "Patient Not Found";
     public static final String CONNECTION_TEST_IP = "google.com/";

@@ -73,7 +73,6 @@
         jq("#facilityId").html(response.data.patient.patientFacility.uuid);
         jq("#birthDate").html(response.data.patient.birthdate);
         jq("#gender").html(response.data.patient.gender);
-        jq("#patientSummary").html(response.data.patient.summaryPage.obs);
 
         "${patientFound=true}";
         "${searched=true}";
@@ -176,12 +175,6 @@ img {
             <h5>Facility Id:</h5>
 
             <div id="facilityId"></div>
-        </div>
-
-        <div>
-            <h5>Patient Summary:</h5>
-
-            <div id="patientSummary"></div>
         </div>
     </div>
 </div>
