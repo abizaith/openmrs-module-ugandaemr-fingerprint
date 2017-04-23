@@ -13,61 +13,6 @@
         for a list of supported elements and attributes
     -->
 
-    <!--<changeSet id="ugandaemrfingerprint-2017-08-02-12-21" author="carapai" dbms="mysql">-->
-    <!--<changeSet id="20170323-1124" author="carapai" dbms="mysql">
-        <preConditions onFail="MARK_RAN">
-            <not>
-                <tableExists tableName="ugandaemrfingerprint_fingerprint"/>
-            </not>
-        </preConditions>
-        <comment>
-            Creating the ugandaemrfingerprint_fingerprint table
-        </comment>
-        <createTable tableName="ugandaemrfingerprint_fingerprint">
-            <column name="ugandaemrfingerprint_fingerprint_id" type="int" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="patient_id" type="int">
-                <constraints nullable="false"/>
-            </column>
-            <column name="finger" type="int">
-                <constraints nullable="false"/>
-            </column>
-            <column name="fingerprint" type="blob"/>
-
-            <column name="creator" type="int">
-                <constraints nullable="false"/>
-            </column>
-            <column name="date_created" type="DATETIME">
-                <constraints nullable="false"/>
-            </column>
-
-            <column name="voided_by" type="int"/>
-            <column name="date_voided" type="DATETIME"/>
-            <column name="void_reason" type="varchar(255)"/>
-            <column name="changed_by" type="int"/>
-            <column name="date_changed" type="DATETIME"/>
-            <column name="uuid" type="char(38)">
-                <constraints nullable="false" unique="true"></constraints>
-            </column>
-        </createTable>
-
-        <addForeignKeyConstraint baseColumnNames="creator" baseTableName="ugandaemrfingerprint_fingerprint"
-                                 constraintName="fingerprint_creator" referencedColumnNames="user_id"
-                                 referencedTableName="users"/>
-        <addForeignKeyConstraint baseColumnNames="voided_by" baseTableName="ugandaemrfingerprint_fingerprint"
-                                 constraintName="fingerprint_voider" referencedColumnNames="user_id"
-                                 referencedTableName="users"/>
-        <addForeignKeyConstraint baseColumnNames="changed_by" baseTableName="ugandaemrfingerprint_fingerprint"
-                                 constraintName="fingerprint_changer" referencedColumnNames="user_id"
-                                 referencedTableName="users"/>
-        <addForeignKeyConstraint baseTableName="ugandaemrfingerprint_fingerprint" baseColumnNames="patient_id"
-                                 constraintName="fingerprint_patient_id_fk" referencedTableName="patient"
-                                 referencedColumnNames="patient_id"/>
-
-    </changeSet>
--->
-
     <changeSet id="20170330-1238" author="carapai" dbms="mysql">
         <preConditions onFail="MARK_RAN">
             <not>
@@ -89,9 +34,22 @@
             </column>
             <column name="fingerprint" type="blob"/>
 
-            <column name="uploaded" type="int" defaultValue="0">
+            <column name="date_created" type="DATETIME">
                 <constraints nullable="false"/>
             </column>
         </createTable>
+    </changeSet>
+
+    <!-- Transfer all fingerprints to new table-->
+
+    <changeSet id="20170422-2228" author="carapai" dbms="mysql">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="fingerprint"/>
+        </preConditions>
+        <comment>
+            Transfer all fingerprints from patient attribute table to the fingerprint table
+        </comment>
+        <sql>insert into fingerprint (patient, finger,fingerprint,date_created) select p.uuid,6,value,pp.date_created from person_attribute pp inner join person p on(pp.person_id = p.person_id) where pp.person_attribute_type_id = (select person_attribute_type_id from person_attribute_type where uuid = 'a41339f9-5014-45f4-91d6-bab84c6c62f1')</sql>
+        <sql>delete from person_attribute where person_attribute_type_id = (select person_attribute_type_id from person_attribute_type where uuid = 'a41339f9-5014-45f4-91d6-bab84c6c62f1')</sql>
     </changeSet>
 </databaseChangeLog>
