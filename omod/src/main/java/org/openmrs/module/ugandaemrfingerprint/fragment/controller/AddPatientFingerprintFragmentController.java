@@ -5,6 +5,7 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.type.DateType;
 import org.hibernate.type.IntegerType;
 import org.hibernate.type.StringType;
 import org.hibernate.type.TextType;
@@ -21,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 
 /**
  * Fragment controller for patient search widget; sets the min # of search characters based on global property,
@@ -39,7 +41,6 @@ public class AddPatientFingerprintFragmentController {
                            @FragmentParam(value = "initialSearchFromParameter", required = false) String searchByParam) {
 
 
-
     }
 
     public SimpleObject saveFingerprint(@RequestParam(value = "patient", required = false) String patient,
@@ -54,14 +55,17 @@ public class AddPatientFingerprintFragmentController {
 
         session.beginTransaction();
 
-        String query = "INSERT INTO fingerprint(patient,finger,fingerprint) VALUES (:patient,:finger,:fingerprint)";
+        String query = "INSERT INTO fingerprint(patient,finger,fingerprint,date_created) VALUES (:patient,:finger,:fingerprint,:dateCreated)";
         SQLQuery sqlQuery = session.createSQLQuery(query);
 
         //        byte[] fingerprintByte = Base64.getDecoder().decode(fingerprint);
 
+        Date dateCreated = new Date();
+
         sqlQuery.setParameter("patient", patient, StringType.INSTANCE);
         sqlQuery.setParameter("finger", finger, IntegerType.INSTANCE);
         sqlQuery.setParameter("fingerprint", fingerprint, TextType.INSTANCE);
+        sqlQuery.setParameter("dateCreated", dateCreated, DateType.INSTANCE);
 
         sqlQuery.executeUpdate();
 

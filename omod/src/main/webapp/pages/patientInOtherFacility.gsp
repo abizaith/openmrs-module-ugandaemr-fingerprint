@@ -22,23 +22,27 @@
         jq(document).ready(function () {
 
             if ("${patientId}" != "") {
-                remoteSearch("${patientId}");
+                remoteSearch('fingerprint', "${patientId}");
             }
 
         });
     }
 
-
-    function remoteSearch(search_params) {
-        console.log(search_params);
-        if(!search_params){
+    function remoteSearch(search_type, search_params) {
+        if (!search_params) {
             search_params = jq("#onlinesearch").val();
+        }
+
+        var searchQuery = '${searchString}'.replace('%s', search_params);
+
+        if (search_type !== 'fingerprint') {
+            searchQuery = '${nationalIdString}'.replace('%s', search_params);
         }
 
         jq("#status_message").html("");
         if (search_params != "") {
             if (navigator.onLine) {
-                jq.post("${connectionProtocol+onlineIpAddress+queryURL}", {query: '${searchString}'.replace('%s',search_params)},
+                jq.post("${connectionProtocol+onlineIpAddress+queryURL}", {query: searchQuery},
                         function (response) {
 
                             if (response && response.data.patient !== null) {
@@ -132,6 +136,7 @@ img {
 
     <div class="left"><input type="button" value="Search" onclick="remoteSearch()"></div>
 </fieldset>
+
 <div id="status_message"></div>
 <% if (patientFound == true && searched == true) { %>
 
@@ -155,6 +160,7 @@ img {
 
             <div id="gender"></div>
         </div>
+
         <div>
             <h5>Date of Birth:</h5>
 

@@ -28,18 +28,11 @@ public class FingerPrintConstant {
     public static final String PATIENT_ID = "patient.id";
     public static final String PATIENT_SUMMARY = "patient.summary";
 
-    public static final String SEARCH_PARAMS_ATTRIBUTE = "{patient(patients:[\"%s\"]){uuid birthdate gender dead patientFacility{ uuid name} names{ familyName middleName givenName voided}}}";
+    public static final String PATIENT_UUID_SEARCH_STRING = "{patient(patients:[\"%s\"]){uuid birthdate gender dead patientFacility{ uuid name} names{ familyName middleName givenName voided}}}";
+    public static final String PATIENT_NATIONAL_ID_SEARCH_STRING = "{patient(identifier:{t:\"f0c16a6d-dc5f-4118-a803-616d0075d282\",v:\"%s\"}){uuid birthdate gender dead patientFacility{ uuid name} names{ familyName middleName givenName voided}}}";
     public static final String PATIENT_ONLINE_ID = "identifiers";
     public static final String PATIENT_NOT_FOUND = "Patient Not Found";
     public static final String CONNECTION_TEST_IP = "google.com/";
     public static final String DEVICE_SOCKET_IP = "ugandaemrfingerprint.socketIPAddress";
     public static final String DEVICE_SOCKET_IP_PLACE_HOLDER = "/complete";
-
-    public static String getAttributeSearch(String searchType, String attributeType, String attributeValue) {
-        return String.format("query=patient(%s:{t:\"%s\",v:\"%s\"}){uuid}", searchType, attributeType, attributeValue);
-    }
-
-    public static String getFingerprintSearch(String fingerprint) {
-        return String.format("query=patient(fingerprint:%s){uuid}", fingerprint);
-    }
 }

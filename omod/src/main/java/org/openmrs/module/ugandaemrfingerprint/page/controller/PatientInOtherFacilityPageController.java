@@ -3,20 +3,13 @@ package org.openmrs.module.ugandaemrfingerprint.page.controller;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.module.appui.UiSessionContext;
-import org.openmrs.module.ugandaemrfingerprint.core.Commons;
 import org.openmrs.module.ugandaemrfingerprint.core.FingerPrintConstant;
 import org.openmrs.module.ugandaemrfingerprint.remoteserver.FingerPrintGlobalProperties;
-import org.openmrs.module.ugandaemrfingerprint.remoteserver.FingerPrintHttpURLConnection;
-import org.openmrs.ui.framework.UiUtils;
 import org.openmrs.ui.framework.annotation.SpringBean;
 import org.openmrs.ui.framework.page.PageModel;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Map;
-
-import static org.openmrs.module.ugandaemrfingerprint.core.FingerPrintConstant.CONNECTION_PROTOCOL;
-import static org.openmrs.module.ugandaemrfingerprint.core.FingerPrintConstant.CONNECTION_SUCCESS;
-import static org.openmrs.module.ugandaemrfingerprint.core.FingerPrintConstant.SEARCH_PARAMS_ATTRIBUTE;
+import static org.openmrs.module.ugandaemrfingerprint.core.FingerPrintConstant.*;
 
 /**
  * Marking a patient as dead
@@ -28,7 +21,7 @@ public class PatientInOtherFacilityPageController {
     }
 
     public void get(@SpringBean PageModel pageModel, @RequestParam(value = "breadcrumbOverride", required = false) String breadcrumbOverride, @RequestParam(value = "patientId", required = false) String patientId) {
-        FingerPrintGlobalProperties fingerPrintGlobalProperties =new FingerPrintGlobalProperties();
+        FingerPrintGlobalProperties fingerPrintGlobalProperties = new FingerPrintGlobalProperties();
         pageModel.put("familyName", "");
         pageModel.put("middleName", "");
         pageModel.put("givenName", "");
@@ -49,7 +42,8 @@ public class PatientInOtherFacilityPageController {
 
         pageModel.put("onlineIpAddress", fingerPrintGlobalProperties.getGlobalProperty(FingerPrintConstant.CONNECTION_SERVER_IP_GLOBALPROPERTY));
         pageModel.put("queryURL", FingerPrintConstant.SEARCH_URL);
-        pageModel.put("searchString", SEARCH_PARAMS_ATTRIBUTE);
+        pageModel.put("searchString", PATIENT_UUID_SEARCH_STRING);
+        pageModel.put("nationalIdString", PATIENT_NATIONAL_ID_SEARCH_STRING);
         pageModel.put("connectionProtocol", CONNECTION_PROTOCOL);
     }
 }
