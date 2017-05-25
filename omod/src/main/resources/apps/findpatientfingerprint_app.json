@@ -15,5 +15,20 @@
                 "requiredPrivilege": "App: fingerprint.findPatient"
             }
         ]
-    }
+    },{
+    "id": "fingerprint.statistic",
+    "description": "Patient search by fingerprint that goes to the patient dashboard",
+    "order": 2,
+    "extensions": [
+        {
+            "id": "coreapps.activeVisitsHomepageLink",
+            "extensionPointId": "systemAdministration.apps",
+            "type": "link",
+            "label": "Fingerprint Statistics",
+            "url": "ugandaemrfingerprint/fingerPrintStatistic.page",
+            "icon": "icon-bar-chart",
+            "requiredPrivilege": "App: fingerprint.findPatient"
+        }
+    ]
+}
 ]

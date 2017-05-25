@@ -35,4 +35,10 @@ public class FingerPrintConstant {
     public static final String CONNECTION_TEST_IP = "google.com/";
     public static final String DEVICE_SOCKET_IP = "ugandaemrfingerprint.socketIPAddress";
     public static final String DEVICE_SOCKET_IP_PLACE_HOLDER = "/complete";
+
+
+    public static final String RIGHT_THUMB = "5";
+    public static final String RIGHT_INDEX = "6";
+
+
 }

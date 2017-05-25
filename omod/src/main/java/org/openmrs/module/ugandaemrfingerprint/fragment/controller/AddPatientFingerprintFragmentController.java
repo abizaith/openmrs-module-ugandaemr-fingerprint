@@ -22,13 +22,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Fragment controller for patient search widget; sets the min # of search characters based on global property,
  * and loads last viewed patients for current user if "showLastViewedPatients" fragment config param=true
  */
-public class AddPatientFingerprintFragmentController {
+public class AddPatientFingerprintFragmentController implements Serializable{
     protected final Log log = LogFactory.getLog(this.getClass());
 
     @Autowired
@@ -72,6 +73,26 @@ public class AddPatientFingerprintFragmentController {
         session.getTransaction().commit();
 
         obj.put("message", "Patient fingerprint saved");
+
+        return obj;
+    }
+
+    public SimpleObject deleteFingerprint(@RequestParam(value = "patient", required = false) String patient,
+                                        UiUtils ui) {
+        SimpleObject obj = new SimpleObject();
+
+        Session session = Context.getRegisteredComponent("sessionFactory", SessionFactory.class).getCurrentSession();
+
+        session.beginTransaction();
+
+        String query = "DELETE FROM fingerprint WHERE patient ='"+patient+"'";
+        SQLQuery sqlQuery = session.createSQLQuery(query);
+
+        sqlQuery.executeUpdate();
+
+        session.getTransaction().commit();
+
+        obj.put("result", "Patient fingerprint Deleted");
 
         return obj;
     }

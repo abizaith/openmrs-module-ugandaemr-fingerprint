@@ -1,4 +1,12 @@
-[
+[  {
+  "id": "ugandaemrfingerprint.patientDashboard.patientActions.fingerprintDetails",
+  "extensionPointId": "patientDashboard.secondColumnFragments",
+  "order": 5,
+  "extensionParams": {
+    "provider": "${project.parent.artifactId}",
+    "fragment": "fingerPrintDetails"
+  }
+},
   {
     "id": "ugandaemrfingerprint.patientDashboard.patientActions.addPatientFingerprint",
     "extensionPointId": "patientDashboard.overallActions",
