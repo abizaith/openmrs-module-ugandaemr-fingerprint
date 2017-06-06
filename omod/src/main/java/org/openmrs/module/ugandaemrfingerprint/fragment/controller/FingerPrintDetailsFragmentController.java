@@ -20,7 +20,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Created by ssmusoke on 26/01/2016.
+ * Created by Lubwama Samuel on 26/01/2016.
  */
 public class FingerPrintDetailsFragmentController {
 

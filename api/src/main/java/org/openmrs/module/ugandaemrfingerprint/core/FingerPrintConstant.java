@@ -41,4 +41,17 @@ public class FingerPrintConstant {
     public static final String RIGHT_INDEX = "6";
 
 
+    public  static final String PATIENT_NAMES="names";
+    public  static final String PATIENT_FAMILY_NAME="familyName";
+    public  static final String PATIENT_MIDDLE_NAME="middleName";
+    public  static final String PATIENT_GIVEN_NAME="givenName";
+
+    public  static final String PATIENT_GENDER="gender";
+    public  static final String PATIENT_BIRTH_DATE="birthdate";
+    public  static final String PATIENT_FACILITY_NAME="patientFacility";
+    public  static final String NAME="name";
+    public  static final String UUID="uuid";
+
+
+
 }
