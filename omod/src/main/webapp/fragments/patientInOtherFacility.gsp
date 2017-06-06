@@ -52,16 +52,6 @@
                             if (response && response.data.patient !== null) {
                                 displayData(response);
                                 jq().toastmessage('showSuccessToast', "Patient Found");
-                                jq("#patient_found").attr("display", "block");
-
-                                var patientData = {};
-                                patientData = response.data.patient;
-                                jq.post('${ ui.actionLink("mapPatientInOtherFacilities") }', {
-                                    patient: JSON.stringify(patientData)
-                                }, function (response) {
-                                    response = response.replace("=", ":");
-                                    console.log("Response: " + response);
-                                });
                             }
                             else if (response.errors) {
                                 jq().toastmessage('showErrorToast', "Internal Server Error");
