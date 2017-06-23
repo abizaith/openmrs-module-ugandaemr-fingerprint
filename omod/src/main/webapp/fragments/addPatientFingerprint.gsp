@@ -29,6 +29,19 @@
         stompClient.send("/calcApp/add", {}, JSON.stringify({'finger': finger, patient: "${patientId}"}));
     }
 
+    function deleteFingerPrints() {
+        jq.post('${ ui.actionLink("deleteFingerprint") }', {
+            patient: "${patientId}"
+        }, function (response) {
+            if(response.search("Patient fingerprint Deleted")>-1){
+               var message;
+                message='{"result":"Patient fingerprint Deleted"}';
+
+                showResult(JSON.parse(message));
+            }
+        });
+    }
+
     function search(finger) {
         document.getElementById('calResponse').innerHTML = "";
         document.getElementById('images').innerHTML = "";
@@ -79,8 +92,10 @@ ${ui.includeFragment("coreapps", "patientHeader", [patient: patient])}
 <div id="calculationDiv">
     <button id="thumb" onclick="sendNum(5);">Scan Right Thumb</button>
     <button id="index" onclick="sendNum(6);">Scan Right Index</button>
+    <button id="delete" onclick="deleteFingerPrints()">Delete Existing Finger Prints</button>
 
     <p id="calResponse"></p>
+    <p id="deleteMessage"></p>
 
     <div id="images"></div>
 </div>

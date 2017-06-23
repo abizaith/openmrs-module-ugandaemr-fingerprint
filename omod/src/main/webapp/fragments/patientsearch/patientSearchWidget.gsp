@@ -108,6 +108,12 @@ img {
         else if (message.type === "online" && message.patient !== "") {
             window.location = "/openmrs/ugandaemrfingerprint/patientInOtherFacility.page?patientId=" + message.patient;
         }
+        else if (message.type === null && (message.patient === null || message.patient === "")) {
+            var message;
+            message = '{"result":"Patient Not Found at Central Server"}';
+            showResult(JSON.parse(message));
+            jq().toastmessage('showErrorToast', "Patient Not Found");
+        }
         else {
             response.innerHTML = message.result;
         }
