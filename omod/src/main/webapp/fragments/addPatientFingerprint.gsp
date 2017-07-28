@@ -103,7 +103,7 @@ ${ui.includeFragment("coreapps", "patientHeader", [patient: patient])}
         }
     %>
     <%
-        if (!rightThumbFingerEnrolled || !rightIndexFingerEnrolled) {
+        if (rightThumbFingerEnrolled || rightIndexFingerEnrolled) {
     %>
     <button id="delete" onclick="deleteFingerPrints()">Delete Existing Finger Prints</button>
     <% } %>
