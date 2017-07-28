@@ -13,28 +13,26 @@ img {
     </div>
 
     <div id="images" class="info-body">
-
         <% if (fingerPrintNo <= 0) { %>
         <div>
             <strong>${ui.message("No Fingerprint Captured.")}</strong>
         </div>
         <%
             } else {
-                fingerPrint.each {
-                    if (it.finger == "5") {
+                    if (finger2 == "5") {
         %>
         <div>
-            <strong>Right Thumb:</strong>Enrolled On ${Date.parse("yyyy-M-d H:m:s", it.dateCreated)}
+            <strong>Right Thumb:</strong>Enrolled On ${Date.parse("yyyy-M-d H:m:s",dateCreated)}
         </div>
         <%
 
-            } else if (it.finger == "6") {
+            } else if (finger1 == "6") {
         %>
         <div>
-            <strong>Right Index:</strong>Enrolled On ${Date.parse("yyyy-M-d H:m:s", it.dateCreated)}
+            <strong>Right Index:</strong>Enrolled On ${Date.parse("yyyy-M-d H:m:s",dateCreated)}
         </div>
         <%
-                }
+
         %>
 
         <%

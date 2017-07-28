@@ -2,12 +2,10 @@ package org.openmrs.module.ugandaemrfingerprint.fragment.controller;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.hibernate.SQLQuery;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.type.StringType;
+import org.openmrs.api.PatientService;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.ugandaemrfingerprint.core.FingerPrintTemplate;
+import org.openmrs.module.ugandaemrfingerprint.model.Fingerprint;
+import org.openmrs.module.ugandaemrfingerprint.UgandaEMRFingerprintService;
 import org.openmrs.ui.framework.SimpleObject;
 import org.openmrs.ui.framework.UiUtils;
 import org.openmrs.ui.framework.fragment.FragmentModel;
@@ -15,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -29,30 +25,32 @@ public class FingerPrintDetailsFragmentController {
     public void controller(FragmentModel model, @RequestParam(value = "patientId", required = false) String patient, UiUtils ui) throws ParseException {
 
         SimpleObject obj = new SimpleObject();
+        UgandaEMRFingerprintService ugandaEMRFingerprintService = (UgandaEMRFingerprintService) Context.getService(UgandaEMRFingerprintService.class);
+        List<Fingerprint> fingerprints = new ArrayList<Fingerprint>();
 
-        Session session = Context.getRegisteredComponent("sessionFactory", SessionFactory.class).getCurrentSession();
 
-        session.beginTransaction();
-
-        String query = "SELECT * FROM fingerprint WHERE patient ='" + patient + "'";
-        SQLQuery sqlQuery = session.createSQLQuery(query);
-
-        List<String> columns = Arrays.asList("fingerprint_id", "finger", "fingerprint", "date_created");
-
-        for (String column : columns) {
-            sqlQuery.addScalar(column, StringType.INSTANCE);
-        }
-        List<Object[]> results = sqlQuery.list();
-        List<FingerPrintTemplate> fingerPrintTemplates = new ArrayList<FingerPrintTemplate>();
-        Iterator iterator = results.iterator();
-        for (Object[] resultItem : results) {
-            FingerPrintTemplate fingerPrintTemplate = new FingerPrintTemplate(resultItem[0].toString(), resultItem[1].toString(), resultItem[2].toString(), resultItem[3].toString());
-            fingerPrintTemplate.getDateCreated();
-            fingerPrintTemplates.add(fingerPrintTemplate);
+        if (!ugandaEMRFingerprintService.isUUID(patient) && patient != "") {
+            PatientService patientService = Context.getPatientService();
+            patient = patientService.getPatient(Integer.parseInt(patient)).getUuid();
         }
 
+        fingerprints = ugandaEMRFingerprintService.getPatientFingerprint(patient);
+        String dateCreated = null;
+        String finger1 = "";
+        String finger2 = "";
+        for (Fingerprint fingerprint : fingerprints) {
+            dateCreated = fingerprint.getDateCreated().toString();
+            if (fingerprint.getFinger() == 6) {
+                finger1 = fingerprint.getFinger() + "";
+            } else if (fingerprint.getFinger() == 5) {
+                finger2 = fingerprint.getFinger() + "";
+            }
+        }
 
-        model.addAttribute("fingerPrint", fingerPrintTemplates);
-        model.addAttribute("fingerPrintNo", fingerPrintTemplates.size());
+        model.addAttribute("fingerPrint", fingerprints);
+        model.addAttribute("dateCreated", dateCreated);
+        model.addAttribute("finger1", finger1);
+        model.addAttribute("finger2", finger2);
+        model.addAttribute("fingerPrintNo", fingerprints.size());
     }
 }
