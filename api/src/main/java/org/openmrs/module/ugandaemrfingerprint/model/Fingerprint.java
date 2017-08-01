@@ -17,7 +17,7 @@ public class Fingerprint extends BaseOpenmrsMetadata implements Auditable,Serial
 
     private int finger;
 
-    private Blob fingerprint;
+    private String fingerprint;
 
     private Date dateCreated;
 
@@ -56,11 +56,11 @@ public class Fingerprint extends BaseOpenmrsMetadata implements Auditable,Serial
         this.finger = finger;
     }
 
-    public Blob getFingerprint() {
+    public String getFingerprint() {
         return fingerprint;
     }
 
-    public void setFingerprint(Blob fingerprint) {
+    public void setFingerprint(String fingerprint) {
         this.fingerprint = fingerprint;
     }
 

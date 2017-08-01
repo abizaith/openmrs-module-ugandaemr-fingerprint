@@ -15,7 +15,7 @@
 
 		<property name="finger" type="int" column="finger" />
 
-		<property name="fingerprint" type="java.sql.Blob" column="fingerprint" />
+		<property name="fingerprint" type="java.lang.String" column="fingerprint" />
 
 		<property name="dateCreated" type="java.util.Date" column="date_created"/>
 			

@@ -73,7 +73,7 @@ public class AddPatientFingerprintFragmentController implements Serializable {
 
     public SimpleObject saveFingerprint(FragmentModel model, @RequestParam(value = "patient", required = false) String patient,
                                         @RequestParam(value = "finger", required = false) Integer finger,
-                                        @RequestParam(value = "fingerprint", required = false) Blob fingerprint,
+                                        @RequestParam(value = "fingerprint", required = false) String fingerprint,
                                         UiUtils ui) {
 
 
