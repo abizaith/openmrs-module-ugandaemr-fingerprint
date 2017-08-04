@@ -40,8 +40,6 @@ public class PatientInOtherFacilityFragmentController {
                            @SpringBean("adminService") AdministrationService administrationService,
                            @FragmentParam(value = "showLastViewedPatients", required = false) Boolean showLastViewedPatients,
                            @FragmentParam(value = "initialSearchFromParameter", required = false) String searchByParam) {
-
-
     }
 
     public SimpleObject mapPatientInOtherFacilities(@RequestParam(value = "patient", required = false) String o) {

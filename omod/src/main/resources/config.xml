@@ -22,7 +22,7 @@
 
     <!-- Maps hibernate file's, if present -->
     <mappingFiles>
-
+        Fingerprint.hbm.xml
     </mappingFiles>
 
     <!-- Internationalization -->

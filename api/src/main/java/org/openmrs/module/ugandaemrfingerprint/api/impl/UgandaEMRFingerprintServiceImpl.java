@@ -9,23 +9,65 @@
  */
 package org.openmrs.module.ugandaemrfingerprint.api.impl;
 
-import org.openmrs.api.APIException;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.impl.BaseOpenmrsService;
-import org.openmrs.module.ugandaemrfingerprint.Fingerprint;
-import org.openmrs.module.ugandaemrfingerprint.api.UgandaEMRFingerprintService;
-import org.openmrs.module.ugandaemrfingerprint.api.dao.UgandaEMRFingerprintDao;
+import org.openmrs.module.ugandaemrfingerprint.UgandaEMRFingerprintService;
+import org.openmrs.module.ugandaemrfingerprint.api.db.UgandaEMRFingerprintDao;
+import org.openmrs.module.ugandaemrfingerprint.model.Fingerprint;
+
+import java.util.List;
+import java.util.UUID;
 
 public class UgandaEMRFingerprintServiceImpl extends BaseOpenmrsService implements UgandaEMRFingerprintService {
 
-    UgandaEMRFingerprintDao dao;
+
+    private UgandaEMRFingerprintDao dao;
+
+    public UgandaEMRFingerprintServiceImpl() {
+    }
+
+    private UgandaEMRFingerprintDao getUgandaEMRFingerprintDAO() {
+        return dao;
+    }
+
+    public void setUgandaEMRFingerprintDAO(UgandaEMRFingerprintDao dao) {
+        this.dao = dao;
+    }
+
+    private Log log = LogFactory.getLog(this.getClass());
 
     public void setDao(UgandaEMRFingerprintDao dao) {
         this.dao = dao;
     }
 
+    @Override
+    public List<Fingerprint> getPatientFingerprint(String patientId) {
+        return dao.getPatientFingerPrint(patientId);
+    }
 
     @Override
-    public Fingerprint saveFingerprint(Fingerprint fingerprint) throws APIException {
-        return dao.saveFingerprint(fingerprint);
+    public List<Fingerprint> getPatientFingerprints() {
+        return dao.getPatientFingerPrints();
+    }
+
+    @Override
+    public void deletePatientFingerPrint(String patientId) {
+        dao.deletePatientFingerPrint(patientId);
+    }
+
+    @Override
+    public void savePatientFingerprint(Fingerprint fingerprint) {
+        dao.savePatientFingerprint(fingerprint);
+    }
+
+    @Override
+    public boolean isUUID(String uuid) {
+        try {
+            UUID.fromString(uuid);
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
     }
 }

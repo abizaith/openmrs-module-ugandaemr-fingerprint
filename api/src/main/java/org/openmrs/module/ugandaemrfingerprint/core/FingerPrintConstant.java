@@ -37,8 +37,8 @@ public class FingerPrintConstant {
     public static final String DEVICE_SOCKET_IP_PLACE_HOLDER = "/complete";
 
 
-    public static final String RIGHT_THUMB = "5";
-    public static final String RIGHT_INDEX = "6";
+    public static final int RIGHT_THUMB = 5;
+    public static final int RIGHT_INDEX = 6;
 
 
     public  static final String PATIENT_NAMES="names";

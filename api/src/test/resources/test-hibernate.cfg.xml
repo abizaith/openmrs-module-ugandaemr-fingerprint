@@ -17,5 +17,6 @@
 
 <hibernate-configuration>
     <session-factory>
+        <mapping resource="Fingerprint.hbm.xml" />
     </session-factory>
 </hibernate-configuration>

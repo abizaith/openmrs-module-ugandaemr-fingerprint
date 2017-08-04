@@ -9,31 +9,32 @@
 
     <context:component-scan base-package="org.openmrs.module.ugandaemrfingerprint"/>
 
-
-    <bean id="ugandaEMRFingerprintService"
-          class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
-        <property name="transactionManager">
-            <ref bean="transactionManager"/>
-        </property>
-        <property name="target">
-            <bean class="${project.parent.groupId}.${project.parent.artifactId}.api.impl.UgandaEMRFingerprintServiceImpl"/>
-        </property>
-        <property name="preInterceptors">
-            <ref bean="serviceInterceptors"/>
-        </property>
-        <property name="transactionAttributeSource">
-            <ref bean="transactionAttributeSource"/>
-        </property>
-    </bean>
-
-    <!-- Services accessible via Context.getService() -->
     <bean parent="serviceContext">
         <property name="moduleService">
             <list>
-                <value>${project.parent.groupId}.${project.parent.artifactId}.api.UgandaEMRFingerprintService</value>
-                <ref local="ugandaEMRFingerprintService"/>
+                <value>org.openmrs.module.ugandaemrfingerprint.UgandaEMRFingerprintService</value> <!-- service interface name -->
+                <bean
+                        class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+                    <property name="transactionManager">
+                        <ref bean="transactionManager" />
+                    </property>
+                    <property name="target">
+                        <bean class="org.openmrs.module.ugandaemrfingerprint.api.impl.UgandaEMRFingerprintServiceImpl">
+                            <property name="ugandaEMRFingerprintDAO">
+                                <bean class="org.openmrs.module.ugandaemrfingerprint.api.db.hibernate.HibernateUgandaEMRFingerprintDao">
+                                    <property name="sessionFactory">
+                                        <ref bean="sessionFactory" />
+                                    </property>
+                                </bean>
+                            </property>
+                        </bean>
+                    </property>
+                    <property name="transactionAttributeSource">
+                        <bean
+                                class="org.springframework.transaction.annotation.AnnotationTransactionAttributeSource" />
+                    </property>
+                </bean>
             </list>
         </property>
     </bean>
-
 </beans>

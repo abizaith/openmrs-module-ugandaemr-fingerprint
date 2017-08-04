@@ -1,5 +1,8 @@
 package org.openmrs.module.ugandaemrfingerprint.core;
 
+import org.openmrs.api.ConceptService;
+import org.openmrs.api.context.Context;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +34,18 @@ public class GenericService {
         Facility facilities = getPatientFacility((Map) client.get(PATIENT_FACILITY_NAME));
         PatientInOtherFacility patientInOtherFacility = new PatientInOtherFacility(client.get("birthdate").toString(), client.get("gender").toString(), patientNames, facilities);
         return patientInOtherFacility;
+    }
+
+
+    public  List<Map> getMap(){
+
+        return null;
+    }
+
+    public String getConcept(String s){
+        ConceptService conceptService= Context.getConceptService();
+
+        return conceptService.getConceptByUuid(s).getName().getName();
     }
 
     public List<PatientName> getPatientNames(List<Map> mapList) {

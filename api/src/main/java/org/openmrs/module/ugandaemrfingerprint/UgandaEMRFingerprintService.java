@@ -7,22 +7,30 @@
  * Copyright (C) OpenMRS Inc. OpenMRS is a registered trademark and the OpenMRS
  * graphic logo is a trademark of OpenMRS Inc.
  */
-package org.openmrs.module.ugandaemrfingerprint.api;
+package org.openmrs.module.ugandaemrfingerprint;
 
 import org.openmrs.annotation.Authorized;
-import org.openmrs.api.APIException;
-import org.openmrs.api.OpenmrsService;
-import org.openmrs.module.ugandaemrfingerprint.Fingerprint;
-import org.openmrs.module.ugandaemrfingerprint.UgandaEMRFingerprintConfig;
 import org.springframework.transaction.annotation.Transactional;
+import org.openmrs.module.ugandaemrfingerprint.model.Fingerprint;
+
+import java.util.List;
 
 /**
  * The main service of this module, which is exposed for other modules. See
  * moduleApplicationContext.xml on how it is wired up.
  */
-public interface UgandaEMRFingerprintService extends OpenmrsService {
+@Transactional
+public interface UgandaEMRFingerprintService {
 
     @Authorized(UgandaEMRFingerprintConfig.MODULE_PRIVILEGE)
-    @Transactional
-    Fingerprint saveFingerprint(Fingerprint fingerprint) throws APIException;
+
+    public List<Fingerprint> getPatientFingerprint(String patientId);
+
+    public List<Fingerprint> getPatientFingerprints();
+
+    public void deletePatientFingerPrint(String patientId);
+
+    public void savePatientFingerprint(Fingerprint fingerprint);
+
+    public boolean isUUID(String uuid);
 }
