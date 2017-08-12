@@ -1,6 +1,5 @@
 package org.openmrs.module.ugandaemrfingerprint.model;
 
-import java.sql.Blob;
 import org.openmrs.Auditable;
 import org.openmrs.BaseOpenmrsMetadata;
 

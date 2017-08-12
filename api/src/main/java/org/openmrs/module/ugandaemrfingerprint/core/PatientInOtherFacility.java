@@ -1,5 +1,8 @@
 package org.openmrs.module.ugandaemrfingerprint.core;
 
+import org.openmrs.Obs;
+import org.openmrs.module.ugandaemrfingerprint.model.PatientOb;
+
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -12,10 +15,14 @@ import java.util.Locale;
  * Created by lubwamasamuel on 30/05/2017.
  */
 public class PatientInOtherFacility implements Serializable {
-    private Date dateOfBirth;
+    private String dateOfBirth;
     private String gender;
     private List<PatientName> patientNames;
     private Facility healthCenter;
+
+    private List<PatientOb> obsSummaryPageList;
+
+    private List<PatientOb> obsLastEncounterPageList;
 
     public PatientInOtherFacility() {
     }
@@ -28,27 +35,43 @@ public class PatientInOtherFacility implements Serializable {
         this.patientNames = patientNames;
     }
 
+    public List<PatientOb> getObsSummaryPageList() {
+        return obsSummaryPageList;
+    }
+
+    public void setObsSummaryPageList(List<PatientOb> obsSummaryPageList) {
+        this.obsSummaryPageList = obsSummaryPageList;
+    }
+
+    public List<PatientOb> getObsLastEncounterPageList() {
+        return obsLastEncounterPageList;
+    }
+
+    public void setObsLastEncounterPageList(List<PatientOb> obsLastEncounterPageList) {
+        this.obsLastEncounterPageList = obsLastEncounterPageList;
+    }
+
     /**
      * @param dateOfBirth
      * @param gender
      * @param names
      * @param healthCenter
      */
-
-
-    public PatientInOtherFacility(String dateOfBirth, String gender, List<PatientName> names, Facility healthCenter) {
-        this.dateOfBirth = getDateFromString(dateOfBirth, "yyyy-M-dd");
+    public PatientInOtherFacility(String dateOfBirth, String gender, List<PatientName> names, Facility healthCenter, List<PatientOb> obsSummaryPageList, List<PatientOb> obsLastEncounterPageList) {
+        this.dateOfBirth = dateOfBirth;
         this.gender = gender;
         this.patientNames = names;
         this.healthCenter = healthCenter;
+        this.obsSummaryPageList = obsSummaryPageList;
+        this.obsLastEncounterPageList = obsLastEncounterPageList;
     }
 
 
-    public Date getDateOfBirth() {
+    public String getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -68,12 +91,12 @@ public class PatientInOtherFacility implements Serializable {
         this.healthCenter = healthCenter;
     }
 
-    private Date getDateFromString(String date, String dateFormat) {
-        DateFormat format = new SimpleDateFormat(dateFormat, Locale.ENGLISH);
-        Date finalDate = null;
+    private String getDateFromString(String date, String dateFormat) {
+        DateFormat format = new SimpleDateFormat(dateFormat);
+        String finalDate = null;
         try {
-            finalDate = format.parse(date);
-        } catch (ParseException e) {
+            finalDate = format.format(date);
+        } catch (Exception e) {
             e.printStackTrace();
         }
         System.out.println(date);

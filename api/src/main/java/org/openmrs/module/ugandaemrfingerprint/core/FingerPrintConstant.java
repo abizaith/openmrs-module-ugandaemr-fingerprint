@@ -26,9 +26,8 @@ public class FingerPrintConstant {
     public static final String FACILITY_NAME = "facility.name";
     public static final String FACILITY_ID = "facility.id";
     public static final String PATIENT_ID = "patient.id";
-    public static final String PATIENT_SUMMARY = "patient.summary";
 
-    public static final String PATIENT_UUID_SEARCH_STRING = "{patient(patients:[\"%s\"]){uuid birthdate gender dead patientFacility{ uuid name} names{ familyName middleName givenName voided}}}";
+    public static final String PATIENT_UUID_SEARCH_STRING = "{patient(patients:[\"%s\"]){uuid birthdate gender dead patientFacility{ uuid name} names{ familyName middleName givenName voided} summaryPage{obs {uuid concept encounterDate encounterType valueCoded valueText valueNumeric valueDatetime valueDrug valueBoolean valueComplex voided }} mostRecentEncounter{obs { uuid concept encounterDate encounterType valueCoded valueText valueNumeric valueDatetime valueDrug valueBoolean valueComplex voided}}}}";
     public static final String PATIENT_NATIONAL_ID_SEARCH_STRING = "{patient(identifier:{t:\"f0c16a6d-dc5f-4118-a803-616d0075d282\",v:\"%s\"}){uuid birthdate gender dead patientFacility{ uuid name} names{ familyName middleName givenName voided}}}";
     public static final String PATIENT_ONLINE_ID = "identifiers";
     public static final String PATIENT_NOT_FOUND = "Patient Not Found";
@@ -49,8 +48,28 @@ public class FingerPrintConstant {
     public  static final String PATIENT_GENDER="gender";
     public  static final String PATIENT_BIRTH_DATE="birthdate";
     public  static final String PATIENT_FACILITY_NAME="patientFacility";
+    public  static final String PATIENT_SUMMARY="summaryPage";
+    public  static final String PATIENT_LAST_ENCOUNTER="mostRecentEncounter";
+
     public  static final String NAME="name";
-    public  static final String UUID="uuid";
+    public  static final String DATE_OF_BIRTH="birthdate";
+    public  static final String GENDER="gender";
+    public  static final String UUID_STRING ="uuid";
+    public  static final String CONCEPT ="concept";
+    public  static final String ENCOUNTER_DATE="encounterDate";
+    public  static final String ENCOUNTER_TYPE="encounterType";
+    public  static final String VALUE_CODED="valueCoded";
+    public  static final String VALUE_TEXT="valueText";
+    public  static final String VALUE_NUMERIC="valueNumeric";
+    public  static final String VALUE_DATE_TIME="valueDatetime";
+    public  static final String VALUE_DRUG="valueDrug";
+    public  static final String VALUE_BOOLEAN="valueBoolean";
+    public  static final String VALUE_COMPLEX="valueComplex";
+    public  static final String VOIDED="voided";
+    public  static final String OBS="obs";
+
+
+
 
 
 
