@@ -1,18 +1,17 @@
 package org.openmrs.module.ugandaemrfingerprint.fragment.controller;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.xpath.operations.String;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.hibernate.SQLQuery;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.type.StringType;
+import org.codehaus.jackson.map.util.JSONPObject;
 import org.openmrs.api.AdministrationService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.appui.UiSessionContext;
-import org.openmrs.module.ugandaemrfingerprint.core.FingerPrintTemplate;
-import org.openmrs.module.ugandaemrfingerprint.core.GenericService;
+import org.openmrs.module.ugandaemrfingerprint.UgandaEMRFingerprintService;
 import org.openmrs.module.ugandaemrfingerprint.core.PatientInOtherFacility;
 import org.openmrs.ui.framework.SimpleObject;
 import org.openmrs.ui.framework.UiUtils;
@@ -23,8 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.text.ParseException;
-import java.util.*;
+import java.util.Map;
 
 /**
  * Created by Lubwama Samuel on 26/01/2016.
@@ -39,32 +37,25 @@ public class PatientInOtherFacilityFragmentController {
                            HttpServletRequest request,
                            @SpringBean("adminService") AdministrationService administrationService,
                            @FragmentParam(value = "showLastViewedPatients", required = false) Boolean showLastViewedPatients,
-                           @FragmentParam(value = "initialSearchFromParameter", required = false) String searchByParam) {
+                           @FragmentParam(value = "initialSearchFromParameter", required = false) java.lang.String searchByParam) {
     }
 
-    public SimpleObject mapPatientInOtherFacilities(@RequestParam(value = "patient", required = false) String o) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        Map map = null;
-        SimpleObject simpleObject = new SimpleObject();
-        try {
-            String patient = o;
-            map = objectMapper.readValue(o.toString(), Map.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        GenericService genericService = new GenericService();
-        PatientInOtherFacility patientInOtherFacility = genericService.getPatientInOtherFacility(map);
-        String jsonString = "";
-        try {
-            jsonString = objectMapper.writeValueAsString(patientInOtherFacility);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-        if (jsonString != "") {
-            Map<String, Object> map1 = objectMapper.convertValue(patientInOtherFacility, Map.class);
-            simpleObject.putAll(map1);
-        }
+    public SimpleObject processPatientEncounters(FragmentModel model, @RequestParam(value = "patientData", required = false) java.lang.String patientData, UiUtils ui) throws IOException {
+
+        JsonParser jsonParser = new JsonParser();
+        JsonObject jsonObj = jsonParser.parse(java.lang.String.valueOf(patientData)).getAsJsonObject();
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        SimpleObject simpleObject = new SimpleObject();
+
+        UgandaEMRFingerprintService ugandaEMRFingerprintService = Context.getService(UgandaEMRFingerprintService.class);
+
+        PatientInOtherFacility patientInOtherFacility = new PatientInOtherFacility();
+
+        patientInOtherFacility = ugandaEMRFingerprintService.getPatientInOtherFacility(jsonObj);
+
+        simpleObject.put("patientData", objectMapper.writeValueAsString(patientInOtherFacility));
 
         return simpleObject;
     }

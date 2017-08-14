@@ -10,7 +10,6 @@
     def breadcrumbMiddle = breadcrumbOverride ?: '';
 %>
 <script type="text/javascript">
-
     var breadcrumbs = [
         {icon: "icon-home", link: '/' + OPENMRS_CONTEXT_PATH + '/index.htm'},
         {
@@ -20,7 +19,7 @@
 
     if (jQuery) {
         jq(document).ready(function () {
-
+            jq("#tabs").tabs();
             if ("${patientId}" != "") {
                 remoteSearch('fingerprint', "${patientId}");
             }
@@ -52,6 +51,13 @@
                             if (response && response.data.patient !== null) {
                                 displayData(response);
                                 jq().toastmessage('showSuccessToast', "Patient Found");
+
+                                jq.post('${ ui.actionLink("processPatientEncounters") }', {
+                                    patientData: JSON.stringify(response.data.patient)
+                                }, function (response) {
+                                    var responseData = JSON.parse(response.replace("patientData=", "\"patientData\":").trim());
+                                    patientClinicInfo(responseData);
+                                });
                             }
                             else if (response.errors) {
                                 jq().toastmessage('showErrorToast', "Internal Server Error");
@@ -95,7 +101,7 @@
         jq("#age").html(response.data.patient.age);
         jq("#gender").html(patientNames);
         jq("#facilityName").html(response.data.patient.patientFacility.name);
-        jq("#facilityNameHeader").html("At "+response.data.patient.patientFacility.name);
+        jq("#facilityNameHeader").html("At " + response.data.patient.patientFacility.name);
         jq("#facilityId").html(response.data.patient.patientFacility.uuid);
         var dateOfBirth = formatDate(new Date(response.data.patient.birthdate));
         jq("#birthDate").html(dateOfBirth + "");
@@ -106,7 +112,50 @@
         "${connectionStatus=""}";
     }
 
+    function patientClinicInfo(response) {
+        if (response.patientData != "") {
 
+            if (response.patientData.obsSummaryPageList != null) {
+                var txt1 = "";
+                txt1 += "<div id=\"tabs-1\" style=\"background: #B6D6E6;\" class=\"encounter-summary-container\">";
+                txt1 += "<table>";
+                for (x in response.patientData.obsSummaryPageList) {
+                    txt1 += "<tr><td>" + response.patientData.obsSummaryPageList[x].concept + "</td><td>" + response.patientData.obsSummaryPageList[x].answerSummary + "</td></tr>";
+                }
+                txt1 += "</table>";
+                txt1 += "</div>";
+                jq("#tabs").append(txt1);
+            }
+            else {
+                var txt1 = "";
+                txt1 += "<div id=\"tabs-1\" style=\"background: #B6D6E6;\" class=\"encounter-summary-container\">";
+                txt1 += "</div>";
+                jq("#tabs").append(txt1);
+            }
+
+            if (response.patientData.obsLastEncounterPageList != null) {
+                var txt2 = "";
+                txt2 += "<div id=\"tabs-2\" style=\"background: #B6D6E6;\" class=\"encounter-summary-container\">";
+                txt2 += "<table>";
+                for (x in response.patientData.obsLastEncounterPageList) {
+                    txt2 += "<tr><td>" + response.patientData.obsLastEncounterPageList[x].concept + "</td><td>" + response.patientData.obsLastEncounterPageList[x].answerSummary + "</td></tr>";
+                }
+                txt2 += "</table>";
+                txt2 += "</div>";
+                jq("#tabs").append(txt2);
+            }
+            else {
+                var txt2 = "";
+                txt2 += "<div id=\"tabs-2\" style=\"background: #B6D6E6;\" class=\"encounter-summary-container\">";
+                txt2 += "</div>";
+                jq("#tabs").append(txt2);
+            }
+        }
+    }
+
+    jq(function () {
+        jq("#tabs").tabs();
+    });
 </script>
 <style type="text/css">
 #death-date-display {
@@ -180,16 +229,23 @@ img {
         </div>
 
         <div>
-            <strong>Sex: </strong><span id="gender"></span>
+            <strong>Sex:</strong><span id="gender"></span>
         </div>
 
         <div>
-            <strong>Date of Birth: </strong><span id="birthDate"></span>
+            <strong>Date of Birth:</strong><span id="birthDate"></span>
         </div>
 
         <div>
-            <strong>Facility Name: </strong><span id="facilityName"></span>
+            <strong>Facility Name:</strong><span id="facilityName"></span>
         </div>
+    </div>
+
+    <div id="tabs" style="margin-left: auto; margin-right: auto;width: 95%;margin-top: 20px;">
+        <ul>
+            <li id="art_summary_header"><a href="#tabs-1">Patient Clinic Summary</a></li>
+            <li id="art_latest_encounter_header"><a href="#tabs-2">Last Patient Encounter</a></li>
+        </ul>
     </div>
 </div>
 <% } %>

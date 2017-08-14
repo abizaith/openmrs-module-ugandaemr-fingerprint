@@ -9,7 +9,12 @@
  */
 package org.openmrs.module.ugandaemrfingerprint;
 
+import com.google.gson.JsonObject;
 import org.openmrs.annotation.Authorized;
+import org.openmrs.api.OpenmrsService;
+import org.openmrs.module.ugandaemrfingerprint.core.Facility;
+import org.openmrs.module.ugandaemrfingerprint.core.PatientInOtherFacility;
+import org.openmrs.module.ugandaemrfingerprint.core.PatientName;
 import org.springframework.transaction.annotation.Transactional;
 import org.openmrs.module.ugandaemrfingerprint.model.Fingerprint;
 
@@ -20,7 +25,7 @@ import java.util.List;
  * moduleApplicationContext.xml on how it is wired up.
  */
 @Transactional
-public interface UgandaEMRFingerprintService {
+public interface UgandaEMRFingerprintService extends OpenmrsService{
 
     @Authorized(UgandaEMRFingerprintConfig.MODULE_PRIVILEGE)
 
@@ -33,4 +38,7 @@ public interface UgandaEMRFingerprintService {
     public void savePatientFingerprint(Fingerprint fingerprint);
 
     public boolean isUUID(String uuid);
+
+    public PatientInOtherFacility getPatientInOtherFacility(JsonObject jsonObject);
+
 }

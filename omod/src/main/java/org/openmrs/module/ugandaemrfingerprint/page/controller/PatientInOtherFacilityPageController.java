@@ -2,22 +2,12 @@ package org.openmrs.module.ugandaemrfingerprint.page.controller;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.codehaus.jackson.map.util.JSONPObject;
-import org.openmrs.Concept;
-import org.openmrs.Encounter;
-import org.openmrs.Obs;
-import org.openmrs.api.ConceptService;
-import org.openmrs.api.context.Context;
 import org.openmrs.module.appui.UiSessionContext;
 import org.openmrs.module.ugandaemrfingerprint.core.FingerPrintConstant;
-import org.openmrs.module.ugandaemrfingerprint.core.GenericService;
-import org.openmrs.module.ugandaemrfingerprint.core.PatientInOtherFacility;
 import org.openmrs.module.ugandaemrfingerprint.remoteserver.FingerPrintGlobalProperties;
 import org.openmrs.ui.framework.annotation.SpringBean;
 import org.openmrs.ui.framework.page.PageModel;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.List;
 
 import static org.openmrs.module.ugandaemrfingerprint.core.FingerPrintConstant.*;
 
@@ -55,16 +45,5 @@ public class PatientInOtherFacilityPageController {
         pageModel.put("searchString", PATIENT_UUID_SEARCH_STRING);
         pageModel.put("nationalIdString", PATIENT_NATIONAL_ID_SEARCH_STRING);
         pageModel.put("connectionProtocol", CONNECTION_PROTOCOL);
-    }
-
-    public List<Obs> getOnlineEncounterPage(String s) {
-
-
-        return null;
-    }
-
-    private Concept getConcept(int conceptId) {
-        ConceptService conceptService = Context.getConceptService();
-        return conceptService.getConcept(conceptId);
     }
 }
