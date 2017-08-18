@@ -4,7 +4,7 @@
 
     <groupId>org.openmrs.module</groupId>
     <artifactId>ugandaemrfingerprint</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>UgandaEMR FingerPrint Module</name>
     <description>Patient registration and search</description>
@@ -22,10 +22,9 @@
     </organization>
 
     <scm>
-        <connection>scm:svn:https://svn.openmrs.org/openmrs-modules/ugandaemrfingerprint/trunk/</connection>
-        <developerConnection>scm:svn:https://svn.openmrs.org/openmrs-modules/ugandaemrfingerprint/trunk/
-        </developerConnection>
-        <url>https://svn.openmrs.org/openmrs-modules/ugandaemrfingerprint/trunk/</url>
+        <connection>scm:git:https://github.com/METS-Programme/openmrs-module-ugandaemr-fingerprint.git</connection>
+        <developerConnection>scm:git:https://github.com/METS-Programme/openmrs-module-ugandaemr-fingerprint.git</developerConnection>
+        <url>https://github.com/METS-Programme/openmrs-module-ugandaemr-fingerprint.git</url>
     </scm>
 
     <modules>
@@ -38,14 +37,14 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <emrapiVersion>1.11</emrapiVersion>
-        <coreappsVersion>1.11.2-SNAPSHOT</coreappsVersion>
+        <coreappsVersion>1.12.0</coreappsVersion>
         <appframeworkVersion>2.4</appframeworkVersion>
         <appuiVersion>1.7</appuiVersion>
         <calculationVersion>1.2</calculationVersion>
         <dataexchangeVersion>1.3.2</dataexchangeVersion>
         <emrapiVersion>1.19</emrapiVersion>
         <formentryappVersion>1.2</formentryappVersion>
-        <htmlformentryuiVersion>1.6.2-SNAPSHOT</htmlformentryuiVersion>
+        <htmlformentryuiVersion>1.6.2</htmlformentryuiVersion>
         <htmlformentryVersion>3.3.1</htmlformentryVersion>
         <idgenVersion>4.4.0</idgenVersion>
         <junitParamsVersion>1.0.4</junitParamsVersion>
@@ -265,23 +264,35 @@
         </pluginManagement>
     </build>
 
+    <distributionManagement>
+        <repository>
+            <id>central</id>
+            <name>openmrs-releases</name>
+            <url>https://openmrs.jfrog.io/openmrs/modules</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <name>openmrs-snapshots</name>
+            <url>https://openmrs.jfrog.io/openmrs/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+
     <repositories>
         <repository>
-            <id>openmrs-repo</id>
-            <name>OpenMRS Nexus Repository</name>
-            <url>http://mavenrepo.openmrs.org/nexus/content/repositories/public</url>
+            <id>central</id>
+            <name>public</name>
+            <url>https://openmrs.jfrog.io/openmrs/public</url>
         </repository>
     </repositories>
 
     <pluginRepositories>
         <pluginRepository>
-            <id>openmrs-repo</id>
-            <name>OpenMRS Nexus Repository</name>
-            <url>http://mavenrepo.openmrs.org/nexus/content/repositories/public</url>
+            <id>central</id>
+            <name>public</name>
+            <url>https://openmrs.jfrog.io/openmrs/public/</url>
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
         </pluginRepository>
     </pluginRepositories>
-
 </project>
