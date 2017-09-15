@@ -35,20 +35,23 @@ public class FingerPrintDetailsFragmentController {
         }
 
         fingerprints = ugandaEMRFingerprintService.getPatientFingerprint(patient);
-        String dateCreated = null;
+        String finger1DateCreated = null;
+        String finger2DateCreated = null;
         String finger1 = "";
         String finger2 = "";
         for (Fingerprint fingerprint : fingerprints) {
-            dateCreated = fingerprint.getDateCreated().toString();
             if (fingerprint.getFinger() == 6) {
+                finger1DateCreated = fingerprint.getDateCreated().toString();
                 finger1 = fingerprint.getFinger() + "";
             } else if (fingerprint.getFinger() == 5) {
+                finger2DateCreated = fingerprint.getDateCreated().toString();
                 finger2 = fingerprint.getFinger() + "";
             }
         }
 
         model.addAttribute("fingerPrint", fingerprints);
-        model.addAttribute("dateCreated", dateCreated);
+        model.addAttribute("finger1DateCreated", finger1DateCreated);
+        model.addAttribute("finger2DateCreated", finger2DateCreated);
         model.addAttribute("finger1", finger1);
         model.addAttribute("finger2", finger2);
         model.addAttribute("fingerPrintNo", fingerprints.size());
