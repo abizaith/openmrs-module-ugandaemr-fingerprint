@@ -22,14 +22,15 @@ img {
                     if (finger2 == "5") {
         %>
         <div>
-            <strong>Right Thumb:</strong>Enrolled On ${Date.parse("yyyy-M-d H:m:s",dateCreated)}
+            <strong>Right Thumb:</strong>Enrolled On ${Date.parse("yyyy-M-d H:m:s",finger2DateCreated)}
         </div>
         <%
 
-            } else if (finger1 == "6") {
+            }
+                if (finger1 == "6") {
         %>
         <div>
-            <strong>Right Index:</strong>Enrolled On ${Date.parse("yyyy-M-d H:m:s",dateCreated)}
+            <strong>Right Index:</strong>Enrolled On ${Date.parse("yyyy-M-d H:m:s",finger1DateCreated)}
         </div>
         <%
 
