@@ -16,7 +16,6 @@
             label: "${ ui.escapeJs(ui.message("Find Patient From other Facility.")) }",
         }
     ];
-
     if (jQuery) {
         jq(document).ready(function () {
             jq("#tabs").tabs();
