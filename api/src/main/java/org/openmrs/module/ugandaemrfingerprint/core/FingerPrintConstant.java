@@ -33,7 +33,16 @@ public class FingerPrintConstant {
     public static final String PATIENT_NOT_FOUND = "Patient Not Found";
     public static final String CONNECTION_TEST_IP = "google.com/";
     public static final String DEVICE_SOCKET_IP = "ugandaemrfingerprint.socketIPAddress";
-    public static final String DEVICE_SOCKET_IP_PLACE_HOLDER = "/complete";
+    public static final String DEVICE_SOCKET_IP_PLACE_HOLDER = "http://localhost:8084";
+
+    public static final String ONLINE_SEARCH_ENABLE_DISABLE = "ugandaemrfingerprint.searchOnline";
+    public static final String ONLINE_SEARCH_ENABLE_DISABLE_PLACE_HOLDER = "false";
+
+    public static final String SHOW_PATIENT_CLINIC_SUMMARY = "ugandaemrfingerprint.showOnlinePatientSummary";
+    public static final String SHOW_PATIENT_CLINIC_SUMMARY_PLACE_HOLDER = "false";
+
+    public static final String SHOW_PATIENT_LAST_TREATMENT_ENCOUNTER = "ugandaemrfingerprint.showOnlinePatientLastTreatmentEncounter";
+    public static final String SHOW_PATIENT_LAST_TREATMENT_ENCOUNTER_PLACE_HOLDER = "false";
 
 
     public static final int RIGHT_THUMB = 5;
@@ -67,10 +76,4 @@ public class FingerPrintConstant {
     public  static final String VALUE_COMPLEX="valueComplex";
     public  static final String VOIDED="voided";
     public  static final String OBS="obs";
-
-
-
-
-
-
 }

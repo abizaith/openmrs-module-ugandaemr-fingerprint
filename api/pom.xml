@@ -96,7 +96,7 @@
 			<groupId>org.openmrs.module</groupId>
 			<artifactId>dataexchange-api</artifactId>
 		</dependency>
-		<!--End FingerPrint Device -->
+        <!--End FingerPrint Device -->
 	</dependencies>
 	
 	<build>

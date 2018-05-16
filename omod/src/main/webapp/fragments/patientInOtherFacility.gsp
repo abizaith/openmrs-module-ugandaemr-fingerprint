@@ -46,27 +46,27 @@
             jq("#patient_found").addClass('hidden');
             if (navigator.onLine) {
                 jq.post("${connectionProtocol+onlineIpAddress+queryURL}", {query: searchQuery},
-                        function (response) {
+                    function (response) {
 
-                            if (response && response.data.patient !== null) {
-                                displayData(response);
-                                jq().toastmessage('showSuccessToast', "Patient Found");
+                        if (response && response.data.patient !== null) {
+                            displayData(response);
+                            jq().toastmessage('showSuccessToast', "Patient Found");
 
-                                jq.post('${ ui.actionLink("processPatientEncounters") }', {
-                                    patientData: JSON.stringify(response.data.patient)
-                                }, function (response) {
-                                    var responseData = JSON.parse(response.replace("patientData=", "\"patientData\":").trim());
-                                    patientClinicInfo(responseData);
-                                });
-                            }
-                            else if (response.errors) {
-                                jq().toastmessage('showErrorToast', "Internal Server Error");
-                            }
-                            else {
-                                jq().toastmessage('showErrorToast', "Patient Not Found");
-                                jq("#patient_found").attr("display", "none");
-                            }
-                        });
+                            jq.post('${ ui.actionLink("processPatientEncounters") }', {
+                                patientData: JSON.stringify(response.data.patient)
+                            }, function (response) {
+                                var responseData = JSON.parse(response.replace("patientData=", "\"patientData\":").trim());
+                                patientClinicInfo(responseData);
+                            });
+                        }
+                        else if (response.errors) {
+                            jq().toastmessage('showErrorToast', "Internal Server Error");
+                        }
+                        else {
+                            jq().toastmessage('showErrorToast', "Patient Not Found");
+                            jq("#patient_found").attr("display", "none");
+                        }
+                    });
             } else {
                 jq().toastmessage('showErrorToast', "No internet Connection");
             }
@@ -115,40 +115,44 @@
     function patientClinicInfo(response) {
         if (response.patientData != "") {
 
-            if (response.patientData.obsSummaryPageList != null) {
-                var txt1 = "";
-                txt1 += "<div id=\"tabs-1\" style=\"background: #B6D6E6;\" class=\"encounter-summary-container\">";
-                txt1 += "<table>";
-                for (x in response.patientData.obsSummaryPageList) {
-                    txt1 += "<tr><td>" + response.patientData.obsSummaryPageList[x].concept + "</td><td>" + response.patientData.obsSummaryPageList[x].answerSummary + "</td></tr>";
+            if (${showOnlinePatientSummary} ===true){
+                if (response.patientData.obsSummaryPageList !== null) {
+                    var txt1 = "";
+                    txt1 += "<div id=\"tabs-1\" style=\"background: #B6D6E6;\" class=\"encounter-summary-container\">";
+                    txt1 += "<table>";
+                    for (x in response.patientData.obsSummaryPageList) {
+                        txt1 += "<tr><td>" + response.patientData.obsSummaryPageList[x].concept + "</td><td>" + response.patientData.obsSummaryPageList[x].answerSummary + "</td></tr>";
+                    }
+                    txt1 += "</table>";
+                    txt1 += "</div>";
+                    jq("#tabs").append(txt1);
                 }
-                txt1 += "</table>";
-                txt1 += "</div>";
-                jq("#tabs").append(txt1);
-            }
-            else {
-                var txt1 = "";
-                txt1 += "<div id=\"tabs-1\" style=\"background: #B6D6E6;\" class=\"encounter-summary-container\">";
-                txt1 += "</div>";
-                jq("#tabs").append(txt1);
+                else {
+                    var txt1 = "";
+                    txt1 += "<div id=\"tabs-1\" style=\"background: #B6D6E6;\" class=\"encounter-summary-container\">";
+                    txt1 += "</div>";
+                    jq("#tabs").append(txt1);
+                }
             }
 
-            if (response.patientData.obsLastEncounterPageList != null) {
-                var txt2 = "";
-                txt2 += "<div id=\"tabs-2\" style=\"background: #B6D6E6;\" class=\"encounter-summary-container\">";
-                txt2 += "<table>";
-                for (x in response.patientData.obsLastEncounterPageList) {
-                    txt2 += "<tr><td>" + response.patientData.obsLastEncounterPageList[x].concept + "</td><td>" + response.patientData.obsLastEncounterPageList[x].answerSummary + "</td></tr>";
+            if (${showOnlinePatientLastTreatmentEncounter} ===true){
+                if (response.patientData.obsLastEncounterPageList != null) {
+                    var txt2 = "";
+                    txt2 += "<div id=\"tabs-2\" style=\"background: #B6D6E6;\" class=\"encounter-summary-container\">";
+                    txt2 += "<table>";
+                    for (x in response.patientData.obsLastEncounterPageList) {
+                        txt2 += "<tr><td>" + response.patientData.obsLastEncounterPageList[x].concept + "</td><td>" + response.patientData.obsLastEncounterPageList[x].answerSummary + "</td></tr>";
+                    }
+                    txt2 += "</table>";
+                    txt2 += "</div>";
+                    jq("#tabs").append(txt2);
                 }
-                txt2 += "</table>";
-                txt2 += "</div>";
-                jq("#tabs").append(txt2);
-            }
-            else {
-                var txt2 = "";
-                txt2 += "<div id=\"tabs-2\" style=\"background: #B6D6E6;\" class=\"encounter-summary-container\">";
-                txt2 += "</div>";
-                jq("#tabs").append(txt2);
+                else {
+                    var txt2 = "";
+                    txt2 += "<div id=\"tabs-2\" style=\"background: #B6D6E6;\" class=\"encounter-summary-container\">";
+                    txt2 += "</div>";
+                    jq("#tabs").append(txt2);
+                }
             }
         }
     }
@@ -241,11 +245,17 @@ img {
         </div>
     </div>
 
+    <% if (showOnlinePatientSummary == true || showOnlinePatientLastTreatmentEncounter == true) { %>
     <div id="tabs" style="margin-left: auto; margin-right: auto;width: 95%;margin-top: 20px;">
         <ul>
+            <% if (showOnlinePatientSummary == true) { %>
             <li id="art_summary_header"><a href="#tabs-1">Patient Clinic Summary</a></li>
+            <% } %>
+            <% if (showOnlinePatientLastTreatmentEncounter == true) { %>
             <li id="art_latest_encounter_header"><a href="#tabs-2">Last Patient Encounter</a></li>
+            <% } %>
         </ul>
     </div>
+    <% } %>
 </div>
 <% } %>
