@@ -16,7 +16,6 @@
             label: "${ ui.escapeJs(ui.message("Find Patient From other Facility.")) }",
         }
     ];
-
     if (jQuery) {
         jq(document).ready(function () {
             jq("#tabs").tabs();
@@ -219,7 +218,6 @@ img {
 
 <div id="status_message"></div>
 <% if (patientFound == true && searched == true) { %>
-
 <div id="patient_found" class="dialog" style="width: 100%">
     <div class="dialog-header">
         <i class="icon-globe"></i>
@@ -244,18 +242,11 @@ img {
             <strong>Facility Name:</strong><span id="facilityName"></span>
         </div>
     </div>
-
-    <% if (showOnlinePatientSummary == true || showOnlinePatientLastTreatmentEncounter == true) { %>
     <div id="tabs" style="margin-left: auto; margin-right: auto;width: 95%;margin-top: 20px;">
         <ul>
-            <% if (showOnlinePatientSummary == true) { %>
             <li id="art_summary_header"><a href="#tabs-1">Patient Clinic Summary</a></li>
-            <% } %>
-            <% if (showOnlinePatientLastTreatmentEncounter == true) { %>
             <li id="art_latest_encounter_header"><a href="#tabs-2">Last Patient Encounter</a></li>
-            <% } %>
         </ul>
     </div>
-    <% } %>
 </div>
 <% } %>

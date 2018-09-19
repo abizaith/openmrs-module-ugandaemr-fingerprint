@@ -47,7 +47,5 @@ public class PatientInOtherFacilityPageController {
         pageModel.put("nationalIdString", PATIENT_NATIONAL_ID_SEARCH_STRING);
         pageModel.put("connectionProtocol", CONNECTION_PROTOCOL);
         fingerPrintGlobalProperties = new FingerPrintGlobalProperties();
-
-
     }
 }

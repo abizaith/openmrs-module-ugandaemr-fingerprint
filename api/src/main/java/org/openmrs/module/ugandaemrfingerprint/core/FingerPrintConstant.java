@@ -28,7 +28,7 @@ public class FingerPrintConstant {
     public static final String PATIENT_ID = "patient.id";
 
     public static final String PATIENT_UUID_SEARCH_STRING = "{patient(patients:[\"%s\"]){uuid birthdate gender dead patientFacility{ uuid name} names{ familyName middleName givenName voided} summaryPage{obs {uuid concept encounterDate encounterType valueCoded valueText valueNumeric valueDatetime valueDrug valueBoolean valueComplex voided }} mostRecentEncounter{obs { uuid concept encounterDate encounterType valueCoded valueText valueNumeric valueDatetime valueDrug valueBoolean valueComplex voided}}}}";
-    public static final String PATIENT_NATIONAL_ID_SEARCH_STRING = "{patient(identifier:{t:\"f0c16a6d-dc5f-4118-a803-616d0075d282\",v:\"%s\"}){uuid birthdate gender dead patientFacility{ uuid name} names{ familyName middleName givenName voided}}}";
+    public static final String PATIENT_NATIONAL_ID_SEARCH_STRING = "{patient(identifier:{t:\"f0c16a6d-dc5f-4118-a803-616d0075d282\",v:\"%s\"}){uuid birthdate gender dead patientFacility{ uuid name} names{ familyName middleName givenName voided} summaryPage{obs {uuid concept encounterDate encounterType valueCoded valueText valueNumeric valueDatetime valueDrug valueBoolean valueComplex voided }} mostRecentEncounter{obs { uuid concept encounterDate encounterType valueCoded valueText valueNumeric valueDatetime valueDrug valueBoolean valueComplex voided}}}}";
     public static final String PATIENT_ONLINE_ID = "identifiers";
     public static final String PATIENT_NOT_FOUND = "Patient Not Found";
     public static final String CONNECTION_TEST_IP = "google.com/";
@@ -45,8 +45,29 @@ public class FingerPrintConstant {
     public static final String SHOW_PATIENT_LAST_TREATMENT_ENCOUNTER_PLACE_HOLDER = "false";
 
 
+    public static final int RIGHT_PINKY = 1;
+    public static final int RIGHT_RING = 2;
+    public static final int RIGHT_MIDDLE = 3;
+    public static final int RIGHT_INDEX = 4;
     public static final int RIGHT_THUMB = 5;
-    public static final int RIGHT_INDEX = 6;
+    public static final int LEFT_PINKY = 6;
+    public static final int LEFT_RING = 7;
+    public static final int LEFT_MIDDLE = 8;
+    public static final int LEFT_INDEX = 9;
+    public static final int LEFT_THUMB = 10;
+
+
+    public static final String RIGHT_PINKY_NAME ="Right Pinky"  ;
+    public static final String RIGHT_RING_NAME = "Right Ring";
+    public static final String RIGHT_MIDDLE_NAME="Right Middle";
+    public static final String RIGHT_INDEX_NAME ="Right Index";
+    public static final String RIGHT_THUMB_NAME ="Right Thumb";
+    public static final String LEFT_PINKY_NAME = "Left Pinky";
+    public static final String LEFT_RING_NAME = "Left Ring";
+    public static final String LEFT_MIDDLE_NAME ="Left Middle";
+    public static final String LEFT_INDEX_NAME = "Left Index"; 
+    public static final String LEFT_THUMB_NAME = "Left Thumb";
+
 
 
     public  static final String PATIENT_NAMES="names";

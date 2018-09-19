@@ -39,7 +39,7 @@ public class FingerPrintGlobalProperties {
 		 */
 		if (getGlobalProperty(SHOW_PATIENT_CLINIC_SUMMARY) == null) {
 			setGlobalProperty(SHOW_PATIENT_CLINIC_SUMMARY, SHOW_PATIENT_CLINIC_SUMMARY_PLACE_HOLDER);
-			log.info("online saarch enable disable is Set");
+			log.info("showing patient clinic summary enable disable is Set");
 		}
 
         /**
@@ -47,7 +47,7 @@ public class FingerPrintGlobalProperties {
          */
         if (getGlobalProperty(SHOW_PATIENT_LAST_TREATMENT_ENCOUNTER) == null) {
             setGlobalProperty(SHOW_PATIENT_LAST_TREATMENT_ENCOUNTER, SHOW_PATIENT_LAST_TREATMENT_ENCOUNTER_PLACE_HOLDER);
-            log.info("online saarch enable disable is Set");
+            log.info("showing patient last treatment encounter enable disable is Set");
         }
 	}
 
