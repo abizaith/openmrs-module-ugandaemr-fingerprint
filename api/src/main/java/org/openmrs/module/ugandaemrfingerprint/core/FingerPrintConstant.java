@@ -45,16 +45,21 @@ public class FingerPrintConstant {
     public static final String SHOW_PATIENT_LAST_TREATMENT_ENCOUNTER_PLACE_HOLDER = "false";
 
 
-    public static final int RIGHT_PINKY = 1;
-    public static final int RIGHT_RING = 2;
-    public static final int RIGHT_MIDDLE = 3;
-    public static final int RIGHT_INDEX = 4;
+    public static final int LEFT_PINKY = 0;
+    public static final int LEFT_RING = 1;
+    public static final int LEFT_MIDDLE = 2;
+    public static final int LEFT_INDEX = 3;
+    public static final int LEFT_THUMB = 4;
     public static final int RIGHT_THUMB = 5;
-    public static final int LEFT_PINKY = 6;
-    public static final int LEFT_RING = 7;
-    public static final int LEFT_MIDDLE = 8;
-    public static final int LEFT_INDEX = 9;
-    public static final int LEFT_THUMB = 10;
+    public static final int RIGHT_INDEX = 6;
+    public static final int RIGHT_MIDDLE = 7;
+    public static final int RIGHT_RING = 8;
+    public static final int RIGHT_PINKY = 9;
+
+
+
+
+
 
 
     public static final String RIGHT_PINKY_NAME ="Right Pinky"  ;

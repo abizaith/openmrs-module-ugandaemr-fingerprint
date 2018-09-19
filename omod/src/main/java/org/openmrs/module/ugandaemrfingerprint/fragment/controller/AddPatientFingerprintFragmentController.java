@@ -114,7 +114,6 @@ public class AddPatientFingerprintFragmentController implements Serializable {
 
         ugandaEMRFingerprintService.savePatientFingerprint(fingerprint1);
 
-
         obj.put("message", "Patient fingerprint saved");
 
         return obj;

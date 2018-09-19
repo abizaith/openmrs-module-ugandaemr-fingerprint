@@ -4,8 +4,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.PatientService;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.ugandaemrfingerprint.model.Fingerprint;
 import org.openmrs.module.ugandaemrfingerprint.UgandaEMRFingerprintService;
+import org.openmrs.module.ugandaemrfingerprint.model.Fingerprint;
 import org.openmrs.ui.framework.SimpleObject;
 import org.openmrs.ui.framework.UiUtils;
 import org.openmrs.ui.framework.fragment.FragmentModel;
@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.Map;
 
 import static org.openmrs.module.ugandaemrfingerprint.core.FingerPrintConstant.*;
-import static org.openmrs.module.ugandaemrfingerprint.core.FingerPrintConstant.LEFT_THUMB_NAME;
 
 /**
  * Created by Lubwama Samuel on 26/01/2016.
@@ -39,7 +38,7 @@ public class FingerPrintDetailsFragmentController {
             patient = patientService.getPatient(Integer.parseInt(patient)).getUuid();
         }
 
-        Map map=new HashMap();
+        Map map = new HashMap();
 
         fingerprints = ugandaEMRFingerprintService.getPatientFingerprint(patient);
         String finger1DateCreated = null;
@@ -48,42 +47,41 @@ public class FingerPrintDetailsFragmentController {
         String finger2 = "";
         for (Fingerprint fingerprint : fingerprints) {
             switch (fingerprint.getFinger()) {
-                case 1:
+                case RIGHT_PINKY:
                     map.put(RIGHT_PINKY_NAME, fingerprint.getDateCreated().toString());
                     break;
-                case 2:
+                case RIGHT_RING:
                     map.put(RIGHT_RING_NAME, fingerprint.getDateCreated().toString());
                     break;
-                case 3:
+                case RIGHT_MIDDLE:
                     map.put(RIGHT_MIDDLE_NAME, fingerprint.getDateCreated().toString());
                     break;
-                case 4:
+                case RIGHT_INDEX:
                     map.put(RIGHT_INDEX_NAME, fingerprint.getDateCreated().toString());
                     break;
-                case 5:
+                case RIGHT_THUMB:
                     map.put(RIGHT_THUMB_NAME, fingerprint.getDateCreated().toString());
                     break;
-                case 6:
+                case LEFT_PINKY:
                     map.put(LEFT_PINKY_NAME, fingerprint.getDateCreated().toString());
                     break;
-                case 7:
+                case LEFT_RING:
                     map.put(LEFT_RING_NAME, fingerprint.getDateCreated().toString());
                     break;
-                case 8:
+                case LEFT_MIDDLE:
                     map.put(LEFT_MIDDLE_NAME, fingerprint.getDateCreated().toString());
                     break;
-                case 9:
+                case LEFT_INDEX:
                     map.put(LEFT_INDEX_NAME, fingerprint.getDateCreated().toString());
                     break;
-                case 10:
+                case LEFT_THUMB:
                     map.put(LEFT_THUMB_NAME, fingerprint.getDateCreated().toString());
                     break;
-                default: ;
+                default:
+                    ;
                     break;
             }
         }
-
-
 
 
         model.addAttribute("fingerPrint", map);

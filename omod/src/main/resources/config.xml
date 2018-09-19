@@ -108,7 +108,7 @@
     </globalProperty>
 
     <globalProperty>
-        <property>ugandaemrfingerprint.enableRightRinger</property>
+        <property>ugandaemrfingerprint.enableRightRing</property>
         <defaultValue>false</defaultValue>
         <description>
             Enables the Right Ring finger to be captured
@@ -148,7 +148,7 @@
     </globalProperty>
 
     <globalProperty>
-        <property>ugandaemrfingerprint.enableLeftRinger</property>
+        <property>ugandaemrfingerprint.enableLeftRing</property>
         <defaultValue>false</defaultValue>
         <description>
             Enables the Left Ring finger to be captured
@@ -165,7 +165,7 @@
 
     <globalProperty>
         <property>ugandaemrfingerprint.enableLeftIndex</property>
-        <defaultValue>true</defaultValue>
+        <defaultValue>false</defaultValue>
         <description>
             Enables the Left Index finger to be captured
         </description>
@@ -173,7 +173,7 @@
 
     <globalProperty>
         <property>ugandaemrfingerprint.enableLeftThumb</property>
-        <defaultValue>true</defaultValue>
+        <defaultValue>false</defaultValue>
         <description>
             Enables the Left Thumb finger to be captured
         </description>
