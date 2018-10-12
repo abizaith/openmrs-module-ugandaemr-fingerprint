@@ -28,8 +28,10 @@ public class PatientInOtherFacilityPageController {
         pageModel.put("birthdate", false);
         pageModel.put("gender", false);
         pageModel.put("dead", false);
-        pageModel.put("summaryPage", false);
-        pageModel.put("mostRecentEncounter", false);
+        pageModel.put("summaryPage", fingerPrintGlobalProperties.getGlobalProperty("ugandaemrfingerprint.showOnlinePatientSummary"));
+        pageModel.put("displaySummaryPage", fingerPrintGlobalProperties.getGlobalProperty("ugandaemrfingerprint.showOnlinePatientSummary"));
+        pageModel.put("mostRecentEncounter", fingerPrintGlobalProperties.getGlobalProperty("ugandaemrfingerprint.showOnlinePatientLastTreatmentEncounter"));
+        pageModel.put("displayMostRecentEncounter", fingerPrintGlobalProperties.getGlobalProperty("ugandaemrfingerprint.showOnlinePatientLastTreatmentEncounter"));
         pageModel.put("facilityName", "");
         pageModel.put("facilityId", "");
         pageModel.put("patientId", patientId);
@@ -46,6 +48,8 @@ public class PatientInOtherFacilityPageController {
         pageModel.put("searchString", PATIENT_UUID_SEARCH_STRING);
         pageModel.put("nationalIdString", PATIENT_NATIONAL_ID_SEARCH_STRING);
         pageModel.put("connectionProtocol", CONNECTION_PROTOCOL);
-        fingerPrintGlobalProperties = new FingerPrintGlobalProperties();
+        pageModel.put("patientDetails", PATIENT_DETAILS);
+        pageModel.put("patientSummarySearchQuery", SUMMARY_ENCOUNTER);
+        pageModel.put("patientMostRecentEncounterSearchQuery", MOST_RECENT_ENCOUNTER);
     }
 }

@@ -20,6 +20,8 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 
+import static org.openmrs.module.ugandaemrfingerprint.core.FingerPrintConstant.*;
+
 /**
  * Fragment controller for patient search widget; sets the min # of search characters based on global property,
  * and loads last viewed patients for current user if "showLastViewedPatients" fragment config param=true
@@ -52,6 +54,10 @@ public class PatientSearchWidgetFragmentController {
         FingerPrintGlobalProperties fingerPrintGlobalProperties = new FingerPrintGlobalProperties();
 
         model.addAttribute("searchOnline", fingerPrintGlobalProperties.getGlobalProperty(FingerPrintConstant.ONLINE_SEARCH_ENABLE_DISABLE));
+        model.addAttribute("simpleNationalIdString", PATIENT_NATIONAL_ID_SIMPLE_SEARCH_STRING);
+        model.addAttribute("onlineIpAddress", fingerPrintGlobalProperties.getGlobalProperty(FingerPrintConstant.CONNECTION_SERVER_IP_GLOBALPROPERTY));
+        model.addAttribute("connectionProtocol", CONNECTION_PROTOCOL);
+        model.addAttribute("queryURL", FingerPrintConstant.SEARCH_URL);
 
         if (showLastViewedPatients) {
             List<Patient> patients = GeneralUtils.getLastViewedPatients(sessionContext.getCurrentUser());

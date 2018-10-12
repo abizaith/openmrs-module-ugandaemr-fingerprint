@@ -16,9 +16,14 @@
             label: "${ ui.escapeJs(ui.message("Find Patient From other Facility.")) }",
         }
     ];
+
     if (jQuery) {
         jq(document).ready(function () {
             jq("#tabs").tabs();
+
+            hideContainer("#art_summary_header");
+            hideContainer("#art_latest_encounter_header");
+
             if ("${patientId}" != "") {
                 remoteSearch('fingerprint', "${patientId}");
             }
@@ -35,6 +40,9 @@
         }
 
         var searchQuery = '${searchString}'.replace('%s', search_params);
+        var patientDetailssearchQuery = '${patientDetails}'.replace('%s', search_params);
+        var patientMostRecentEncounterSearchQuery = '${patientMostRecentEncounterSearchQuery}'.replace('%s', search_params);
+        var patientSummarySearchQuery = '${patientSummarySearchQuery}'.replace('%s', search_params);
 
         if (search_type !== 'fingerprint') {
             searchQuery = '${nationalIdString}'.replace('%s', search_params);
@@ -44,13 +52,26 @@
         if (search_params != "") {
             jq("#patient_found").addClass('hidden');
             if (navigator.onLine) {
-                jq.post("${connectionProtocol+onlineIpAddress+queryURL}", {query: searchQuery},
+                jq.post("${connectionProtocol+onlineIpAddress+queryURL}", {query: patientDetailssearchQuery},
+                        function (response) {
+
+                            if (response && response.data.patient !== null) {
+                                displayData(response);
+                                jq().toastmessage('showSuccessToast', "Patient Found");
+                            }
+                            else if (response.errors) {
+                                jq().toastmessage('showErrorToast', "Internal Server Error");
+                            }
+                            else {
+                                jq().toastmessage('showErrorToast', "Patient Not Found");
+                                jq("#patient_found").attr("display", "none");
+                            }
+                        });
+
+                if(${displayMostRecentEncounter}){
+                jq.post("${connectionProtocol+onlineIpAddress+queryURL}", {query: patientMostRecentEncounterSearchQuery},
                     function (response) {
-
                         if (response && response.data.patient !== null) {
-                            displayData(response);
-                            jq().toastmessage('showSuccessToast', "Patient Found");
-
                             jq.post('${ ui.actionLink("processPatientEncounters") }', {
                                 patientData: JSON.stringify(response.data.patient)
                             }, function (response) {
@@ -58,14 +79,22 @@
                                 patientClinicInfo(responseData);
                             });
                         }
-                        else if (response.errors) {
-                            jq().toastmessage('showErrorToast', "Internal Server Error");
-                        }
-                        else {
-                            jq().toastmessage('showErrorToast', "Patient Not Found");
-                            jq("#patient_found").attr("display", "none");
+                    });
+                }
+
+                if(${displaySummaryPage}){
+                jq.post("${connectionProtocol+onlineIpAddress+queryURL}", {query: patientSummarySearchQuery},
+                    function (response) {
+                        if (response && response.data.patient !== null) {
+                            jq.post('${ ui.actionLink("processPatientEncounters") }', {
+                                patientData: JSON.stringify(response.data.patient)
+                            }, function (response) {
+                                var responseData = JSON.parse(response.replace("patientData=", "\"patientData\":").trim());
+                                patientClinicInfo(responseData);
+                            });
                         }
                     });
+                }
             } else {
                 jq().toastmessage('showErrorToast', "No internet Connection");
             }
@@ -113,9 +142,10 @@
 
     function patientClinicInfo(response) {
         if (response.patientData != "") {
-
-            if (${showOnlinePatientSummary} ===true){
+            if (${showOnlinePatientSummary} === true){
                 if (response.patientData.obsSummaryPageList !== null) {
+                    showContainer("#art_summary_header");
+                    jq().toastmessage('showSuccessToast', "Patient Summary Loaded Successful");
                     var txt1 = "";
                     txt1 += "<div id=\"tabs-1\" style=\"background: #B6D6E6;\" class=\"encounter-summary-container\">";
                     txt1 += "<table>";
@@ -134,8 +164,10 @@
                 }
             }
 
-            if (${showOnlinePatientLastTreatmentEncounter} ===true){
+            if (${showOnlinePatientLastTreatmentEncounter} === true){
                 if (response.patientData.obsLastEncounterPageList != null) {
+                    showContainer("#art_latest_encounter_header");
+                    jq().toastmessage('showSuccessToast', "Last Patient Encounter Loaded Successful");
                     var txt2 = "";
                     txt2 += "<div id=\"tabs-2\" style=\"background: #B6D6E6;\" class=\"encounter-summary-container\">";
                     txt2 += "<table>";
@@ -203,18 +235,6 @@ img {
 </style>
 
 <h3>Locate Patient From other Facility</h3>
-
-<fieldset>
-    <input type="hidden" name="fingerprint" id="fingerprint">
-
-    <div class="scan-input left search_container">
-        <input type="text" name="onlinesearch" id="onlinesearch"
-               class="field-display ui-autocomplete-input left online_search_input_box"
-               placeholder="Type National Id" size="100">
-    </div>
-
-    <div class="left"><input type="button" value="Search" onclick="remoteSearch()"></div>
-</fieldset>
 
 <div id="status_message"></div>
 <% if (patientFound == true && searched == true) { %>

@@ -11,6 +11,7 @@
     <packaging>jar</packaging>
     <name>UgandaEMR FingerPrint Module OMOD</name>
     <description>OMOD project for UgandaEMRFingerPrint</description>
+
     <dependencies>
 
         <!--
@@ -118,21 +119,10 @@
         </dependency>
         <!--End FingerPrint Device -->
 
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-        </dependency>
-
         <!--Mysql-->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
@@ -140,6 +130,7 @@
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
         </dependency>
+
     </dependencies>
 
     <build>
