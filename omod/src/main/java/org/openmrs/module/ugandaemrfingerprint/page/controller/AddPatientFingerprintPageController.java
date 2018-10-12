@@ -7,13 +7,9 @@ import org.openmrs.api.context.Context;
 import org.openmrs.module.appui.UiSessionContext;
 import org.openmrs.module.ugandaemrfingerprint.core.FingerPrintConstant;
 import org.openmrs.module.ugandaemrfingerprint.remoteserver.FingerPrintGlobalProperties;
-import org.openmrs.ui.framework.SimpleObject;
-import org.openmrs.ui.framework.UiUtils;
 import org.openmrs.ui.framework.annotation.SpringBean;
 import org.openmrs.ui.framework.page.PageModel;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.List;
 
 /**
  * Marking a patient as dead
@@ -30,6 +26,6 @@ public class AddPatientFingerprintPageController {
         patient = Context.getPatientService().getPatientByUuid(patientId);
         pageModel.put("patientId", patient.getUuid());
         pageModel.put("breadcrumbOverride", breadcrumbOverride);
-        pageModel.put("fingerSocketPrintIpAddress", fingerPrintGlobalProperties.getGlobalProperty(FingerPrintConstant.DEVICE_SOCKET_IP));
+        pageModel.put("fingerSocketPrintIpAddress", fingerPrintGlobalProperties.getGlobalProperty(FingerPrintConstant.GP_DEVICE_SOCKET_IP));
     }
 }

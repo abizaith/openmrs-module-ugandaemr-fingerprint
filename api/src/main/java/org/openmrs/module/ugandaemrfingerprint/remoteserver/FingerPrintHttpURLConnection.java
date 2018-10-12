@@ -41,7 +41,8 @@ public class FingerPrintHttpURLConnection {
     }
 
     public int getCheckConnection(String url) throws Exception {
-        return sendGet(url, FingerPrintConstant.CONNECTION_PROTOCOL).getResponseCode();
+        FingerPrintGlobalProperties fingerPrintGlobalProperties = new FingerPrintGlobalProperties();
+        return sendGet(url, fingerPrintGlobalProperties.getGlobalProperty(FingerPrintConstant.GP_CONNECTION_PROTOCOL)).getResponseCode();
     }
 
     public StringBuffer getResponseString(BufferedReader bufferedReader) throws IOException {
@@ -110,10 +111,10 @@ public class FingerPrintHttpURLConnection {
 
         Commons commons = new Commons();
 
-        String serverIP = commons.getGlobalProperty(FingerPrintConstant.CONNECTION_SERVER_IP_GLOBALPROPERTY);
-        String facilityId = commons.getGlobalProperty(FingerPrintConstant.CONNECTION_SERVER_IP_GLOBALPROPERTY);
+        String serverIP = commons.getGlobalProperty(FingerPrintConstant.GP_CONNECTION_SERVER_IP);
+        String facilityId = commons.getGlobalProperty(FingerPrintConstant.GP_CONNECTION_SERVER_IP);
 
-        String facilityURL = FingerPrintConstant.CONNECTION_PROTOCOL + serverIP + "/" + url;
+        String facilityURL = FingerPrintConstant.GP_CONNECTION_PROTOCOL + serverIP + "/" + url;
 
         return sendPostBy(contentTypeJSON, data, facilityId, facilityURL);
     }
