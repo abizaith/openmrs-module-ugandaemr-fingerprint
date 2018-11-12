@@ -60,24 +60,6 @@
 		</dependency>
 				
 		<!-- End OpenMRS org.openmrs.module.ugandaemrfingerprintngerprint.core -->
-		
-		<!-- FingerPrint Device -->
-		<dependency>
-			<groupId>com.digitalpersona.fingerprint</groupId>
-			<artifactId>fp-enrollment</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.digitalpersona.fingerprint</groupId>
-			<artifactId>fp-verification</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.digitalpersona.onetouch</groupId>
-			<artifactId>ot-api</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.digitalpersona.onetouch</groupId>
-			<artifactId>ot-jni</artifactId>
-		</dependency>
 
 		<dependency>
 			<groupId>org.openmrs.module</groupId>
