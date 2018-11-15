@@ -2,15 +2,12 @@ package org.openmrs.module.ugandaemrfingerprint.page.controller;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.openmrs.Patient;
-import org.openmrs.api.context.Context;
 import org.openmrs.module.appframework.domain.AppDescriptor;
 import org.openmrs.module.appui.UiSessionContext;
 import org.openmrs.module.coreapps.helper.BreadcrumbHelper;
 import org.openmrs.module.ugandaemrfingerprint.core.FingerPrintConstant;
 import org.openmrs.module.ugandaemrfingerprint.remoteserver.FingerPrintGlobalProperties;
 import org.openmrs.ui.framework.UiUtils;
-import org.openmrs.ui.framework.annotation.SpringBean;
 import org.openmrs.ui.framework.page.PageModel;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -30,7 +27,7 @@ public class FindPatientFingerprintPageController {
         model.addAttribute("heading", app.getConfig().get("heading").getTextValue());
         model.addAttribute("label", app.getConfig().get("label").getTextValue());
         model.addAttribute("showLastViewedPatients", app.getConfig().get("showLastViewedPatients").getBooleanValue());
-        model.put("fingerSocketPrintIpAddress", fingerPrintGlobalProperties.getGlobalProperty(FingerPrintConstant.DEVICE_SOCKET_IP));
+        model.put("fingerSocketPrintIpAddress", fingerPrintGlobalProperties.getGlobalProperty(FingerPrintConstant.GP_DEVICE_SOCKET_IP));
         BreadcrumbHelper.addBreadcrumbsIfDefinedInApp(app, model, ui);
     }
 }
