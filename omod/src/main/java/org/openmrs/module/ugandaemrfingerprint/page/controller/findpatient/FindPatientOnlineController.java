@@ -32,7 +32,7 @@ public class FindPatientOnlineController {
         try {
             FingerPrintHttpURLConnection fingerPrintHttpURLConnection = new FingerPrintHttpURLConnection();
 
-            if (fingerPrintHttpURLConnection.getCheckConnection(CONNECTION_TEST_IP) == CONNECTION_SUCCESS) {
+            if (fingerPrintHttpURLConnection.getCheckConnection(GP_CONNECTION_PROTOCOL) == CONNECTION_SUCCESS) {
                 Commons commons = new Commons();
                 Map map = fingerPrintHttpURLConnection.sendPostBy(SEARCH_URL,"");
 

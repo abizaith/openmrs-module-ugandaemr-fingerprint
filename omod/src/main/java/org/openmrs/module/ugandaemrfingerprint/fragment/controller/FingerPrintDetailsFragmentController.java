@@ -41,10 +41,6 @@ public class FingerPrintDetailsFragmentController {
         Map map = new HashMap();
 
         fingerprints = ugandaEMRFingerprintService.getPatientFingerprint(patient);
-        String finger1DateCreated = null;
-        String finger2DateCreated = null;
-        String finger1 = "";
-        String finger2 = "";
         for (Fingerprint fingerprint : fingerprints) {
             switch (fingerprint.getFinger()) {
                 case RIGHT_PINKY:
@@ -82,7 +78,6 @@ public class FingerPrintDetailsFragmentController {
                     break;
             }
         }
-
 
         model.addAttribute("fingerPrint", map);
         model.addAttribute("fingerPrintNo", fingerprints.size());

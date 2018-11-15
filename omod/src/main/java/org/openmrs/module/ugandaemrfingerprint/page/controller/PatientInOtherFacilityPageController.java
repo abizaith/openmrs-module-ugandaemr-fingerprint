@@ -41,13 +41,13 @@ public class PatientInOtherFacilityPageController {
         pageModel.put("connectionFailed", "");
         pageModel.put("searched", false);
         pageModel.put("breadcrumbOverride", breadcrumbOverride);
-        pageModel.put("onlineIpAddress", fingerPrintGlobalProperties.getGlobalProperty(FingerPrintConstant.CONNECTION_SERVER_IP_GLOBALPROPERTY));
-        pageModel.put("showOnlinePatientSummary", fingerPrintGlobalProperties.getGlobalProperty(FingerPrintConstant.SHOW_PATIENT_CLINIC_SUMMARY));
-        pageModel.put("showOnlinePatientLastTreatmentEncounter", fingerPrintGlobalProperties.getGlobalProperty(FingerPrintConstant.SHOW_PATIENT_LAST_TREATMENT_ENCOUNTER));
+        pageModel.put("onlineIpAddress", fingerPrintGlobalProperties.getGlobalProperty(FingerPrintConstant.GP_CONNECTION_SERVER_IP));
+        pageModel.put("showOnlinePatientSummary", fingerPrintGlobalProperties.getGlobalProperty(FingerPrintConstant.GP_SHOW_PATIENT_CLINIC_SUMMARY));
+        pageModel.put("showOnlinePatientLastTreatmentEncounter", fingerPrintGlobalProperties.getGlobalProperty(FingerPrintConstant.GP_SHOW_PATIENT_LAST_TREATMENT_ENCOUNTER));
         pageModel.put("queryURL", FingerPrintConstant.SEARCH_URL);
         pageModel.put("searchString", PATIENT_UUID_SEARCH_STRING);
         pageModel.put("nationalIdString", PATIENT_NATIONAL_ID_SEARCH_STRING);
-        pageModel.put("connectionProtocol", CONNECTION_PROTOCOL);
+        pageModel.put("connectionProtocol", fingerPrintGlobalProperties.getGlobalProperty(FingerPrintConstant.GP_CONNECTION_PROTOCOL));
         pageModel.put("patientDetails", PATIENT_DETAILS);
         pageModel.put("patientSummarySearchQuery", SUMMARY_ENCOUNTER);
         pageModel.put("patientMostRecentEncounterSearchQuery", MOST_RECENT_ENCOUNTER);

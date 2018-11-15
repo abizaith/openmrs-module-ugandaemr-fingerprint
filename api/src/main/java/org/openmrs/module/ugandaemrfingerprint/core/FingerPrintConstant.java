@@ -9,9 +9,8 @@ public class FingerPrintConstant {
     public static String FINGER_PRINT_ATTRIBUTE_UUID = "a41339f9-5014-45f4-91d6-bab84c6c62f1";
 
 
-    public static final String CONNECTION_SERVER_IP_GLOBALPROPERTY = "ugandaemrsync.serverIP";
 
-    public static final String CONNECTION_PROTOCOL = "http://";
+    public static final String GP_CONNECTION_PROTOCOL = "ugandaemrsync.protocol";
 
     public static final int CONNECTION_SUCCESS = 200;
 
@@ -36,18 +35,17 @@ public class FingerPrintConstant {
     public static final String PATIENT_ONLINE_ID = "identifiers";
     public static final String PATIENT_NOT_FOUND = "Patient Not Found";
     public static final String CONNECTION_TEST_IP = "google.com/";
-    public static final String DEVICE_SOCKET_IP = "ugandaemrfingerprint.socketIPAddress";
-    public static final String DEVICE_SOCKET_IP_PLACE_HOLDER = "http://localhost:8084";
 
-    public static final String ONLINE_SEARCH_ENABLE_DISABLE = "ugandaemrfingerprint.searchOnline";
-    public static final String ONLINE_SEARCH_ENABLE_DISABLE_PLACE_HOLDER = "false";
 
-    public static final String SHOW_PATIENT_CLINIC_SUMMARY = "ugandaemrfingerprint.showOnlinePatientSummary";
-    public static final String SHOW_PATIENT_CLINIC_SUMMARY_PLACE_HOLDER = "false";
-
-    public static final String SHOW_PATIENT_LAST_TREATMENT_ENCOUNTER = "ugandaemrfingerprint.showOnlinePatientLastTreatmentEncounter";
-    public static final String SHOW_PATIENT_LAST_TREATMENT_ENCOUNTER_PLACE_HOLDER = "false";
-
+    public static final String GP_CONNECTION_SERVER_IP = "ugandaemrsync.serverIP";
+    public static final String GP_DEVICE_SOCKET_IP = "ugandaemrfingerprint.socketIPAddress";
+    public static final String GP_DEVICE_SOCKET_IP_PLACE_HOLDER = "http://localhost:8084";
+    public static final String GP_ONLINE_SEARCH_ENABLE_DISABLE = "ugandaemrfingerprint.searchOnline";
+    public static final String GP_ONLINE_SEARCH_ENABLE_DISABLE_PLACE_HOLDER = "false";
+    public static final String GP_SHOW_PATIENT_CLINIC_SUMMARY = "ugandaemrfingerprint.showOnlinePatientSummary";
+    public static final String GP_SHOW_PATIENT_CLINIC_SUMMARY_PLACE_HOLDER = "false";
+    public static final String GP_SHOW_PATIENT_LAST_TREATMENT_ENCOUNTER = "ugandaemrfingerprint.showOnlinePatientLastTreatmentEncounter";
+    public static final String GP_SHOW_PATIENT_LAST_TREATMENT_ENCOUNTER_PLACE_HOLDER = "false";
 
     public static final int LEFT_PINKY = 0;
     public static final int LEFT_RING = 1;
@@ -61,11 +59,6 @@ public class FingerPrintConstant {
     public static final int RIGHT_PINKY = 9;
 
 
-
-
-
-
-
     public static final String RIGHT_PINKY_NAME ="Right Pinky"  ;
     public static final String RIGHT_RING_NAME = "Right Ring";
     public static final String RIGHT_MIDDLE_NAME="Right Middle";
@@ -74,10 +67,8 @@ public class FingerPrintConstant {
     public static final String LEFT_PINKY_NAME = "Left Pinky";
     public static final String LEFT_RING_NAME = "Left Ring";
     public static final String LEFT_MIDDLE_NAME ="Left Middle";
-    public static final String LEFT_INDEX_NAME = "Left Index"; 
+    public static final String LEFT_INDEX_NAME = "Left Index";
     public static final String LEFT_THUMB_NAME = "Left Thumb";
-
-
 
     public  static final String PATIENT_NAMES="names";
     public  static final String PATIENT_FAMILY_NAME="familyName";

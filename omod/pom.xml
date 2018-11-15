@@ -95,23 +95,6 @@
             <artifactId>emrapi-api</artifactId>
         </dependency>
 
-        <!-- FingerPrint Device -->
-        <dependency>
-            <groupId>com.digitalpersona.fingerprint</groupId>
-            <artifactId>fp-enrollment</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.digitalpersona.fingerprint</groupId>
-            <artifactId>fp-verification</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.digitalpersona.onetouch</groupId>
-            <artifactId>ot-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.digitalpersona.onetouch</groupId>
-            <artifactId>ot-jni</artifactId>
-        </dependency>
         <dependency>
             <groupId>org.dbunit</groupId>
             <artifactId>dbunit</artifactId>

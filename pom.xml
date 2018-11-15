@@ -180,29 +180,6 @@
                 <scope>provided</scope>
             </dependency>
 
-            <!-- FingerPrint Device -->
-            <dependency>
-                <groupId>com.digitalpersona.fingerprint</groupId>
-                <artifactId>fp-enrollment</artifactId>
-                <version>${digitalPersonaVersion}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.digitalpersona.fingerprint</groupId>
-                <artifactId>fp-verification</artifactId>
-                <version>${digitalPersonaVersion}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.digitalpersona.onetouch</groupId>
-                <artifactId>ot-api</artifactId>
-                <version>${digitalPersonaVersion}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.digitalpersona.onetouch</groupId>
-                <artifactId>ot-jni</artifactId>
-                <version>${digitalPersonaVersion}</version>
-            </dependency>
-            <!--End FingerPrint Device -->
-
             <!--Mysql-->
             <dependency>
                 <groupId>mysql</groupId>

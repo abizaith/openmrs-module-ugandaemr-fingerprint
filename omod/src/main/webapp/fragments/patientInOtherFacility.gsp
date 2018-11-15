@@ -23,7 +23,6 @@
 
             hideContainer("#art_summary_header");
             hideContainer("#art_latest_encounter_header");
-
             if ("${patientId}" != "") {
                 remoteSearch('fingerprint', "${patientId}");
             }
@@ -233,9 +232,6 @@ img {
 
 }
 </style>
-
-<h3>Locate Patient From other Facility</h3>
-
 <div id="status_message"></div>
 <% if (patientFound == true && searched == true) { %>
 <div id="patient_found" class="dialog" style="width: 100%">

@@ -21,32 +21,32 @@ public class FingerPrintGlobalProperties {
 		/**
 		 * Setting Device Socket IP Address
 		 */
-		if (getGlobalProperty(DEVICE_SOCKET_IP) == null) {
-			setGlobalProperty(DEVICE_SOCKET_IP, DEVICE_SOCKET_IP_PLACE_HOLDER);
+		if (getGlobalProperty(GP_DEVICE_SOCKET_IP) == null) {
+			setGlobalProperty(GP_DEVICE_SOCKET_IP, GP_DEVICE_SOCKET_IP_PLACE_HOLDER);
 			log.info("Default Server IP is Set");
 		}
 
 		/**
 		 * Enable disable online search
 		 */
-		if (getGlobalProperty(ONLINE_SEARCH_ENABLE_DISABLE) == null) {
-			setGlobalProperty(ONLINE_SEARCH_ENABLE_DISABLE, ONLINE_SEARCH_ENABLE_DISABLE_PLACE_HOLDER);
+		if (getGlobalProperty(GP_ONLINE_SEARCH_ENABLE_DISABLE) == null) {
+			setGlobalProperty(GP_ONLINE_SEARCH_ENABLE_DISABLE, GP_ONLINE_SEARCH_ENABLE_DISABLE_PLACE_HOLDER);
 			log.info("online saarch enable disable is Set");
 		}
 
 		/**
 		 * Enable disable showing patient clinic summary when searching online search
 		 */
-		if (getGlobalProperty(SHOW_PATIENT_CLINIC_SUMMARY) == null) {
-			setGlobalProperty(SHOW_PATIENT_CLINIC_SUMMARY, SHOW_PATIENT_CLINIC_SUMMARY_PLACE_HOLDER);
+		if (getGlobalProperty(GP_SHOW_PATIENT_CLINIC_SUMMARY) == null) {
+			setGlobalProperty(GP_SHOW_PATIENT_CLINIC_SUMMARY, GP_SHOW_PATIENT_CLINIC_SUMMARY_PLACE_HOLDER);
 			log.info("showing patient clinic summary enable disable is Set");
 		}
 
         /**
          * Enable disable showing patient last treatment encounter when searching online search
          */
-        if (getGlobalProperty(SHOW_PATIENT_LAST_TREATMENT_ENCOUNTER) == null) {
-            setGlobalProperty(SHOW_PATIENT_LAST_TREATMENT_ENCOUNTER, SHOW_PATIENT_LAST_TREATMENT_ENCOUNTER_PLACE_HOLDER);
+        if (getGlobalProperty(GP_SHOW_PATIENT_LAST_TREATMENT_ENCOUNTER) == null) {
+            setGlobalProperty(GP_SHOW_PATIENT_LAST_TREATMENT_ENCOUNTER, GP_SHOW_PATIENT_LAST_TREATMENT_ENCOUNTER_PLACE_HOLDER);
             log.info("showing patient last treatment encounter enable disable is Set");
         }
 	}

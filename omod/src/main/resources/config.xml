@@ -179,6 +179,14 @@
         </description>
     </globalProperty>
 
+    <globalProperty>
+        <property>ugandaemrsync.protocol</property>
+        <defaultValue>http://</defaultValue>
+        <description>
+            Default communication protocol to use
+        </description>
+    </globalProperty>
+
 
     <privilege>
         <name>Task: coreapps.endVisit</name>
